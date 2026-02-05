@@ -1,0 +1,27 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- This is a placeholder. The actual logo will be fetched from the imgbb link -->
+  <!-- The logo shows a laptop with WiFi signals in teal/purple colors -->
+  <rect width="512" height="512" fill="#000"/>
+  
+  <!-- Laptop body - Purple -->
+  <g transform="translate(100, 180)">
+    <!-- Laptop base -->
+    <rect x="20" y="140" width="280" height="30" rx="5" fill="#6633CC"/>
+    <!-- Screen border - Purple -->
+    <rect x="10" y="40" width="300" height="170" rx="8" fill="none" stroke="#6633CC" stroke-width="12"/>
+    <!-- Screen - Teal -->
+    <rect x="25" y="55" width="270" height="140" rx="4" fill="#4DD0E1"/>
+  </g>
+  
+  <!-- WiFi signals - Teal -->
+  <g transform="translate(200, 80)">
+    <!-- WiFi arc 1 -->
+    <path d="M 0 0 Q -30 -30 -50 -50" fill="none" stroke="#4DD0E1" stroke-width="16" stroke-linecap="round"/>
+    <!-- WiFi arc 2 -->
+    <path d="M 0 0 Q -55 -55 -90 -90" fill="none" stroke="#4DD0E1" stroke-width="16" stroke-linecap="round"/>
+    <!-- WiFi arc 3 -->
+    <path d="M 0 0 Q -80 -80 -130 -130" fill="none" stroke="#4DD0E1" stroke-width="16" stroke-linecap="round"/>
+    <!-- WiFi dot -->
+    <circle cx="0" cy="0" r="12" fill="#4DD0E1"/>
+  </g>
+</svg>
