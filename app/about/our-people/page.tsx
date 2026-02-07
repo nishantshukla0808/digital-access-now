@@ -5,22 +5,28 @@ import Image from 'next/image'
 export default function OurPeople() {
   const teamMembers = [
     {
+      name: 'Ritika Malik',
+      role: 'CEO and Founder',
+      bio: 'Student studying Neuroscience at Columbia University',
+      image: 'https://i.ibb.co/KxGZGXN4/rs-w-730-h-730-cg-true-Picsart-Ai-Image-Enhancer.png',
+    },
+    {
       name: 'Awahan Sapkota',
-      role: 'Chief of Operation Officer',
+      role: 'Vice President',
       bio: 'Senior studying Chemical Engineering and Physics at the University of Pennsylvania',
       image: 'https://i.ibb.co/jZwpDG3G/Awahan.jpg',
     },
     {
-      name: 'Ritika Malik',
-      role: 'Founder & CEO',
-      bio: 'Student studying Neuroscience at Columbia University',
-      image: 'https://i.ibb.co/wFqRmQYQ/Ritika.jpg',
+      name: 'Aayushi Shah',
+      role: 'Director of Human Resources',
+      bio: 'Leading human resources and team development initiatives',
+      image: 'https://i.ibb.co/5gmSJkvg/Aayushi-Shah-Picsart-Ai-Image-Enhancer.jpg',
     },
     {
-      name: 'Aayushi Shah',
-      role: 'HR Manager',
-      bio: 'Leading human resources and team development initiatives',
-      image: 'https://i.ibb.co/WW7b3Hmk/Aayushi-Shah.jpg',
+      name: 'Ishita',
+      role: 'Director of Education Systems',
+      bio: 'Developing educational programs and curriculum frameworks',
+      image: 'https://i.ibb.co/DDnVbWXY/Ishita.png',
     },
     {
       name: 'Nishu Shukla',
@@ -30,27 +36,33 @@ export default function OurPeople() {
     },
     {
       name: 'Suman',
-      role: 'Grant Director',
-      bio: 'Managing grant applications and funding opportunities',
+      role: 'Director of Data & Technology',
+      bio: 'Managing data analytics and technology infrastructure',
       image: 'https://i.ibb.co/V02X2YCP/suman1.png',
     },
     {
-      name: 'Ishita',
-      role: 'Education System Director',
-      bio: 'Developing educational programs and curriculum frameworks',
-      image: 'https://i.ibb.co/DDnVbWXY/Ishita.png',
-    },
-    {
-      name: 'Fashiba',
-      role: 'Chief Financial Officer',
-      bio: 'Managing financial operations and strategic planning',
-      image: 'https://i.ibb.co/KPp0qp3/Fashiba.jpg',
+      name: 'Tejinderjit Singh',
+      role: 'Director of Student Engagement',
+      bio: 'Leading student outreach and engagement initiatives',
+      image: 'https://i.ibb.co/7xN2gfhs/TJ.jpg',
     },
     {
       name: 'Yash',
-      role: 'Technology Lead',
-      bio: 'Building and maintaining technical infrastructure and digital solutions',
+      role: 'Social Media Director',
+      bio: 'Building digital presence and managing social media strategy',
       image: 'https://i.ibb.co/ycD3wQWy/Yash.jpg',
+    },
+    {
+      name: 'Prof. Abirlal Mukherjee',
+      role: 'Country Director, India',
+      bio: 'Leading operations and strategic initiatives in India',
+      image: 'https://i.ibb.co/39BNW2fR/Screenshot-2026-02-07-153447-Picsart-Ai-Image-Enhancer.png',
+    },
+    {
+      name: 'Fashiba',
+      role: 'Country Director, Pakistan',
+      bio: 'Leading operations and strategic initiatives in Pakistan',
+      image: 'https://i.ibb.co/KPp0qp3/Fashiba.jpg',
     },
   ]
 
@@ -77,9 +89,9 @@ export default function OurPeople() {
             OUR TEAM
           </h2>
           
-          {/* First Row - 2 Members */}
-          <div className="grid md:grid-cols-2 gap-12 mb-12 max-w-4xl mx-auto">
-            {teamMembers.slice(0, 2).map((member, i) => (
+          {/* First Row - 3 Members */}
+          <div className="grid md:grid-cols-3 gap-12 mb-12">
+            {teamMembers.slice(0, 3).map((member, i) => (
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
@@ -100,7 +112,7 @@ export default function OurPeople() {
 
           {/* Second Row - 3 Members */}
           <div className="grid md:grid-cols-3 gap-12 mb-12">
-            {teamMembers.slice(2, 5).map((member, i) => (
+            {teamMembers.slice(3, 6).map((member, i) => (
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
@@ -119,9 +131,9 @@ export default function OurPeople() {
             ))}
           </div>
 
-          {/* Third Row - 3 Members */}
-          <div className="grid md:grid-cols-3 gap-12">
-            {teamMembers.slice(5, 8).map((member, i) => (
+          {/* Third Row - 4 Members */}
+          <div className="grid md:grid-cols-4 gap-12">
+            {teamMembers.slice(6, 10).map((member, i) => (
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
@@ -136,28 +148,6 @@ export default function OurPeople() {
                 <h3 className="text-2xl font-black mb-2 uppercase tracking-wide" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>{member.name}</h3>
                 <p className="text-red-accent font-bold text-lg mb-3">{member.role}</p>
                 <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Stats */}
-      <section className="py-16 md:py-24 bg-light-gray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
-            Our Global Team
-          </h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { stat: '500+', label: 'Team Members Worldwide' },
-              { stat: '52', label: 'Countries Represented' },
-              { stat: '95%', label: 'Team Satisfaction Rate' },
-              { stat: '20+', label: 'Years Avg Experience' },
-            ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-primary-blue mb-3">{item.stat}</div>
-                <p className="text-gray-700 font-medium">{item.label}</p>
               </div>
             ))}
           </div>

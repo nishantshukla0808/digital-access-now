@@ -78,10 +78,10 @@ export function Navbar() {
 
           {/* Right: Social Icons & Donate Button */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0 ml-auto">
-            <a href="#" className="hover:text-red-accent transition-all duration-300" aria-label="Instagram">
+            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="hover:text-red-accent transition-all duration-300" aria-label="Instagram">
               <Instagram size={24} />
             </a>
-            <a href="#" className="hover:text-red-accent transition-all duration-300" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="hover:text-red-accent transition-all duration-300" aria-label="LinkedIn">
               <Linkedin size={24} />
             </a>
             <a href="#" className="hover:text-red-accent transition-all duration-300" aria-label="YouTube">

@@ -15,19 +15,66 @@ export default function Home() {
       <HeroCarousel />
 
       {/* Partners Section */}
-      <section className="py-12 md:py-16 bg-light-gray">
+      <section className="py-8 md:py-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-sm md:text-base font-bold text-gray-600 mb-8 tracking-wider">
-            IN PARTNERSHIP WITH
+          <h2 className="text-center text-xl md:text-2xl font-bold text-gray-700 mb-16 tracking-wide uppercase">
+            IN COLLABORATION WITH
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 items-center">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white p-4 rounded-lg shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <div className="h-16 bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                  Partner {i}
-                </div>
+          
+          <div className="space-y-16">
+            {/* Corporate & Government Partners */}
+            <div>
+              <h3 className="text-center text-sm font-semibold text-gray-500 mb-8 uppercase tracking-wide">
+                Corporate & Government Partners
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-items-center max-w-6xl mx-auto">
+                <img 
+                  src="https://i.ibb.co/DHrcwKzv/image.png"
+                  alt="Apple"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+                <img 
+                  src="https://i.ibb.co/8DWNf084/image.png"
+                  alt="Microsoft"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+                <img 
+                  src="https://i.ibb.co/ynh0YHm5/image.png"
+                  alt="City of Philadelphia"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="text-gray-400 text-sm text-center">PA State Govt</div>
               </div>
-            ))}
+            </div>
+            
+            {/* NGO/Nonprofit Partners */}
+            <div>
+              <h3 className="text-center text-sm font-semibold text-gray-500 mb-8 uppercase tracking-wide">
+                NGO/Nonprofit Partners
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-items-center max-w-6xl mx-auto">
+                <img 
+                  src="https://i.ibb.co/0VrvwdF9/image.png"
+                  alt="Power Up Tech"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+                <img 
+                  src="https://i.ibb.co/399xsYCM/image.png"
+                  alt="Rotary International"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+                <img 
+                  src="https://i.ibb.co/jvg811Lv/image.png"
+                  alt="Moinee"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+                <img 
+                  src="https://i.ibb.co/hxwrXfZj/image.png"
+                  alt="Zonta"
+                  className="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -35,22 +82,18 @@ export default function Home() {
       {/* Stats Section */}
       <section className="py-16 md:py-24 bg-red-accent text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">245</div>
-              <p className="text-lg md:text-xl font-medium">Communities Reached</p>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">50</div>
+              <p className="text-lg md:text-xl font-medium">Laptops Distributed</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">89K+</div>
-              <p className="text-lg md:text-xl font-medium">Digital Access Provided</p>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">100+</div>
+              <p className="text-lg md:text-xl font-medium">Student Kits</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">52</div>
-              <p className="text-lg md:text-xl font-medium">Countries Active</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">340K</div>
-              <p className="text-lg md:text-xl font-medium">People Empowered</p>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">5</div>
+              <p className="text-lg md:text-xl font-medium">Countries Reached</p>
             </div>
           </div>
         </div>

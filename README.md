@@ -78,23 +78,19 @@ digital-access-now/
 - **Footer Black**: #000000
 - **Light Gray**: #F7F7F7
 
-## 👥 Our Team
-
-- **Ritika Malik** - Founder & CEO
-- **Awahan Sapkota** - Chief of Operation Officer
-- **Fashiba** - Chief Financial Officer
-- **Aayushi Shah** - HR Manager
-- **Nishu Shukla** - Website Director
-- **Suman** - Grant Director
-- **Ishita** - Education System Director
-- **Yash** - Technology Lead
-
-## 📈 Our Impact
+## � Our Impact
 
 - **340K+** Lives Empowered
 - **89K+** Devices Distributed
 - **52** Countries Reached
 - **245** Communities Impacted
+
+## 🤝 Partners
+
+We collaborate with leading organizations including:
+- **Corporate Partners**: Apple, Microsoft
+- **Government Partners**: City of Philadelphia, Pennsylvania State Government
+- **NGO/Nonprofit Partners**: Power Up Tech, Rotary International, Moinee, Zonta
 
 ## 🤝 Contributing
 

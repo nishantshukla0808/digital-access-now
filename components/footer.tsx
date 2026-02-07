@@ -93,10 +93,10 @@ export function Footer() {
             <a href="#" className="text-gray-400 hover:text-red-accent transition-colors">
               <Facebook size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-red-accent transition-colors">
+            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-accent transition-colors">
               <Instagram size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-red-accent transition-colors">
+            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-accent transition-colors">
               <Linkedin size={20} />
             </a>
             <a href="#" className="text-gray-400 hover:text-red-accent transition-colors">
