@@ -78,7 +78,7 @@ digital-access-now/
 - **Footer Black**: #000000
 - **Light Gray**: #F7F7F7
 
-## � Our Impact
+## 📈 Our Impact
 
 - **340K+** Lives Empowered
 - **89K+** Devices Distributed
