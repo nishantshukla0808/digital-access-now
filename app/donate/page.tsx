@@ -14,9 +14,6 @@ export default function Donate() {
   const [customAmount, setCustomAmount] = React.useState('')
   
   const donationAmounts = [100, 50, 25, 15, 10]
-  const raised = 2803
-  const goal = 10000
-  const progressPercentage = (raised / goal) * 100
 
   const faqItems = [
     {
@@ -203,20 +200,6 @@ export default function Donate() {
                   Your donation supports digital literacy, device distribution, and outreach for community-led digital access.
                 </p>
               </div>
-            </div>
-          </div>
-
-          {/* Progress Bar Section */}
-          <div className="mt-16 max-w-3xl mx-auto">
-            <div className="flex justify-between items-center mb-3">
-              <p className="text-2xl font-bold text-gray-900">US${raised.toLocaleString()} raised</p>
-              <p className="text-2xl font-bold text-gray-600">US${goal.toLocaleString()} goal</p>
-            </div>
-            <div className="w-full h-6 bg-gray-200 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-red-accent to-red-600 transition-all duration-500 rounded-full"
-                style={{ width: `${progressPercentage}%` }}
-              />
             </div>
           </div>
         </div>
