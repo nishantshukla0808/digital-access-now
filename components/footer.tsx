@@ -39,19 +39,19 @@ export function Footer() {
             <h4 className="font-bold text-lg mb-4">CONTACT</h4>
             <div className="space-y-3 text-gray-300 text-sm">
               <div className="flex gap-2">
-                <Mail size={18} className="text-red-accent flex-shrink-0 mt-0.5" />
-                <a href="mailto:info@digitalaccessnow.org" className="hover:text-red-accent transition-colors">
-                  info@digitalaccessnow.org
+                <Mail size={18} className="text-red-accent shrink-0 mt-0.5" />
+                <a href="mailto:hello@digitalaccessnow.org" className="hover:text-red-accent transition-colors">
+                  hello@digitalaccessnow.org
                 </a>
               </div>
               <div className="flex gap-2">
-                <Phone size={18} className="text-red-accent flex-shrink-0 mt-0.5" />
-                <a href="tel:+1234567890" className="hover:text-red-accent transition-colors">
-                  +1 (234) 567-890
+                <Phone size={18} className="text-red-accent shrink-0 mt-0.5" />
+                <a href="tel:+14076195503" className="hover:text-red-accent transition-colors">
+                  +1 (407) 619-5503
                 </a>
               </div>
               <div className="flex gap-2">
-                <MapPin size={18} className="text-red-accent flex-shrink-0 mt-0.5" />
+                <MapPin size={18} className="text-red-accent shrink-0 mt-0.5" />
                 <address className="not-italic">
                   123 Digital Street<br />
                   Tech City, TC 12345<br />

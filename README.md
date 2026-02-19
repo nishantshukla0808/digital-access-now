@@ -109,7 +109,7 @@ This project is licensed under the MIT License.
 
 ## 📞 Contact
 
-For inquiries, please visit our [Contact Page](https://digitalaccessnow.org/contact) or email us at info@digitalaccessnow.org
+For inquiries, please visit our [Contact Page](https://digitalaccessnow.org/contact) or email us at hello@digitalaccessnow.org
 
 ---
 
