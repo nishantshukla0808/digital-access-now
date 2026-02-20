@@ -2,7 +2,7 @@
 
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Instagram, Linkedin, Youtube } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -215,27 +215,56 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Social Section */}
-      <section className="py-16 md:py-24 bg-primary-blue text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8">
+      {/* Connect With Us Section */}
+      <section className="py-16 md:py-24 bg-linear-to-r from-primary-blue to-primary-purple text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Follow Our Journey
           </h2>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Stay connected with Digital Access Now on social media for the latest news, stories, and opportunities.
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
+            Stay connected with Digital Access Now on social media for the latest updates, 
+            stories, and opportunities to get involved.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { platform: 'Instagram', icon: '📷', posts: '2.4K' },
-              { platform: 'LinkedIn', icon: '💼', posts: '1.8K' },
-              { platform: 'YouTube', icon: '▶️', posts: '450+' },
-            ].map((social, i) => (
-              <div key={i} className="bg-white/10 p-8 rounded-lg backdrop-blur-sm">
-                <div className="text-4xl mb-3">{social.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{social.platform}</h3>
-                <p className="text-gray-200">{social.posts} followers</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <a 
+              href="https://www.instagram.com/digitalaccessnow/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 border border-white/20"
+            >
+              <div className="mb-4 flex justify-center">
+                <Instagram size={56} strokeWidth={1.5} />
               </div>
-            ))}
+              <h3 className="text-2xl font-bold mb-2">Instagram</h3>
+              <p className="text-white/80 mb-4">Follow our daily updates</p>
+              <span className="text-white font-bold">@digitalaccessnow</span>
+            </a>
+            
+            <a 
+              href="https://www.linkedin.com/company/digital-access-now/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 border border-white/20"
+            >
+              <div className="mb-4 flex justify-center">
+                <Linkedin size={56} strokeWidth={1.5} />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">LinkedIn</h3>
+              <p className="text-white/80 mb-4">Connect professionally</p>
+              <span className="text-white font-bold">Digital Access Now</span>
+            </a>
+            
+            <a 
+              href="#" 
+              className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 border border-white/20"
+            >
+              <div className="mb-4 flex justify-center">
+                <Youtube size={56} strokeWidth={1.5} />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">YouTube</h3>
+              <p className="text-white/80 mb-4">Watch our impact stories</p>
+              <span className="text-white font-bold">Coming Soon</span>
+            </a>
           </div>
         </div>
       </section>
@@ -260,6 +289,16 @@ function HeroCarousel() {
       image: 'https://i.ibb.co/NgjX72yS/Screenshot-2026-01-22-at-7-16-54-PM.png',
       title: 'Digital Education',
       subtitle: 'Empowering students with essential tech skills'
+    },
+    {
+      image: 'https://i.ibb.co/kVPWnj1Z/498172294-122095796942883922-3614581082728561584-n-Picsart-Ai-Image-Enhancer.jpg',
+      title: 'Building Digital Literacy',
+      subtitle: 'Creating engaging learning environments for all'
+    },
+    {
+      image: 'https://i.ibb.co/27763Nj9/0b847d86-98de-4dce-a1f1-446394011ce7-Picsart-Ai-Image-Enhancer.jpg',
+      title: 'Global Impact & Recognition',
+      subtitle: 'Representing youth voices on the world stage'
     }
   ]
 
@@ -287,7 +326,7 @@ function HeroCarousel() {
 
   return (
     <section className="pt-20 md:pt-24 relative">
-      <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden relative">
+      <div className="w-full h-100 md:h-125 lg:h-150 overflow-hidden relative">
         {/* Slides */}
         {slides.map((slide, index) => (
           <div
@@ -302,7 +341,7 @@ function HeroCarousel() {
               className="w-full h-full object-cover object-center"
             />
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/60 to-black/30" />
             
             {/* Content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">

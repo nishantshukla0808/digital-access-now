@@ -70,13 +70,34 @@ export default function OurPeople() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section with Gradient */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-r from-primary-blue via-primary-purple to-red-accent text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-balance">
-            Our People
+      {/* Hero Section with Gradient Background */}
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
+          <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
+            LEADERS
+          </div>
+          <div className="absolute top-32 right-10 text-6xl md:text-8xl font-black text-white transform rotate-12">
+            INNOVATORS
+          </div>
+          <div className="absolute bottom-20 left-20 text-6xl md:text-8xl font-black text-white transform -rotate-6">
+            CHANGEMAKERS
+          </div>
+          <div className="absolute bottom-10 right-32 text-5xl md:text-7xl font-black text-white transform rotate-6">
+            TEAM
+          </div>
+        </div>
+
+        {/* Decorative Circles */}
+        <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+
+        {/* Main Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+            OUR PEOPLE
           </h1>
-          <p className="text-lg md:text-xl text-gray-100 max-w-2xl text-pretty">
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Meet the dedicated team and leaders driving digital equity worldwide
           </p>
         </div>
@@ -95,7 +116,7 @@ export default function OurPeople() {
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
                     <img 
                       src={member.image}
                       alt={member.name}
@@ -116,7 +137,7 @@ export default function OurPeople() {
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
                     <img 
                       src={member.image}
                       alt={member.name}
@@ -137,7 +158,7 @@ export default function OurPeople() {
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
                     <img 
                       src={member.image}
                       alt={member.name}
@@ -155,7 +176,7 @@ export default function OurPeople() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-primary-blue to-primary-purple text-white">
+      <section className="py-16 md:py-24 bg-linear-to-r from-primary-blue to-primary-purple text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Join Our Team</h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">

@@ -6,51 +6,34 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section with Background Text */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-red-accent text-white overflow-hidden">
-        {/* Background Text Pattern */}
-        <div className="absolute inset-0 opacity-15 select-none pointer-events-none">
-          <div className="absolute top-10 left-0 text-5xl md:text-7xl font-black text-white transform -rotate-12">
+      {/* Hero Section with Gradient Background */}
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
+          <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
             EQUITY
           </div>
-          <div className="absolute top-32 right-0 text-5xl md:text-7xl font-black text-white transform rotate-12">
+          <div className="absolute top-32 right-10 text-6xl md:text-8xl font-black text-white transform rotate-12">
             ACCESS
           </div>
-          <div className="absolute bottom-32 left-10 text-5xl md:text-7xl font-black text-white transform -rotate-6">
+          <div className="absolute bottom-20 left-20 text-6xl md:text-8xl font-black text-white transform -rotate-6">
             INCLUSION
           </div>
-          <div className="absolute bottom-10 right-20 text-5xl md:text-7xl font-black text-white transform rotate-6">
+          <div className="absolute bottom-10 right-32 text-5xl md:text-7xl font-black text-white transform rotate-6">
             EMPOWERMENT
           </div>
-          <div className="absolute top-1/2 left-1/4 text-4xl md:text-6xl font-black text-white transform -rotate-3">
-            DIGITAL RIGHTS
-          </div>
         </div>
 
-        {/* Decorative Icons */}
-        <div className="absolute top-16 left-12 opacity-25 hidden lg:block">
-          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="3"/>
-            <path d="M50 15 L58 42 L85 50 L58 58 L50 85 L42 58 L15 50 L42 42 Z" fill="currentColor"/>
-          </svg>
-        </div>
-        <div className="absolute bottom-16 right-12 opacity-25 hidden lg:block">
-          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="3"/>
-            <circle cx="50" cy="20" r="6" fill="currentColor"/>
-            <circle cx="50" cy="50" r="6" fill="currentColor"/>
-            <circle cx="50" cy="80" r="6" fill="currentColor"/>
-            <circle cx="20" cy="50" r="6" fill="currentColor"/>
-            <circle cx="80" cy="50" r="6" fill="currentColor"/>
-          </svg>
-        </div>
+        {/* Decorative Circles */}
+        <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
 
         {/* Main Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
-            WHY DIGITAL<br/>ACCESS NOW?
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+            WHY DIGITAL ACCESS NOW?
           </h1>
-          <p className="text-xl md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Breaking barriers to digital access so every community can thrive in our connected world
           </p>
         </div>

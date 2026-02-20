@@ -115,45 +115,36 @@ export default function About() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section with Gradient & Image Placeholders */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-linear-to-r from-primary-blue via-primary-purple to-red-accent text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-balance">
-                ABOUT DIGITAL ACCESS NOW
-              </h1>
-              <p className="text-lg md:text-xl text-gray-100 max-w-lg text-pretty">
-                Our story, mission, and the global movement we're building together
-              </p>
-            </div>
-            <div className="hidden md:grid grid-cols-2 gap-4 h-64">
-              <div className="bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm border border-white/30">
-                <div className="text-center text-white">
-                  <div className="text-5xl mb-2">🌍</div>
-                  <p className="text-sm">Global Reach</p>
-                </div>
-              </div>
-              <div className="bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm border border-white/30">
-                <div className="text-center text-white">
-                  <div className="text-5xl mb-2">🤝</div>
-                  <p className="text-sm">Partnerships</p>
-                </div>
-              </div>
-              <div className="bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm border border-white/30">
-                <div className="text-center text-white">
-                  <div className="text-5xl mb-2">📚</div>
-                  <p className="text-sm">Education</p>
-                </div>
-              </div>
-              <div className="bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm border border-white/30">
-                <div className="text-center text-white">
-                  <div className="text-5xl mb-2">💡</div>
-                  <p className="text-sm">Innovation</p>
-                </div>
-              </div>
-            </div>
+      {/* Hero Section with Gradient Background */}
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
+          <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
+            MISSION
           </div>
+          <div className="absolute top-32 right-10 text-6xl md:text-8xl font-black text-white transform rotate-12">
+            VISION
+          </div>
+          <div className="absolute bottom-20 left-20 text-6xl md:text-8xl font-black text-white transform -rotate-6">
+            IMPACT
+          </div>
+          <div className="absolute bottom-10 right-32 text-5xl md:text-7xl font-black text-white transform rotate-6">
+            TEAM
+          </div>
+        </div>
+
+        {/* Decorative Circles */}
+        <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+
+        {/* Main Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+            ABOUT US
+          </h1>
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Our story, mission, and the global movement we're building to bridge the digital divide
+          </p>
         </div>
       </section>
 
@@ -175,12 +166,10 @@ export default function About() {
                 Today, we operate in 52 countries across 6 continents, directly reaching over 340,000 people with digital access and education initiatives.
               </p>
             </div>
-            <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center overflow-hidden">
-              <Image 
-                src="/images/whatsapp-20image-202026-02-01-20at-2022.jpeg"
-                alt="Our Story"
-                width={400}
-                height={384}
+            <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center overflow-hidden shadow-xl">
+              <img 
+                src="https://i.ibb.co/MytKDQR3/Screenshot-2026-02-16-at-8-04-14-PM-Picsart-Ai-Image-Enhancer.png"
+                alt="Digital Access Now at United Nations"
                 className="w-full h-full object-cover"
               />
             </div>
