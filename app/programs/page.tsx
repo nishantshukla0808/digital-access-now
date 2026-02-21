@@ -68,14 +68,14 @@ export default function Programs() {
               </p>
 
               <div className="flex gap-4 pt-6">
-                <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
+                <a href="https://wkf.ms/3OkUudk" target="_blank" rel="noopener noreferrer">
                   <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                    LEARN MORE
+                    APPLY NOW
                   </button>
                 </a>
-                <a href="https://salt-desk-080.notion.site/758e6e871cfd4b129d2add9beec3e6e3?pvs=105" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
                   <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                    START A CHAPTER
+                    LEARN MORE
                   </button>
                 </a>
               </div>
@@ -87,7 +87,7 @@ export default function Programs() {
                 <img 
                   src="https://i.ibb.co/gZpd6L93/497859265-122095815776883922-6063565023698107666-n-Picsart-Ai-Image-Enhancer.jpg"
                   alt="Chapter Team"
-                  className="w-full h-[500px] object-cover"
+                  className="w-full h-125 object-cover"
                 />
               </div>
             </div>
@@ -95,104 +95,128 @@ export default function Programs() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 md:py-24 bg-red-accent text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">50</div>
-              <p className="text-lg md:text-xl font-medium">Laptops Distributed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">100+</div>
-              <p className="text-lg md:text-xl font-medium">Student Kits</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">5</div>
-              <p className="text-lg md:text-xl font-medium">Countries Reached</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
+      {/* Volunteer Program */}
       <section className="py-20 md:py-28 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-            Ready to Make a Difference?
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+            VOLUNTEER PROGRAM
           </h2>
-          <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-            Join our programs and help bridge the digital divide in communities around the world.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/volunteer">
-              <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                BECOME A VOLUNTEER
-              </button>
-            </Link>
-            <Link href="/contact-us">
-              <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                CONTACT US
-              </button>
-            </Link>
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Image */}
+            <div className="relative order-2 lg:order-1">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-200 h-125">
+                {/* Image placeholder */}
+              </div>
+            </div>
+
+            {/* Right: Description */}
+            <div className="space-y-6 order-1 lg:order-2">
+              <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+                Join our global network of volunteers working to bridge the digital divide. Whether you're a tech expert, educator, or community advocate, there's a role for you.
+              </p>
+              
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Our volunteers contribute their skills in web development, digital literacy instruction, fundraising, grant writing, social media management, and content creation.
+              </p>
+              
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Flexible commitment options allow you to volunteer remotely from anywhere in the world, making it easy to fit meaningful work into your schedule.
+              </p>
+              
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Gain valuable experience, build your portfolio, and connect with a passionate community of changemakers dedicated to digital equity.
+              </p>
+
+              <div className="flex gap-4 pt-6">
+                <a href="https://wkf.ms/4aOVIFd" target="_blank" rel="noopener noreferrer">
+                  <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                    APPLY NOW
+                  </button>
+                </a>
+                <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
+                  <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                    LEARN MORE
+                  </button>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Digital Literacy Training */}
+      {/* Ambassador Program */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
-            DIGITAL LITERACY TRAINING
+            AMBASSADOR PROGRAM
           </h2>
           
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Description */}
             <div className="space-y-6">
               <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
-                Our Digital Literacy Training Programs equip individuals with essential skills to navigate the digital world, from basic computer use to advanced technical competencies.
+                A Digital Access Now Ambassador is an individual leader who promotes digital equity by raising awareness, organizing small-scale impact initiatives, and connecting underserved peers to technology resources.
               </p>
               
-              <p className="text-lg text-gray-600 leading-relaxed">
-                We offer curriculum designed for all ages and skill levels, delivered through in-person workshops, online courses, and hybrid learning models.
-              </p>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-gray-900">Ambassadors Create Impact By:</h3>
+                <ul className="space-y-3 text-lg text-gray-600">
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-red-accent">•</span>
+                    <span><strong>Raising Awareness:</strong> Sharing information about digital equity through school announcements, social media, and community conversations</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-red-accent">•</span>
+                    <span><strong>Supporting Device Drives:</strong> Helping collect used laptops and tablets for refurbishment and redistribution</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-red-accent">•</span>
+                    <span><strong>Hosting Introductory Workshops:</strong> Leading or assisting with sessions on basic computer skills, internet safety, resume building, or digital tools</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-red-accent">•</span>
+                    <span><strong>Connecting Students to Resources:</strong> Guiding peers toward programs, scholarships, and opportunities in the digital economy</span>
+                  </li>
+                </ul>
+              </div>
               
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Training modules cover: basic computer operations, internet safety, online communication, digital citizenship, productivity software, coding fundamentals, and job-ready tech skills.
-              </p>
-              
-              <p className="text-lg text-gray-600 leading-relaxed">
-                All participants receive certificates upon completion and ongoing access to learning resources and mentorship opportunities.
-              </p>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-gray-900">Each Ambassador Must:</h3>
+                <ul className="space-y-2 text-lg text-gray-600">
+                  <li className="flex gap-3">
+                    <span className="text-red-accent">✓</span>
+                    <span>Demonstrate leadership and a commitment to digital equity</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-red-accent">✓</span>
+                    <span>Complete at least one impact activity every three months</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-red-accent">✓</span>
+                    <span>Follow Digital Access Now's standards for responsible communication and community engagement</span>
+                  </li>
+                </ul>
+              </div>
 
               <div className="flex gap-4 pt-6">
-                <Link href="/programs/training">
+                <a href="https://wkf.ms/4b2zfpl" target="_blank" rel="noopener noreferrer">
                   <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                    APPLY NOW
+                  </button>
+                </a>
+                <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
+                  <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
                     LEARN MORE
                   </button>
-                </Link>
-                <Link href="/programs/training/enroll">
-                  <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                    ENROLL NOW
-                  </button>
-                </Link>
+                </a>
               </div>
             </div>
 
             {/* Right: Image */}
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <div className="w-full h-[500px] bg-gradient-to-br from-primary-purple to-red-accent flex items-center justify-center text-white">
-                  <div className="text-center">
-                    <div className="text-8xl mb-4">📚</div>
-                    <p className="text-2xl font-bold">340,000+ Lives</p>
-                    <p className="text-xl">Empowered Through Training</p>
-                  </div>
-                </div>
-                {/* Floating Labels */}
-                <div className="absolute top-8 right-8 bg-primary-blue text-white px-6 py-3 rounded-full font-bold text-lg shadow-xl transform rotate-3">
-                  TRAINING
-                </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-200 h-125">
+                {/* Image placeholder */}
               </div>
             </div>
           </div>

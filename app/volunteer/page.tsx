@@ -6,14 +6,35 @@ export default function Volunteer() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-r from-primary-purple to-primary-blue text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+      {/* Hero Section with Gradient Background */}
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
+          <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
+            VOLUNTEER
+          </div>
+          <div className="absolute top-32 right-10 text-6xl md:text-8xl font-black text-white transform rotate-12">
+            IMPACT
+          </div>
+          <div className="absolute bottom-20 left-20 text-6xl md:text-8xl font-black text-white transform -rotate-6">
+            SERVE
+          </div>
+          <div className="absolute bottom-10 right-32 text-5xl md:text-7xl font-black text-white transform rotate-6">
+            GIVE BACK
+          </div>
+        </div>
+
+        {/* Decorative Circles */}
+        <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+
+        {/* Main Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
             VOLUNTEER WITH US
           </h1>
-          <p className="text-lg md:text-xl text-gray-100 max-w-2xl mx-auto">
-            Join thousands of volunteers making a real difference in digital equity
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Join thousands of volunteers making a real difference in bridging the digital divide worldwide
           </p>
         </div>
       </section>
@@ -21,127 +42,60 @@ export default function Volunteer() {
       {/* Volunteer Opportunities */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
             VOLUNTEER OPPORTUNITIES
           </h2>
+          <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Choose a role that matches your skills and passion. All positions are flexible and remote-friendly.
+          </p>
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                title: 'Digital Skills Trainer',
-                commitment: '5-10 hours/week',
-                description: 'Teach digital literacy classes to communities in your area or online. No prior teaching experience necessary.',
-                requirements: ['Basic computer skills', 'Passion for teaching', 'Flexible schedule'],
+                title: 'Web Developer',
+                description: 'Help build and maintain our digital platforms, develop new features, and improve user experience. Work with modern web technologies to create impactful solutions.',
+                requirements: ['HTML, CSS, JavaScript knowledge', 'Experience with React/Next.js preferred', 'Problem-solving mindset'],
               },
               {
-                title: 'Community Coordinator',
-                commitment: '8-15 hours/week',
-                description: 'Organize local events, manage volunteer teams, and coordinate program logistics in your community.',
-                requirements: ['Strong organizational skills', 'Community connections', 'Leadership experience'],
+                title: 'Digital Skills Instructor',
+                description: 'Teach digital literacy classes to communities in your area or online. Share your knowledge and empower others with essential technology skills.',
+                requirements: ['Basic computer proficiency', 'Passion for teaching', 'Patience and communication skills'],
               },
               {
-                title: 'Social Media Ambassador',
-                commitment: '3-8 hours/week',
-                description: 'Help spread awareness of our mission through social media content creation and community engagement.',
-                requirements: ['Social media expertise', 'Creative skills', 'Strong communication'],
+                title: 'Fundraising & Grant Writing',
+                description: 'Research funding opportunities, write compelling grant proposals, and help secure resources to expand our programs and reach more communities.',
+                requirements: ['Strong writing skills', 'Research experience', 'Understanding of nonprofit sector'],
               },
               {
-                title: 'Tech Support Volunteer',
-                commitment: '4-10 hours/week',
-                description: 'Provide technical support to program participants and help troubleshoot device and connectivity issues.',
-                requirements: ['Technical knowledge', 'Problem-solving skills', 'Patience and empathy'],
+                title: 'Social Media & Content',
+                description: 'Create engaging content, manage social media channels, and help spread awareness of our mission. Tell our story and connect with our global community.',
+                requirements: ['Social media expertise', 'Content creation skills', 'Creative and strategic thinking'],
               },
             ].map((opp, i) => (
-              <div key={i} className="bg-light-gray p-8 rounded-lg shadow-md hover-lift">
-                <h3 className="text-2xl font-bold mb-2">{opp.title}</h3>
-                <p className="text-red-accent font-semibold mb-4">{opp.commitment}</p>
-                <p className="text-gray-700 mb-6">{opp.description}</p>
-                <p className="text-sm font-semibold text-gray-600 mb-3">Requirements:</p>
-                <ul className="text-sm text-gray-700 space-y-1 mb-6">
-                  {opp.requirements.map((req, j) => (
-                    <li key={j}>✓ {req}</li>
-                  ))}
-                </ul>
-                <button className="w-full bg-red-accent hover:bg-red-600 text-white px-6 py-2 rounded-full font-bold transition-colors">
+              <div key={i} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-red-accent">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">{opp.title}</h3>
+                <p className="text-gray-700 mb-6 leading-relaxed">{opp.description}</p>
+                <div className="mb-6">
+                  <p className="text-sm font-semibold text-gray-600 mb-3">What You'll Need:</p>
+                  <ul className="text-sm text-gray-700 space-y-2">
+                    {opp.requirements.map((req, j) => (
+                      <li key={j} className="flex items-start">
+                        <span className="text-red-accent mr-2">✓</span>
+                        <span>{req}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <a 
+                  href="https://wkf.ms/4aOVIFd" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full bg-red-accent hover:bg-red-600 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg text-center"
+                >
                   Apply Now
-                </button>
+                </a>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Volunteer Stats */}
-      <section className="py-16 md:py-24 bg-primary-blue text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">15K+</div>
-              <p className="text-lg">Active Volunteers</p>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">2.1M</div>
-              <p className="text-lg">Volunteer Hours</p>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">52</div>
-              <p className="text-lg">Countries</p>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">340K</div>
-              <p className="text-lg">Lives Impacted</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Volunteer Signup Form */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            READY TO MAKE A DIFFERENCE?
-          </h2>
-          <form className="bg-light-gray p-8 rounded-lg shadow-md space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <input
-                type="text"
-                placeholder="First Name"
-                className="px-4 py-3 border border-border-gray rounded-lg focus:outline-none focus:border-primary-blue"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="px-4 py-3 border border-border-gray rounded-lg focus:outline-none focus:border-primary-blue"
-              />
-            </div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full px-4 py-3 border border-border-gray rounded-lg focus:outline-none focus:border-primary-blue"
-            />
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              className="w-full px-4 py-3 border border-border-gray rounded-lg focus:outline-none focus:border-primary-blue"
-            />
-            <select className="w-full px-4 py-3 border border-border-gray rounded-lg focus:outline-none focus:border-primary-blue">
-              <option>Select Volunteer Role</option>
-              <option>Digital Skills Trainer</option>
-              <option>Community Coordinator</option>
-              <option>Social Media Ambassador</option>
-              <option>Tech Support Volunteer</option>
-            </select>
-            <textarea
-              placeholder="Tell us about yourself and your volunteer interests"
-              rows={5}
-              className="w-full px-4 py-3 border border-border-gray rounded-lg focus:outline-none focus:border-primary-blue"
-            />
-            <button
-              type="submit"
-              className="w-full bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-colors"
-            >
-              Submit Application
-            </button>
-          </form>
         </div>
       </section>
 
