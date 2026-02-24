@@ -42,8 +42,8 @@ export default function Page() {
                 description: 'Influence policy and systemic change by elevating voices from communities most affected by the digital divide.',
               },
             ].map((stage, i) => (
-              <div key={i} className="border-l-4 border-red-accent pl-8">
-                <h3 className="text-3xl font-bold text-red-accent mb-2">{stage.stage}</h3>
+              <div key={i} className="border-l-4 border-primary-blue pl-8">
+                <h3 className="text-3xl font-bold text-primary-blue mb-2">{stage.stage}</h3>
                 <p className="text-lg text-gray-700 leading-relaxed">{stage.description}</p>
               </div>
             ))}
@@ -63,7 +63,7 @@ export default function Page() {
               </div>
               <div className="text-2xl text-primary-blue hidden md:block">→</div>
               <div className="text-center flex-1">
-                <div className="text-2xl font-bold text-red-accent">340K+</div>
+                <div className="text-2xl font-bold text-primary-blue">340K+</div>
                 <p className="text-sm text-gray-700">Lives Empowered</p>
               </div>
             </div>

@@ -116,7 +116,7 @@ export default function OurPeople() {
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-primary-blue transition-all duration-300 group-hover:shadow-3xl">
                     <img 
                       src={member.image}
                       alt={member.name}
@@ -125,7 +125,7 @@ export default function OurPeople() {
                   </div>
                 </div>
                 <h3 className="text-2xl font-black mb-2 uppercase tracking-wide" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>{member.name}</h3>
-                <p className="text-red-accent font-bold text-lg mb-3">{member.role}</p>
+                <p className="text-primary-blue font-bold text-lg mb-3">{member.role}</p>
                 <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
               </div>
             ))}
@@ -137,7 +137,7 @@ export default function OurPeople() {
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-primary-blue transition-all duration-300 group-hover:shadow-3xl">
                     <img 
                       src={member.image}
                       alt={member.name}
@@ -146,7 +146,7 @@ export default function OurPeople() {
                   </div>
                 </div>
                 <h3 className="text-2xl font-black mb-2 uppercase tracking-wide" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>{member.name}</h3>
-                <p className="text-red-accent font-bold text-lg mb-3">{member.role}</p>
+                <p className="text-primary-blue font-bold text-lg mb-3">{member.role}</p>
                 <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
               </div>
             ))}
@@ -158,7 +158,7 @@ export default function OurPeople() {
               <div key={i} className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
                 {/* Rounded Image Container */}
                 <div className="mb-6 flex justify-center">
-                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                  <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-primary-blue transition-all duration-300 group-hover:shadow-3xl">
                     <img 
                       src={member.image}
                       alt={member.name}
@@ -167,7 +167,7 @@ export default function OurPeople() {
                   </div>
                 </div>
                 <h3 className="text-2xl font-black mb-2 uppercase tracking-wide" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>{member.name}</h3>
-                <p className="text-red-accent font-bold text-lg mb-3">{member.role}</p>
+                <p className="text-primary-blue font-bold text-lg mb-3">{member.role}</p>
                 <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
               </div>
             ))}
@@ -182,7 +182,7 @@ export default function OurPeople() {
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
             We're always looking for passionate individuals to join our mission of bridging the digital divide.
           </p>
-          <a href="/about/our-careers" className="inline-block bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
+          <a href="/about/our-careers" className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
             Explore Careers
           </a>
         </div>

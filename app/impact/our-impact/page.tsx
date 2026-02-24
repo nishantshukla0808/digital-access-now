@@ -29,7 +29,7 @@ export default function Page() {
               { number: '52', label: 'Countries' },
             ].map((stat, i) => (
               <div key={i} className="bg-light-gray p-8 rounded-lg text-center">
-                <div className="text-5xl font-bold text-red-accent mb-2">{stat.number}</div>
+                <div className="text-5xl font-bold text-primary-blue mb-2">{stat.number}</div>
                 <p className="text-gray-700 font-semibold">{stat.label}</p>
               </div>
             ))}

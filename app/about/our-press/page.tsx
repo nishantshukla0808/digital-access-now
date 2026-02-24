@@ -132,7 +132,7 @@ export default function Press() {
             <p className="text-gray-700 mb-6 text-lg">
               Download our comprehensive media kit for logos, brand guidelines, leadership bios, high-resolution images, and fact sheets.
             </p>
-            <button className="bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
+            <button className="bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
               Download Media Kit (PDF)
             </button>
           </div>

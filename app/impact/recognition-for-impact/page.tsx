@@ -49,11 +49,11 @@ export default function Page() {
                 description: 'Recognition for collaborative approach and impact multiplication.',
               },
             ].map((award, i) => (
-              <div key={i} className="bg-light-gray p-8 rounded-lg border-l-4 border-red-accent">
+              <div key={i} className="bg-light-gray p-8 rounded-lg border-l-4 border-primary-blue">
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="text-2xl font-bold mb-1">{award.award}</h3>
-                    <p className="text-red-accent font-semibold">{award.organization}</p>
+                    <p className="text-primary-blue font-semibold">{award.organization}</p>
                   </div>
                   <span className="text-primary-blue font-bold text-lg">{award.year}</span>
                 </div>

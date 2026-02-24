@@ -65,7 +65,7 @@ export default function Page() {
             <p className="mb-6">
               We're committed to transparency and accountability. View our latest M&E report for detailed findings.
             </p>
-            <button className="bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-colors">
+            <button className="bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-colors">
               Download M&E Report
             </button>
           </div>

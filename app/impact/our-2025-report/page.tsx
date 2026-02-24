@@ -39,7 +39,7 @@ export default function Page() {
                 { stat: '15K+', label: 'Active Volunteers' },
               ].map((highlight, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <div className="text-4xl font-bold text-red-accent">{highlight.stat}</div>
+                  <div className="text-4xl font-bold text-primary-blue">{highlight.stat}</div>
                   <div className="text-gray-700 font-semibold">{highlight.label}</div>
                 </div>
               ))}
@@ -66,7 +66,7 @@ export default function Page() {
                 content: 'Strategic alliances with tech companies, governments, and NGOs accelerated our ability to scale solutions.',
               },
             ].map((section, i) => (
-              <div key={i} className="border-l-4 border-red-accent pl-6">
+              <div key={i} className="border-l-4 border-primary-blue pl-6">
                 <h4 className="text-xl font-bold mb-2">{section.title}</h4>
                 <p className="text-gray-700">{section.content}</p>
               </div>
@@ -77,7 +77,7 @@ export default function Page() {
           <div className="bg-primary-blue text-white p-8 rounded-lg text-center">
             <h3 className="text-2xl font-bold mb-4">DOWNLOAD FULL REPORT</h3>
             <p className="mb-6">Access the complete 2025 Impact Report with detailed metrics, case studies, and insights.</p>
-            <button className="bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-colors">
+            <button className="bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-colors">
               Download PDF Report
             </button>
           </div>
