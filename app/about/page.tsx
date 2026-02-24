@@ -116,7 +116,7 @@ export default function About() {
       <Navbar />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
@@ -217,7 +217,7 @@ export default function About() {
             {currentIndex > 0 && (
               <button
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-white hover:bg-red-accent text-gray-800 hover:text-white p-3 rounded-full shadow-lg transition-all duration-300 group"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-white hover:bg-primary-blue text-gray-800 hover:text-white p-3 rounded-full shadow-lg transition-all duration-300 group"
                 aria-label="Previous team members"
                 suppressHydrationWarning
               >
@@ -228,7 +228,7 @@ export default function About() {
             {currentIndex < maxIndex && (
               <button
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-white hover:bg-red-accent text-gray-800 hover:text-white p-3 rounded-full shadow-lg transition-all duration-300 group"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-white hover:bg-primary-blue text-gray-800 hover:text-white p-3 rounded-full shadow-lg transition-all duration-300 group"
                 aria-label="Next team members"
                 suppressHydrationWarning
               >
@@ -252,7 +252,7 @@ export default function About() {
                     <div className="text-center group cursor-pointer transition-all duration-300 hover:scale-105 py-4">
                       {/* Rounded Image Container - Exact same styling as our-people page */}
                       <div className="mb-6 flex justify-center">
-                        <div className="w-48 h-48 md:w-56 md:h-56 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-red-accent transition-all duration-300 group-hover:shadow-3xl">
+                        <div className="w-48 h-48 md:w-56 md:h-56 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-primary-blue transition-all duration-300 group-hover:shadow-3xl">
                           <img 
                             src={member.image}
                             alt={member.name}
@@ -263,7 +263,7 @@ export default function About() {
                       <h3 className="text-xl md:text-2xl font-black mb-2 uppercase tracking-wide" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
                         {member.name}
                       </h3>
-                      <p className="text-red-accent font-bold text-base md:text-lg mb-3">{member.role}</p>
+                      <p className="text-primary-blue font-bold text-base md:text-lg mb-3">{member.role}</p>
                       <p className="text-gray-600 text-sm leading-relaxed px-2">{member.bio}</p>
                     </div>
                   </div>
@@ -279,7 +279,7 @@ export default function About() {
                   onClick={() => setCurrentIndex(i)}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                     currentIndex === i 
-                      ? 'bg-red-accent w-8' 
+                      ? 'bg-primary-blue w-8' 
                       : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                   aria-label={`Go to slide ${i + 1}`}
@@ -290,7 +290,7 @@ export default function About() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/about/our-people" className="inline-block bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Link href="/about/our-people" className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl">
               Meet Full Team
             </Link>
           </div>

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'leaflet/dist/leaflet.css';
 
 @custom-variant dark (&:is(.dark *));
  
@@ -7,7 +8,7 @@
   /* User-defined colors */
   --primary-blue: #00BCD4;
   --primary-purple: #6633CC;
-  --red-accent: #E63946;
+  --red-accent: #E63946; /* Deprecated - use primary-blue instead */
   --footer-black: #000000;
   --white: #FFFFFF;
   --light-gray: #F5F5F5;
@@ -160,4 +161,70 @@
   h3 {
     @apply text-2xl md:text-3xl;
   }
+}
+
+/* Custom Map Styles */
+.leaflet-container {
+  background: #f5f5f5;
+  font-family: inherit;
+  z-index: 1 !important;
+  position: relative !important;
+}
+
+/* Ensure map panes don't overlap navbar */
+.leaflet-pane {
+  z-index: auto !important;
+}
+
+.leaflet-map-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-marker-pane {
+  z-index: 2 !important;
+}
+
+.leaflet-tooltip-pane {
+  z-index: 3 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  margin: 12px;
+  font-size: 14px;
+}
+
+.custom-location-marker {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.custom-location-marker:hover {
+  transform: scale(1.15);
+}
+
+/* Permanent tooltip styling for country labels */
+.country-label-tooltip {
+  background: white !important;
+  border: 2px solid #00BCD4 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  padding: 4px 8px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 3 !important;
+}
+
+.country-label-tooltip::before {
+  border-top-color: #00BCD4 !important;
+}
+
+.leaflet-tooltip-top::before {
+  border-top-color: #00BCD4 !important;
 }

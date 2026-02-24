@@ -37,7 +37,7 @@ export function Navbar() {
               <button suppressHydrationWarning className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 flex items-center gap-1 text-base font-medium whitespace-nowrap">
                 ABOUT <ChevronDown size={18} />
               </button>
-              <div className="absolute left-0 mt-0 w-48 bg-footer-black border-t-2 border-red-accent opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 mt-0 w-48 bg-footer-black border-t-2 border-primary-blue opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <Link href="/about" className="block px-4 py-3 hover:bg-gray-800">About Us</Link>
                 <Link href="/about/why-digital-access-now" className="block px-4 py-3 hover:bg-gray-800">Why Digital Access Now?</Link>
                 <Link href="/about/our-people" className="block px-4 py-3 hover:bg-gray-800">Our People</Link>
@@ -59,7 +59,7 @@ export function Navbar() {
               <button suppressHydrationWarning className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 flex items-center gap-1 text-base font-medium whitespace-nowrap">
                 IMPACT <ChevronDown size={18} />
               </button>
-              <div className="absolute left-0 mt-0 w-48 bg-footer-black border-t-2 border-red-accent opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 mt-0 w-48 bg-footer-black border-t-2 border-primary-blue opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <Link href="/impact/our-2025-report" className="block px-4 py-3 hover:bg-gray-800">Our 2025 Report</Link>
                 <Link href="/impact/our-impact" className="block px-4 py-3 hover:bg-gray-800">Our Impact</Link>
                 <Link href="/impact/our-theory-of-change" className="block px-4 py-3 hover:bg-gray-800">Our Theory of Change</Link>
@@ -68,8 +68,8 @@ export function Navbar() {
               </div>
             </div>
 
-            <Link href="/services" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
-              SERVICES
+            <Link href="/resources" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
+              RESOURCES
             </Link>
             <Link href="/contact-us" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
               CONTACT US
@@ -78,16 +78,16 @@ export function Navbar() {
 
           {/* Right: Social Icons & Donate Button */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0 ml-auto">
-            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="hover:text-red-accent transition-all duration-300" aria-label="Instagram">
+            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-blue transition-all duration-300" aria-label="Instagram">
               <Instagram size={24} />
             </a>
-            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="hover:text-red-accent transition-all duration-300" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-blue transition-all duration-300" aria-label="LinkedIn">
               <Linkedin size={24} />
             </a>
-            <a href="#" className="hover:text-red-accent transition-all duration-300" aria-label="YouTube">
+            <a href="#" className="hover:text-primary-blue transition-all duration-300" aria-label="YouTube">
               <Youtube size={24} />
             </a>
-            <Link href="/donate" className="bg-red-accent hover:bg-red-600 text-white px-6 xl:px-8 py-2.5 rounded-full font-bold transition-all duration-300 ml-2 text-base whitespace-nowrap">
+            <Link href="/donate" className="bg-primary-blue hover:bg-cyan-600 text-white px-6 xl:px-8 py-2.5 rounded-full font-bold transition-all duration-300 ml-2 text-base whitespace-nowrap">
               DONATE
             </Link>
           </div>
@@ -149,26 +149,26 @@ export function Navbar() {
               </div>
             )}
 
-            <Link href="/services" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
-              SERVICES
+            <Link href="/resources" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
+              RESOURCES
             </Link>
             <Link href="/contact-us" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
               CONTACT US
             </Link>
 
             <div className="pt-4 border-t border-gray-800 flex gap-4 mb-4">
-              <a href="#" className="hover:text-red-accent transition-all duration-300">
+              <a href="#" className="hover:text-primary-blue transition-all duration-300">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="hover:text-red-accent transition-all duration-300">
+              <a href="#" className="hover:text-primary-blue transition-all duration-300">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="hover:text-red-accent transition-all duration-300">
+              <a href="#" className="hover:text-primary-blue transition-all duration-300">
                 <Youtube size={20} />
               </a>
             </div>
 
-            <Link href="/donate" className="w-full bg-red-accent hover:bg-red-600 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 block text-center">
+            <Link href="/donate" className="w-full bg-primary-blue hover:bg-cyan-600 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 block text-center">
               DONATE
             </Link>
           </div>

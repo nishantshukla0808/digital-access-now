@@ -8,7 +8,7 @@ export default function ContactUs() {
       <Navbar />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
@@ -46,17 +46,17 @@ export default function ContactUs() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             {/* Email Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-red-accent">
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-primary-blue">
               <div className="flex items-center gap-4 mb-4">
-                <div className="bg-red-accent/10 p-4 rounded-full">
-                  <Mail className="text-red-accent" size={32} />
+                <div className="bg-primary-blue/10 p-4 rounded-full">
+                  <Mail className="text-primary-blue" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold">Email Us</h3>
               </div>
               <p className="text-gray-600 mb-4">Send us an email anytime!</p>
               <a 
                 href="mailto:hello@digitalaccessnow.org" 
-                className="text-red-accent hover:text-red-600 font-bold text-lg transition-colors inline-flex items-center gap-2"
+                className="text-primary-blue hover:text-cyan-600 font-bold text-lg transition-colors inline-flex items-center gap-2"
               >
                 hello@digitalaccessnow.org
                 <span>→</span>
@@ -99,7 +99,7 @@ export default function ContactUs() {
                 <input
                   type="text"
                   placeholder="John"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-red-accent transition-colors bg-white"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary-blue transition-colors bg-white"
                   required
                 />
               </div>
@@ -108,7 +108,7 @@ export default function ContactUs() {
                 <input
                   type="text"
                   placeholder="Doe"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-red-accent transition-colors bg-white"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary-blue transition-colors bg-white"
                   required
                 />
               </div>
@@ -119,14 +119,14 @@ export default function ContactUs() {
               <input
                 type="email"
                 placeholder="john.doe@example.com"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-red-accent transition-colors bg-white"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary-blue transition-colors bg-white"
                 required
               />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Subject *</label>
-              <select className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-red-accent transition-colors bg-white">
+              <select className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary-blue transition-colors bg-white">
                 <option>Select a subject</option>
                 <option>General Inquiry</option>
                 <option>Partnership Opportunity</option>
@@ -143,20 +143,20 @@ export default function ContactUs() {
               <textarea
                 placeholder="Tell us how we can help you..."
                 rows={6}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-red-accent transition-colors bg-white resize-none"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary-blue transition-colors bg-white resize-none"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-red-accent hover:bg-red-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="w-full bg-primary-blue hover:bg-cyan-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Send Message
             </button>
 
             <p className="text-sm text-gray-500 text-center">
-              Send your message to <a href="mailto:hello@digitalaccessnow.org" className="text-red-accent hover:text-red-600 font-semibold">hello@digitalaccessnow.org</a>
+              Send your message to <a href="mailto:hello@digitalaccessnow.org" className="text-primary-blue hover:text-cyan-600 font-semibold">hello@digitalaccessnow.org</a>
             </p>
           </form>
         </div>

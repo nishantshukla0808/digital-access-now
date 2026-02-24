@@ -26,11 +26,11 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4">QUICK LINKS</h4>
             <ul className="space-y-2 text-gray-300">
-              <li><Link href="/" className="hover:text-red-accent transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-red-accent transition-colors">About</Link></li>
-              <li><Link href="/programs" className="hover:text-red-accent transition-colors">Programs</Link></li>
-              <li><Link href="/volunteer" className="hover:text-red-accent transition-colors">Volunteer</Link></li>
-              <li><Link href="/services" className="hover:text-red-accent transition-colors">Services</Link></li>
+              <li><Link href="/" className="hover:text-primary-blue transition-colors">Home</Link></li>
+              <li><Link href="/about" className="hover:text-primary-blue transition-colors">About</Link></li>
+              <li><Link href="/programs" className="hover:text-primary-blue transition-colors">Programs</Link></li>
+              <li><Link href="/volunteer" className="hover:text-primary-blue transition-colors">Volunteer</Link></li>
+              <li><Link href="/resources" className="hover:text-primary-blue transition-colors">Resources</Link></li>
             </ul>
           </div>
 
@@ -39,19 +39,19 @@ export function Footer() {
             <h4 className="font-bold text-lg mb-4">CONTACT</h4>
             <div className="space-y-3 text-gray-300 text-sm">
               <div className="flex gap-2">
-                <Mail size={18} className="text-red-accent shrink-0 mt-0.5" />
-                <a href="mailto:hello@digitalaccessnow.org" className="hover:text-red-accent transition-colors">
+                <Mail size={18} className="text-primary-blue shrink-0 mt-0.5" />
+                <a href="mailto:hello@digitalaccessnow.org" className="hover:text-primary-blue transition-colors">
                   hello@digitalaccessnow.org
                 </a>
               </div>
               <div className="flex gap-2">
-                <Phone size={18} className="text-red-accent shrink-0 mt-0.5" />
-                <a href="tel:+14076195503" className="hover:text-red-accent transition-colors">
+                <Phone size={18} className="text-primary-blue shrink-0 mt-0.5" />
+                <a href="tel:+14076195503" className="hover:text-primary-blue transition-colors">
                   +1 (407) 619-5503
                 </a>
               </div>
               <div className="flex gap-2">
-                <MapPin size={18} className="text-red-accent shrink-0 mt-0.5" />
+                <MapPin size={18} className="text-primary-blue shrink-0 mt-0.5" />
                 <address className="not-italic">
                   123 Digital Street<br />
                   Tech City, TC 12345<br />
@@ -72,9 +72,9 @@ export function Footer() {
                 suppressHydrationWarning
                 type="email"
                 placeholder="Your email"
-                className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:border-red-accent focus:outline-none transition-colors"
+                className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:border-primary-blue focus:outline-none transition-colors"
               />
-              <button suppressHydrationWarning className="bg-red-accent hover:bg-red-600 text-white px-4 py-2 rounded font-bold transition-colors">
+              <button suppressHydrationWarning className="bg-primary-blue hover:bg-cyan-600 text-white px-4 py-2 rounded font-bold transition-colors">
                 Subscribe
               </button>
             </div>
@@ -90,16 +90,16 @@ export function Footer() {
             © 2026 Digital Access Now. All rights reserved.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="text-gray-400 hover:text-red-accent transition-colors">
+            <a href="#" className="text-gray-400 hover:text-primary-blue transition-colors">
               <Facebook size={20} />
             </a>
-            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-accent transition-colors">
+            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-blue transition-colors">
               <Instagram size={20} />
             </a>
-            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-accent transition-colors">
+            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-blue transition-colors">
               <Linkedin size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-red-accent transition-colors">
+            <a href="#" className="text-gray-400 hover:text-primary-blue transition-colors">
               <Youtube size={20} />
             </a>
           </div>

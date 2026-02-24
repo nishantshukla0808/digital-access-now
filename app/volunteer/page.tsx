@@ -7,7 +7,7 @@ export default function Volunteer() {
       <Navbar />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
@@ -71,7 +71,7 @@ export default function Volunteer() {
                 requirements: ['Social media expertise', 'Content creation skills', 'Creative and strategic thinking'],
               },
             ].map((opp, i) => (
-              <div key={i} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-red-accent">
+              <div key={i} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-primary-blue">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">{opp.title}</h3>
                 <p className="text-gray-700 mb-6 leading-relaxed">{opp.description}</p>
                 <div className="mb-6">
@@ -79,7 +79,7 @@ export default function Volunteer() {
                   <ul className="text-sm text-gray-700 space-y-2">
                     {opp.requirements.map((req, j) => (
                       <li key={j} className="flex items-start">
-                        <span className="text-red-accent mr-2">✓</span>
+                        <span className="text-primary-blue mr-2">✓</span>
                         <span>{req}</span>
                       </li>
                     ))}
@@ -89,7 +89,7 @@ export default function Volunteer() {
                   href="https://wkf.ms/4aOVIFd" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block w-full bg-red-accent hover:bg-red-600 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg text-center"
+                  className="block w-full bg-primary-blue hover:bg-cyan-600 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg text-center"
                 >
                   Apply Now
                 </a>

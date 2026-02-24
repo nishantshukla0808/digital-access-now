@@ -2,6 +2,7 @@
 
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { ChaptersMap } from '@/components/chapters-map'
 import { ArrowRight, ChevronLeft, ChevronRight, Instagram, Linkedin, Youtube } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -80,7 +81,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 md:py-24 bg-red-accent text-white">
+      <section className="py-16 md:py-24 bg-primary-blue text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             <div className="text-center">
@@ -113,15 +114,16 @@ export default function Home() {
               <p className="text-lg text-gray-700 leading-relaxed">
                 <strong>Imagine a world where everyone has the digital tools and knowledge to succeed.</strong> Through our programs, we train youth leaders, connect communities, and advocate for digital equity at the global level.
               </p>
-              <Link href="/about" className="inline-block mt-8 bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
+              <Link href="/about" className="inline-block mt-8 bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
                 Learn More About Us
               </Link>
             </div>
-            <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <div className="text-6xl mb-4">🗺️</div>
-                <p>Impact Map Placeholder</p>
-              </div>
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-gray-900">Chapters Map</h3>
+              <ChaptersMap />
+              <p className="text-sm text-gray-600 text-center">
+                Our chapters in 4 countries bringing digital access to communities
+              </p>
             </div>
           </div>
         </div>
@@ -155,7 +157,7 @@ export default function Home() {
                 <div className="text-5xl mb-4">{story.icon}</div>
                 <h3 className="text-xl font-bold mb-3">{story.title}</h3>
                 <p className="text-gray-600 mb-6">{story.description}</p>
-                <Link href="/impact/our-impact" className="text-red-accent font-bold hover:text-red-600 transition-all duration-300 inline-flex items-center gap-2">
+                <Link href="/impact/our-impact" className="text-primary-blue font-bold hover:text-cyan-600 transition-all duration-300 inline-flex items-center gap-2">
                   Read Story <ArrowRight size={16} />
                 </Link>
               </div>
@@ -184,7 +186,7 @@ export default function Home() {
                 <div className="p-6">
                   <p className="text-sm text-gray-500 mb-2">{news.date}</p>
                   <h3 className="font-bold text-lg mb-4">{news.title}</h3>
-                  <Link href="#" className="text-red-accent font-bold hover:text-red-600 transition-all duration-300 flex items-center gap-2">
+                  <Link href="#" className="text-primary-blue font-bold hover:text-cyan-600 transition-all duration-300 flex items-center gap-2">
                     Read More <ArrowRight size={16} />
                   </Link>
                 </div>
@@ -206,7 +208,7 @@ export default function Home() {
               <div key={i} className="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <h3 className="text-2xl font-bold mb-3">{cta.title}</h3>
                 <p className="text-gray-600 mb-6">{cta.description}</p>
-                <button suppressHydrationWarning className="bg-red-accent hover:bg-red-600 text-white px-6 py-2 rounded-full font-bold transition-all duration-300">
+                <button suppressHydrationWarning className="bg-primary-blue hover:bg-cyan-600 text-white px-6 py-2 rounded-full font-bold transition-all duration-300">
                   {cta.action}
                 </button>
               </div>
@@ -352,7 +354,7 @@ function HeroCarousel() {
                 {slide.subtitle}
               </p>
               <div className="flex gap-4">
-                <Link href="/volunteer" className="bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
+                <Link href="/volunteer" className="bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
                   Get Involved
                 </Link>
                 <Link href="/about" className="border-2 border-white hover:bg-white hover:text-black text-white px-8 py-3 rounded-full font-bold transition-all duration-300">

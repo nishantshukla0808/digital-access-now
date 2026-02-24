@@ -7,7 +7,7 @@ export default function Page() {
       <Navbar />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
@@ -57,10 +57,9 @@ export default function Page() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 md:py-24 bg-red-accent text-white">
+      <section className="py-16 md:py-24 bg-primary-blue text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <div className="text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">\n            <div className="text-center">
               <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">50</div>
               <p className="text-lg md:text-xl font-medium">Laptops Distributed</p>
             </div>

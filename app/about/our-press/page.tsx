@@ -8,7 +8,7 @@ export default function Press() {
       <Navbar />
 
       {/* Hero Section with Gradient & Image Placeholders */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-r from-primary-blue via-primary-purple to-red-accent text-white">
+      <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-r from-primary-blue via-primary-purple to-cyan-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -77,7 +77,7 @@ export default function Press() {
               },
             ].map((press, i) => (
               <div key={i} className="border-b border-border-gray pb-8 last:border-b-0 hover:bg-light-gray p-4 rounded transition-all duration-300">
-                <p className="text-red-accent font-semibold mb-2">{press.date}</p>
+                <p className="text-primary-blue font-semibold mb-2">{press.date}</p>
                 <h3 className="text-2xl font-bold mb-3">{press.title}</h3>
                 <p className="text-gray-700 mb-4">{press.excerpt}</p>
                 <a href="#" className="text-primary-blue font-bold hover:text-primary-purple transition-all duration-300">
@@ -113,7 +113,7 @@ export default function Press() {
               },
             ].map((article, i) => (
               <div key={i} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <p className="text-red-accent font-semibold text-sm mb-2">{article.publication}</p>
+                <p className="text-primary-blue font-semibold text-sm mb-2">{article.publication}</p>
                 <h3 className="text-lg font-bold mb-4">{article.headline}</h3>
                 <a href="#" className="text-primary-blue font-bold hover:text-primary-purple transition-all duration-300">
                   Read Article →
@@ -146,7 +146,7 @@ export default function Press() {
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
             Contact our media relations team for interviews, quotes, or media requests.
           </p>
-          <a href="mailto:press@digitalaccessnow.org" className="inline-block bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
+          <a href="mailto:press@digitalaccessnow.org" className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
             Contact Press Team
           </a>
         </div>

@@ -71,7 +71,7 @@ export default function OurPeople() {
       <Navbar />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">

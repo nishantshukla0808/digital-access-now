@@ -60,7 +60,7 @@ export default function Page() {
                   </div>
                 </div>
                 <p className="text-gray-700 mb-4">{job.description}</p>
-                <button className="bg-red-accent hover:bg-red-600 text-white px-6 py-2 rounded-full font-bold transition-colors">
+                <button className="bg-primary-blue hover:bg-cyan-600 text-white px-6 py-2 rounded-full font-bold transition-colors">
                   Apply Now
                 </button>
               </div>

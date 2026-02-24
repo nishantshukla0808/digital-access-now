@@ -58,19 +58,19 @@ export default function Donate() {
               
               <div className="space-y-6 text-gray-700 text-lg">
                 <div className="flex gap-3">
-                  <span className="text-red-accent font-bold">•</span>
+                  <span className="text-primary-blue font-bold">•</span>
                   <p><strong>Empower 340,000+ lives</strong> to achieve digital equity and access essential online resources.</p>
                 </div>
                 <div className="flex gap-3">
-                  <span className="text-red-accent font-bold">•</span>
+                  <span className="text-primary-blue font-bold">•</span>
                   <p><strong>Break barriers for underserved communities</strong> by providing devices, connectivity, and digital literacy training.</p>
                 </div>
                 <div className="flex gap-3">
-                  <span className="text-red-accent font-bold">•</span>
+                  <span className="text-primary-blue font-bold">•</span>
                   <p><strong>Grow a high-impact, community-led movement</strong> with operations in 52 countries and partnerships with global organizations.</p>
                 </div>
                 <div className="flex gap-3">
-                  <span className="text-red-accent font-bold">•</span>
+                  <span className="text-primary-blue font-bold">•</span>
                   <p><strong>Ensure economic status is never a barrier</strong> to participating in the digital economy.</p>
                 </div>
               </div>
@@ -86,7 +86,7 @@ export default function Donate() {
                     onClick={() => setDonationType('one-time')}
                     className={`flex-1 py-3 px-6 rounded-full font-bold transition-all duration-300 ${
                       donationType === 'one-time'
-                        ? 'bg-white border-2 border-red-accent text-red-accent'
+                        ? 'bg-white border-2 border-primary-blue text-primary-blue'
                         : 'bg-gray-100 text-gray-600 border-2 border-transparent hover:border-gray-300'
                     }`}
                   >
@@ -97,7 +97,7 @@ export default function Donate() {
                     onClick={() => setDonationType('monthly')}
                     className={`flex-1 py-3 px-6 rounded-full font-bold transition-all duration-300 ${
                       donationType === 'monthly'
-                        ? 'bg-red-accent text-white'
+                        ? 'bg-primary-blue text-white'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -125,8 +125,8 @@ export default function Donate() {
                       }}
                       className={`py-4 px-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                         selectedAmount === amount
-                          ? 'bg-red-accent text-white shadow-lg scale-105'
-                          : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-red-accent hover:text-red-accent'
+                          ? 'bg-primary-blue text-white shadow-lg scale-105'
+                          : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-primary-blue hover:text-primary-blue'
                       }`}
                     >
                       ${amount}
@@ -145,8 +145,8 @@ export default function Donate() {
                       }}
                       className={`py-4 px-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                         selectedAmount === amount
-                          ? 'bg-red-accent text-white shadow-lg scale-105'
-                          : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-red-accent hover:text-red-accent'
+                          ? 'bg-primary-blue text-white shadow-lg scale-105'
+                          : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-primary-blue hover:text-primary-blue'
                       }`}
                     >
                       ${amount}
@@ -165,7 +165,7 @@ export default function Donate() {
                       setCustomAmount(e.target.value)
                       setSelectedAmount(null)
                     }}
-                    className="w-full px-4 py-4 border-2 border-red-accent rounded-xl focus:outline-none focus:ring-2 focus:ring-red-accent text-lg"
+                    className="w-full px-4 py-4 border-2 border-primary-blue rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
                   />
                   <p className="text-xs text-gray-500 mt-2 text-center">
                     Donating in <strong>US Dollars</strong>
@@ -192,7 +192,7 @@ export default function Donate() {
                 </div>suppressHydrationWarning 
 
                 {/* Donate Button */}
-                <button className="w-full bg-red-accent hover:bg-red-600 text-white py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6">
+                <button className="w-full bg-primary-blue hover:bg-cyan-600 text-white py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6">
                   Donate Now
                 </button>
 
@@ -267,7 +267,7 @@ export default function Donate() {
             </p>
             <a 
               href="mailto:finance@digitalaccessnow.org" 
-              className="inline-block bg-red-accent hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300"
+              className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300"
             >
               Request Documents
             </a>
@@ -287,14 +287,14 @@ export default function Donate() {
                 <button
                   suppressHydrationWarning
                   onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                  className="w-full px-0 py-6 flex items-center justify-between hover:text-red-accent transition-all duration-300 group"
+                  className="w-full px-0 py-6 flex items-center justify-between hover:text-primary-blue transition-all duration-300 group"
                 >
-                  <h3 className="text-xl font-normal text-left text-gray-700 group-hover:text-red-accent transition-colors">
+                  <h3 className="text-xl font-normal text-left text-gray-700 group-hover:text-primary-blue transition-colors">
                     {item.question}
                   </h3>
                   <ChevronDown 
                     size={28} 
-                    className={`transition-all duration-300 flex-shrink-0 text-gray-400 group-hover:text-red-accent ml-4 ${
+                    className={`transition-all duration-300 flex-shrink-0 text-gray-400 group-hover:text-primary-blue ml-4 ${
                       expandedFaq === i ? 'rotate-180' : ''
                     }`}
                   />

@@ -9,7 +9,7 @@ export default function Programs() {
       <Navbar />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-red-accent via-primary-purple to-primary-blue text-white overflow-hidden">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">
@@ -69,7 +69,7 @@ export default function Programs() {
 
               <div className="flex gap-4 pt-6">
                 <a href="https://wkf.ms/3OkUudk" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
                     APPLY NOW
                   </button>
                 </a>
@@ -130,7 +130,7 @@ export default function Programs() {
 
               <div className="flex gap-4 pt-6">
                 <a href="https://wkf.ms/4aOVIFd" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
                     APPLY NOW
                   </button>
                 </a>
@@ -163,19 +163,19 @@ export default function Programs() {
                 <h3 className="text-xl font-bold text-gray-900">Ambassadors Create Impact By:</h3>
                 <ul className="space-y-3 text-lg text-gray-600">
                   <li className="flex gap-3">
-                    <span className="font-semibold text-red-accent">•</span>
+                    <span className="font-semibold text-primary-blue">•</span>
                     <span><strong>Raising Awareness:</strong> Sharing information about digital equity through school announcements, social media, and community conversations</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-semibold text-red-accent">•</span>
+                    <span className="font-semibold text-primary-blue">•</span>
                     <span><strong>Supporting Device Drives:</strong> Helping collect used laptops and tablets for refurbishment and redistribution</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-semibold text-red-accent">•</span>
+                    <span className="font-semibold text-primary-blue">•</span>
                     <span><strong>Hosting Introductory Workshops:</strong> Leading or assisting with sessions on basic computer skills, internet safety, resume building, or digital tools</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-semibold text-red-accent">•</span>
+                    <span className="font-semibold text-primary-blue">•</span>
                     <span><strong>Connecting Students to Resources:</strong> Guiding peers toward programs, scholarships, and opportunities in the digital economy</span>
                   </li>
                 </ul>
@@ -185,15 +185,15 @@ export default function Programs() {
                 <h3 className="text-xl font-bold text-gray-900">Each Ambassador Must:</h3>
                 <ul className="space-y-2 text-lg text-gray-600">
                   <li className="flex gap-3">
-                    <span className="text-red-accent">✓</span>
+                    <span className="text-primary-blue">✓</span>
                     <span>Demonstrate leadership and a commitment to digital equity</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-red-accent">✓</span>
+                    <span className="text-primary-blue">✓</span>
                     <span>Complete at least one impact activity every three months</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-red-accent">✓</span>
+                    <span className="text-primary-blue">✓</span>
                     <span>Follow Digital Access Now's standards for responsible communication and community engagement</span>
                   </li>
                 </ul>
@@ -201,7 +201,7 @@ export default function Programs() {
 
               <div className="flex gap-4 pt-6">
                 <a href="https://wkf.ms/4b2zfpl" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-red-accent hover:bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
                     APPLY NOW
                   </button>
                 </a>
