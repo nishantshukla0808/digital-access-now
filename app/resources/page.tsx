@@ -174,35 +174,35 @@ export default function Resources() {
         </div>
       </section>
 
-      {/* Digital Access Now Hub Section */}
+      {/* Philadelphia Programs & Events Portal Section */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
-            DIGITAL ACCESS NOW HUB
+            PHILADELPHIA CITY PROGRAMS & EVENTS
           </h2>
           
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
-                  Access our comprehensive internal portal for team members and volunteers. Here you'll find everything you need to stay connected and engaged with our mission.
+                  Explore programs and events from the City of Philadelphia. As an organization based in Philadelphia, we stay connected to local opportunities, partnerships, and funding initiatives.
                 </p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start gap-3 text-lg text-gray-600">
                     <span className="text-primary-blue font-bold mt-1">✓</span>
-                    <span>High-level program information and resources</span>
+                    <span>Discover city programs and initiatives</span>
                   </li>
                   <li className="flex items-start gap-3 text-lg text-gray-600">
                     <span className="text-primary-blue font-bold mt-1">✓</span>
-                    <span>Upcoming events calendar with registration links</span>
+                    <span>Find upcoming community events</span>
                   </li>
                   <li className="flex items-start gap-3 text-lg text-gray-600">
                     <span className="text-primary-blue font-bold mt-1">✓</span>
-                    <span>Volunteer intake and onboarding forms</span>
+                    <span>Explore partnership opportunities</span>
                   </li>
                   <li className="flex items-start gap-3 text-lg text-gray-600">
                     <span className="text-primary-blue font-bold mt-1">✓</span>
-                    <span>Team collaboration tools and documents</span>
+                    <span>Stay informed about funding initiatives</span>
                   </li>
                 </ul>
                 <a 
@@ -211,25 +211,25 @@ export default function Resources() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
-                  Sign In to Hub
+                  Explore City Events
                 </a>
               </div>
               <div className="relative">
                 <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
                   <div className="text-center space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900">Internal Portal Access</h3>
+                    <h3 className="text-2xl font-bold text-gray-900">City of Philadelphia</h3>
                     <div className="space-y-4 text-left">
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-                        <p className="font-semibold mb-1 text-gray-900">Program Information</p>
-                        <p className="text-gray-600">Access detailed program resources</p>
+                        <p className="font-semibold mb-1 text-gray-900">Local Programs</p>
+                        <p className="text-gray-600">Browse Philadelphia initiatives</p>
                       </div>
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-                        <p className="font-semibold mb-1 text-gray-900">Events & Registration</p>
-                        <p className="text-gray-600">Register for upcoming events</p>
+                        <p className="font-semibold mb-1 text-gray-900">Community Events</p>
+                        <p className="text-gray-600">Discover upcoming opportunities</p>
                       </div>
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-                        <p className="font-semibold mb-1 text-gray-900">Collaboration</p>
-                        <p className="text-primary-blue font-bold">Tools & Documents</p>
+                        <p className="font-semibold mb-1 text-gray-900">Partnerships</p>
+                        <p className="text-primary-blue font-bold">Funding & Collaboration</p>
                       </div>
                     </div>
                   </div>
