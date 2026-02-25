@@ -40,10 +40,8 @@ export function Navbar() {
               <div className="absolute left-0 mt-0 w-48 bg-footer-black border-t-2 border-primary-blue opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <Link href="/about" className="block px-4 py-3 hover:bg-gray-800">About Us</Link>
                 <Link href="/about/why-digital-access-now" className="block px-4 py-3 hover:bg-gray-800">Why Digital Access Now?</Link>
-                <Link href="/about/our-people" className="block px-4 py-3 hover:bg-gray-800">Our People</Link>
+                <Link href="/about/our-team" className="block px-4 py-3 hover:bg-gray-800">Our Team</Link>
                 <Link href="/about/our-press" className="block px-4 py-3 hover:bg-gray-800">Our Press</Link>
-                <Link href="/about/our-careers" className="block px-4 py-3 hover:bg-gray-800">Our Careers</Link>
-                <Link href="/about/internships" className="block px-4 py-3 hover:bg-gray-800">Internships</Link>
               </div>
             </div>
 
@@ -118,10 +116,8 @@ export function Navbar() {
               <div className="pl-4 space-y-2">
                 <Link href="/about" className="block px-4 py-3 hover:bg-gray-800">About Us</Link>
                 <Link href="/about/why-digital-access-now" className="block px-4 py-3 hover:bg-gray-800">Why Digital Access Now?</Link>
-                <Link href="/about/our-people" className="block px-4 py-3 hover:bg-gray-800">Our People</Link>
+                <Link href="/about/our-team" className="block px-4 py-3 hover:bg-gray-800">Our Team</Link>
                 <Link href="/about/our-press" className="block px-4 py-3 hover:bg-gray-800">Our Press</Link>
-                <Link href="/about/our-careers" className="block px-4 py-3 hover:bg-gray-800">Our Careers</Link>
-                <Link href="/about/internships" className="block px-4 py-3 hover:bg-gray-800">Internships</Link>
               </div>
             )}
 

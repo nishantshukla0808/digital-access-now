@@ -108,29 +108,198 @@ export default function Resources() {
         </div>
       </section>
 
-      {/* Digital Solutions Overview */}
-      <section className="py-20 md:py-28 bg-white">
+      {/* DigitalEquityPHL Section */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
-            DIGITAL SOLUTIONS
+            DIGITAL EQUITY PHL
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
-                We partner with governments, NGOs, and private sector organizations to design and implement comprehensive digital access and literacy programs.
-              </p>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Our tailored solutions address the unique challenges faced by underserved communities, ensuring sustainable impact through infrastructure, training, and ongoing support.
-              </p>
-              <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                Partner With Us
-              </button>
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
+                  DigitalEquityPHL, led by the City of Philadelphia's Office of Innovation and Technology (OIT), works to ensure that every resident has access to reliable internet, modern devices, and the digital skills needed to thrive.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Partnerships with community organizations</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Addressing unaffordable internet barriers</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Modern device access programs</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Coordinated citywide strategies</span>
+                  </li>
+                </ul>
+                <a 
+                  href="https://www.phila.gov/programs/digitalequityphl/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Visit DigitalEquityPHL
+                </a>
+              </div>
+              <div className="relative">
+                <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
+                  <div className="text-center space-y-6">
+                    <h3 className="text-2xl font-bold text-gray-900">Bridging Philadelphia's Digital Divide</h3>
+                    <div className="space-y-4 text-left">
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Mission</p>
+                        <p className="text-gray-600">Ensure every resident has reliable internet access</p>
+                      </div>
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Led By</p>
+                        <p className="text-gray-600">City of Philadelphia's Office of Innovation and Technology</p>
+                      </div>
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Focus</p>
+                        <p className="text-primary-blue font-bold">Building a Connected, Inclusive Philadelphia</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="bg-gray-100 rounded-2xl h-96 flex items-center justify-center shadow-lg">
-              <div className="text-center text-gray-500">
-                <div className="text-6xl mb-4">🤝</div>
-                <p>Resources Image</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Digital Access Now Hub Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+            DIGITAL ACCESS NOW HUB
+          </h2>
+          
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
+                  Access our comprehensive internal portal for team members and volunteers. Here you'll find everything you need to stay connected and engaged with our mission.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>High-level program information and resources</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Upcoming events calendar with registration links</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Volunteer intake and onboarding forms</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Team collaboration tools and documents</span>
+                  </li>
+                </ul>
+                <a 
+                  href="https://login.microsoftonline.com/2046864f-68ea-497d-af34-a6629a6cd700/oauth2/authorize?client%5Fid=00000003%2D0000%2D0ff1%2Dce00%2D000000000000&response%5Fmode=form%5Fpost&response%5Ftype=code%20id%5Ftoken&resource=00000003%2D0000%2D0ff1%2Dce00%2D000000000000&scope=openid&nonce=E3BA51F9041E43F52A1DA4F3312D320F4CAFFA8210D79E6A%2D2811DCE781420E6E1E8A7EA3F252CBE4EBED65239BB050546D4D9CFF38FEC10F&redirect%5Furi=https%3A%2F%2Fphila%2Esharepoint%2Ecom%2F%5Fforms%2Fdefault%2Easpx&state=OD0w&claims=%7B%22id%5Ftoken%22%3A%7B%22xms%5Fcc%22%3A%7B%22values%22%3A%5B%22CP1%22%5D%7D%7D%7D&wsucxt=1&cobrandid=11bd8083%2D87e0%2D41b5%2Dbb78%2D0bc43c8a8e8a&client%2Drequest%2Did=f280faa1%2D50fc%2Db000%2Df9c8%2D59f0c5c11613&sso_reload=true" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Sign In to Hub
+                </a>
+              </div>
+              <div className="relative">
+                <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
+                  <div className="text-center space-y-6">
+                    <h3 className="text-2xl font-bold text-gray-900">Internal Portal Access</h3>
+                    <div className="space-y-4 text-left">
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Program Information</p>
+                        <p className="text-gray-600">Access detailed program resources</p>
+                      </div>
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Events & Registration</p>
+                        <p className="text-gray-600">Register for upcoming events</p>
+                      </div>
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Collaboration</p>
+                        <p className="text-primary-blue font-bold">Tools & Documents</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Northstar Digital Literacy Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+            NORTHSTAR DIGITAL LITERACY
+          </h2>
+          
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
+                  Provide constituents with tools to master the digital skills needed to work, learn, and participate fully in daily life. Northstar Digital Literacy offers comprehensive online learning modules.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Access online digital skills learning modules</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Moderate and track learner progress</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Advance your own digital skills</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-lg text-gray-600">
+                    <span className="text-primary-blue font-bold mt-1">✓</span>
+                    <span>Industry-recognized assessment and certification</span>
+                  </li>
+                </ul>
+                <a 
+                  href="https://www.digitalliteracyassessment.org/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Explore Northstar
+                </a>
+              </div>
+              <div className="relative">
+                <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
+                  <div className="text-center space-y-6">
+                    <h3 className="text-2xl font-bold text-gray-900">Digital Skills Platform</h3>
+                    <div className="space-y-4 text-left">
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Learning Modules</p>
+                        <p className="text-gray-600">Comprehensive online courses</p>
+                      </div>
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Progress Tracking</p>
+                        <p className="text-gray-600">Monitor and assess learning</p>
+                      </div>
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                        <p className="font-semibold mb-1 text-gray-900">Certification</p>
+                        <p className="text-primary-blue font-bold">Industry-Recognized Standards</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

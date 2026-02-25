@@ -290,7 +290,7 @@ export default function About() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/about/our-people" className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Link href="/about/our-team" className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl">
               Meet Full Team
             </Link>
           </div>
@@ -306,7 +306,7 @@ export default function About() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: 'Why Digital Access Now?', link: '/about/why-digital-access-now', icon: '❓' },
-              { title: 'Our People', link: '/about/our-people', icon: '👥' },
+              { title: 'Our Team', link: '/about/our-team', icon: '👥' },
               { title: 'Press & Media', link: '/about/our-press', icon: '📰' },
               { title: 'Careers', link: '/about/our-careers', icon: '💼' },
             ].map((item, i) => (

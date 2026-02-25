@@ -2,7 +2,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import Image from 'next/image'
 
-export default function OurPeople() {
+export default function OurTeam() {
   const teamMembers = [
     {
       name: 'Ritika Malik',
@@ -84,7 +84,7 @@ export default function OurPeople() {
             CHANGEMAKERS
           </div>
           <div className="absolute bottom-10 right-32 text-5xl md:text-7xl font-black text-white transform rotate-6">
-            TEAM
+            VISIONARIES
           </div>
         </div>
 
@@ -95,10 +95,10 @@ export default function OurPeople() {
         {/* Main Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
-            OUR PEOPLE
+            MEET OUR TEAM
           </h1>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Meet the dedicated team and leaders driving digital equity worldwide
+            Passionate leaders and innovators driving digital equity across the globe
           </p>
         </div>
       </section>
@@ -106,10 +106,6 @@ export default function OurPeople() {
       {/* Team Members Grid */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-center mb-20 uppercase tracking-tight" style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.2)' }}>
-            OUR TEAM
-          </h2>
-          
           {/* First Row - 3 Members */}
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             {teamMembers.slice(0, 3).map((member, i) => (
@@ -120,6 +116,8 @@ export default function OurPeople() {
                     <img 
                       src={member.image}
                       alt={member.name}
+                      loading={i < 3 ? "eager" : "lazy"}
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -141,6 +139,8 @@ export default function OurPeople() {
                     <img 
                       src={member.image}
                       alt={member.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -162,6 +162,8 @@ export default function OurPeople() {
                     <img 
                       src={member.image}
                       alt={member.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -182,8 +184,8 @@ export default function OurPeople() {
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
             We're always looking for passionate individuals to join our mission of bridging the digital divide.
           </p>
-          <a href="/about/our-careers" className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300">
-            Explore Careers
+          <a href="/volunteer" className="inline-block bg-white text-primary-blue hover:bg-gray-100 px-8 py-3 rounded-full font-bold transition-all duration-300">
+            Get Involved
           </a>
         </div>
       </section>
