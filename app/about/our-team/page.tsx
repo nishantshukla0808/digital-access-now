@@ -46,12 +46,12 @@ export default function OurTeam() {
       bio: 'Leading student outreach and engagement initiatives',
       image: 'https://i.ibb.co/7xN2gfhs/TJ.jpg',
     },
-    {
-      name: 'Yash',
-      role: 'Social Media Director',
-      bio: 'Building digital presence and managing social media strategy',
-      image: 'https://i.ibb.co/ycD3wQWy/Yash.jpg',
-    },
+    // {
+    //   name: 'Yash',
+    //   role: 'Social Media Director',
+    //   bio: 'Building digital presence and managing social media strategy',
+    //   image: 'https://i.ibb.co/ycD3wQWy/Yash.jpg',
+    // },
     {
       name: 'Prof. Abirlal Mukherjee',
       role: 'Country Director, India',
