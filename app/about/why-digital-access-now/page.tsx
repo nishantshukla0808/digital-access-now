@@ -61,7 +61,7 @@ export default function Page() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">50</div>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">1000+</div>
               <p className="text-lg md:text-xl font-medium">Laptops Distributed</p>
             </div>
             <div className="text-center">
