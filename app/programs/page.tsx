@@ -32,9 +32,9 @@ export default function Programs() {
 
         {/* Main Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+          <div role="heading" aria-level={1} className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 tracking-tight">
             OUR PROGRAMS
-          </h1>
+          </div>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Empowering communities through digital access, education, and leadership development
           </p>
@@ -44,9 +44,9 @@ export default function Programs() {
       {/* Chapters Program */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             CHAPTERS
-          </h2>
+          </div>
           
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Description */}
@@ -98,9 +98,9 @@ export default function Programs() {
       {/* Volunteer Program */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             VOLUNTEER PROGRAM
-          </h2>
+          </div>
           
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Image */}
@@ -148,9 +148,9 @@ export default function Programs() {
       {/* Ambassador Program */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             AMBASSADOR PROGRAM
-          </h2>
+          </div>
           
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Description */}
@@ -160,7 +160,7 @@ export default function Programs() {
               </p>
               
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-gray-900">Ambassadors Create Impact By:</h3>
+                <div role="heading" aria-level={3} className="text-lg md:text-xl font-bold text-gray-900">Ambassadors Create Impact By:</div>
                 <ul className="space-y-3 text-lg text-gray-600">
                   <li className="flex gap-3">
                     <span className="font-semibold text-primary-blue">•</span>
@@ -182,7 +182,7 @@ export default function Programs() {
               </div>
               
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-gray-900">Each Ambassador Must:</h3>
+                <div role="heading" aria-level={3} className="text-lg md:text-xl font-bold text-gray-900">Each Ambassador Must:</div>
                 <ul className="space-y-2 text-lg text-gray-600">
                   <li className="flex gap-3">
                     <span className="text-primary-blue">✓</span>
@@ -226,9 +226,9 @@ export default function Programs() {
       {/* FAQ */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
+          <div role="heading" aria-level={2} className="text-2xl md:text-3xl font-bold text-center mb-12">
             Frequently Asked Questions
-          </h2>
+          </div>
           <div className="space-y-4">
             {[
               {

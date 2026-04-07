@@ -31,9 +31,9 @@ export default function Resources() {
 
         {/* Main Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+          <div role="heading" aria-level={1} className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 tracking-tight">
             RESOURCES
-          </h1>
+          </div>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Essential tools and solutions for digital equity and inclusion
           </p>
@@ -43,9 +43,9 @@ export default function Resources() {
       {/* WiFi Finder Section */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             FREE WIFI FINDER
-          </h2>
+          </div>
           
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -85,7 +85,7 @@ export default function Resources() {
                 <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
                   <div className="text-center space-y-6">
                     <div className="text-7xl">📡</div>
-                    <h3 className="text-2xl font-bold text-gray-900">Philadelphia WiFi Network</h3>
+                    <div role="heading" aria-level={3} className="text-lg md:text-xl font-bold text-gray-900">Philadelphia WiFi Network</div>
                     <div className="space-y-4 text-left">
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                         <p className="font-semibold mb-1 text-gray-900">Network Name (SSID)</p>
@@ -111,9 +111,9 @@ export default function Resources() {
       {/* DigitalEquityPHL Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             DIGITAL EQUITY PHL
-          </h2>
+          </div>
           
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -151,7 +151,7 @@ export default function Resources() {
               <div className="relative">
                 <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
                   <div className="text-center space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900">Bridging Philadelphia's Digital Divide</h3>
+                    <div role="heading" aria-level={3} className="text-lg md:text-xl font-bold text-gray-900">Bridging Philadelphia's Digital Divide</div>
                     <div className="space-y-4 text-left">
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                         <p className="font-semibold mb-1 text-gray-900">Mission</p>
@@ -177,9 +177,9 @@ export default function Resources() {
       {/* Philadelphia Programs & Events Portal Section */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             PHILADELPHIA CITY PROGRAMS & EVENTS
-          </h2>
+          </div>
           
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -217,7 +217,7 @@ export default function Resources() {
               <div className="relative">
                 <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
                   <div className="text-center space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900">City of Philadelphia</h3>
+                    <div role="heading" aria-level={3} className="text-lg md:text-xl font-bold text-gray-900">City of Philadelphia</div>
                     <div className="space-y-4 text-left">
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                         <p className="font-semibold mb-1 text-gray-900">Local Programs</p>
@@ -243,9 +243,9 @@ export default function Resources() {
       {/* Northstar Digital Literacy Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
             NORTHSTAR DIGITAL LITERACY
-          </h2>
+          </div>
           
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -283,7 +283,7 @@ export default function Resources() {
               <div className="relative">
                 <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
                   <div className="text-center space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900">Digital Skills Platform</h3>
+                    <div role="heading" aria-level={3} className="text-lg md:text-xl font-bold text-gray-900">Digital Skills Platform</div>
                     <div className="space-y-4 text-left">
                       <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
                         <p className="font-semibold mb-1 text-gray-900">Learning Modules</p>
@@ -309,9 +309,9 @@ export default function Resources() {
       {/* Resources Breakdown */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-16 text-gray-900">
+          <div role="heading" aria-level={2} className="text-2xl md:text-3xl font-black mb-12 text-gray-900">
             OUR SERVICES
-          </h2>
+          </div>
           <div className="space-y-6">
             {[
               {
@@ -360,9 +360,9 @@ export default function Resources() {
       {/* CTA */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-black mb-6 text-gray-900">
+          <div role="heading" aria-level={2} className="text-2xl md:text-3xl font-black mb-6 text-gray-900">
             Ready to Transform Digital Equity in Your Community?
-          </h2>
+          </div>
           <p className="text-xl text-gray-600 mb-10 leading-relaxed">
             Contact our team to discuss how we can support your organization's digital access goals.
           </p>
