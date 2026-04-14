@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { Webhook } from 'svix'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -24,27 +23,18 @@ interface WebhookPayload {
 
 export async function POST(req: Request) {
   try {
-    // Verify the request is genuinely from Supabase using the webhook secret
+    // Supabase Auth Hooks authenticate via Bearer token in the Authorization header
     const webhookSecret = process.env.SUPABASE_WEBHOOK_SECRET
     if (!webhookSecret) {
       return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 })
     }
 
-    const payload = await req.text()
-    const headers = {
-      'svix-id': req.headers.get('svix-id') ?? '',
-      'svix-timestamp': req.headers.get('svix-timestamp') ?? '',
-      'svix-signature': req.headers.get('svix-signature') ?? '',
+    const authHeader = req.headers.get('authorization')
+    if (!authHeader || authHeader !== `Bearer ${webhookSecret}`) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    let body: WebhookPayload
-    try {
-      const wh = new Webhook(webhookSecret)
-      body = wh.verify(payload, headers) as WebhookPayload
-    } catch {
-      return NextResponse.json({ error: 'Invalid webhook signature' }, { status: 401 })
-    }
-
+    const body: WebhookPayload = await req.json()
     const { user, email_data } = body
 
     if (!user || !email_data || !user.email) {
