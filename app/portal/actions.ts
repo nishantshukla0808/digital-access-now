@@ -34,12 +34,18 @@ export async function login(formData: FormData) {
     redirect(`/portal/login?error=${encodeURIComponent(error.message)}`)
   }
 
-  // Fetch roles array (supports multi-role)
+  // Fetch user profile — check email verification and roles
   const { data: userData } = await supabase
     .from('users')
-    .select('role, roles')
+    .select('role, roles, is_email_verified')
     .eq('id', data.user.id)
     .single()
+
+  // Block login if user hasn't completed our custom OTP verification
+  if (!userData?.is_email_verified) {
+    await supabase.auth.signOut()
+    redirect(`/portal/verify-email?email=${encodeURIComponent(email)}&error=Please+verify+your+email+first.+Check+your+inbox+for+the+verification+code.`)
+  }
 
   revalidatePath('/', 'layout')
 
