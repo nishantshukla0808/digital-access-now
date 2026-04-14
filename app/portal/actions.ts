@@ -34,12 +34,19 @@ export async function login(formData: FormData) {
     redirect(`/portal/login?error=${encodeURIComponent(error.message)}`)
   }
 
+  const service = createServiceClient()
+
   // Fetch user profile — check email verification and roles
-  const { data: userData } = await supabase
+  // Use service client to avoid session set-cookie delay/RLS issues in the same tick
+  const { data: userData, error: fetchError } = await service
     .from('users')
     .select('role, roles, is_email_verified')
     .eq('id', data.user.id)
     .single()
+
+  if (fetchError) {
+    console.error('Failed to fetch user after login:', fetchError)
+  }
 
   // Block login if user hasn't completed our custom OTP verification
   if (!userData?.is_email_verified) {
