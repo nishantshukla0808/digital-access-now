@@ -66,14 +66,17 @@ export async function signup(formData: FormData) {
     redirect('/portal/register?error=All+fields+are+required')
   }
 
-  const supabase = await createClient()
   const service = createServiceClient()
 
-  // Create the Supabase auth user (email confirmation disabled in dashboard)
-  const { data: signupData, error: signupError } = await supabase.auth.signUp({
+  // Use admin.createUser instead of signUp — the admin API creates users silently
+  // without triggering any Supabase confirmation email whatsoever.
+  // email_confirm: false so Supabase marks it unconfirmed, but we handle it via our OTP.
+  // email_confirm: true so Supabase won't block signInWithPassword — our is_email_verified flag is the gate instead.
+  const { data: signupData, error: signupError } = await service.auth.admin.createUser({
     email,
     password,
-    options: { data: { full_name: fullName, role } },
+    email_confirm: false, // Supabase marks unconfirmed — blocks signIn until we call admin.updateUserById after OTP
+    user_metadata: { full_name: fullName, role },
   })
 
   if (signupError) {
@@ -103,9 +106,6 @@ export async function signup(formData: FormData) {
 
   // Send the OTP via Resend
   await sendOtpEmail(email, fullName, otp)
-
-  // Sign the user out so they must verify before accessing the portal
-  await supabase.auth.signOut()
 
   redirect(`/portal/verify-email?email=${encodeURIComponent(email)}`)
 }
