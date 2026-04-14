@@ -150,7 +150,7 @@ export async function verifyOtp(formData: FormData) {
     redirect(`/portal/verify-email?email=${encodeURIComponent(email)}&error=Invalid+or+expired+code.+Please+try+again.`)
   }
 
-  // Mark OTP as used and user as verified
+  // Mark OTP as used and user as verified in our table
   await service
     .from('email_verifications')
     .update({ used_at: new Date().toISOString() })
@@ -161,7 +161,12 @@ export async function verifyOtp(formData: FormData) {
     .update({ is_email_verified: true })
     .eq('id', userData.id)
 
-  // Redirect to login with success message
+  // CRITICAL: Also confirm email in Supabase Auth itself.
+  // Without this, signInWithPassword returns "Email not confirmed" regardless of our custom flag.
+  await service.auth.admin.updateUserById(userData.id, {
+    email_confirm: true,
+  })
+
   redirect('/portal/login?message=Email+verified!+You+can+now+sign+in.')
 }
 
