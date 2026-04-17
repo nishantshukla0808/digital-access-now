@@ -69,6 +69,9 @@ export function Navbar() {
             <Link href="/resources" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
               RESOURCES
             </Link>
+            <Link href="/blog" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
+              BLOG
+            </Link>
             <Link href="/contact-us" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
               CONTACT US
             </Link>
@@ -147,6 +150,9 @@ export function Navbar() {
 
             <Link href="/resources" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
               RESOURCES
+            </Link>
+            <Link href="/blog" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
+              BLOG
             </Link>
             <Link href="/contact-us" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
               CONTACT US

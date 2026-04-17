@@ -1,8 +1,25 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { Wifi } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
+import { Wifi, BookOpen, Download } from 'lucide-react'
 
-export default function Resources() {
+export default async function Resources() {
+  const supabase = await createClient()
+
+  const { data: resources } = await supabase
+    .from('resources')
+    .select('id, title, description, category, file_url, created_at')
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+
+  const categoryColors: Record<string, string> = {
+    'Digital Literacy': 'bg-blue-50 text-blue-700 border-blue-200',
+    'Training': 'bg-green-50 text-green-700 border-green-200',
+    'Research': 'bg-orange-50 text-orange-700 border-orange-200',
+    'Guides': 'bg-purple-50 text-purple-700 border-purple-200',
+    'Templates': 'bg-cyan-50 text-cyan-700 border-cyan-200',
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -356,6 +373,45 @@ export default function Resources() {
           </div>
         </div>
       </section>
+
+      {/* ─── Community Resources (Live from DB) ─── */}
+      {(resources ?? []).length > 0 && (
+        <section className="py-20 md:py-28 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-4 text-gray-900">
+              COMMUNITY RESOURCES
+            </div>
+            <p className="text-gray-500 mb-12">Documents, guides and templates contributed by our volunteers and approved by the DAN team.</p>
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {(resources ?? []).map((r) => {
+                const colorClass = categoryColors[r.category ?? ''] ?? 'bg-gray-50 text-gray-600 border-gray-200'
+                return (
+                  <div key={r.id} className="flex flex-col rounded-2xl border border-primary-blue/10 bg-white p-6 shadow-sm hover:shadow-lg transition-shadow gap-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-bold ${colorClass}`}>
+                        {r.category || 'Resource'}
+                      </span>
+                      <BookOpen className="size-4 text-gray-300 shrink-0 mt-0.5" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-black text-gray-950 mb-2 leading-snug">{r.title}</h3>
+                      {r.description && <p className="text-sm text-gray-500 line-clamp-2">{r.description}</p>}
+                    </div>
+                    <a
+                      href={r.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-primary-blue/10 hover:bg-primary-blue/20 text-primary-blue px-4 py-2 text-sm font-bold transition-colors self-start"
+                    >
+                      <Download className="size-3.5" /> Download
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-20 md:py-28 bg-white">
