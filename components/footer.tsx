@@ -44,20 +44,6 @@ export function Footer() {
                   hello@digitalaccessnow.org
                 </a>
               </div>
-              <div className="flex gap-2">
-                <Phone size={18} className="text-primary-blue shrink-0 mt-0.5" />
-                <a href="tel:+14076195503" className="hover:text-primary-blue transition-colors">
-                  +1 (407) 619-5503
-                </a>
-              </div>
-              <div className="flex gap-2">
-                <MapPin size={18} className="text-primary-blue shrink-0 mt-0.5" />
-                <address className="not-italic">
-                  123 Digital Street<br />
-                  Tech City, TC 12345<br />
-                  USA
-                </address>
-              </div>
             </div>
           </div>
 
