@@ -44,7 +44,7 @@ export default function ContactUs() {
       {/* Contact Info Cards */}
       <section className="py-16 md:py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="max-w-md mx-auto mb-16">
             {/* Email Card */}
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-primary-blue">
               <div className="flex items-center gap-4 mb-4">
@@ -59,24 +59,6 @@ export default function ContactUs() {
                 className="text-primary-blue hover:text-cyan-600 font-bold text-lg transition-colors inline-flex items-center gap-2"
               >
                 hello@digitalaccessnow.org
-                <span>→</span>
-              </a>
-            </div>
-
-            {/* Phone Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-primary-blue">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-primary-blue/10 p-4 rounded-full">
-                  <Phone className="text-primary-blue" size={32} />
-                </div>
-                <h3 className="text-2xl font-bold">Call Us</h3>
-              </div>
-              <p className="text-gray-600 mb-4">We'd love to hear from you!</p>
-              <a 
-                href="tel:+14076195503" 
-                className="text-primary-blue hover:text-blue-600 font-bold text-lg transition-colors inline-flex items-center gap-2"
-              >
-                +1 (407) 619-5503
                 <span>→</span>
               </a>
             </div>
