@@ -60,6 +60,7 @@ create table public.team_members (
   name text not null,
   role_title text not null,
   country text not null,
+  bio text,
   image_url text not null,
   status text check (status in ('active', 'inactive')) default 'active',
   created_at timestamp with time zone default timezone('utc'::text, now())

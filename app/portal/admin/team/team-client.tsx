@@ -1,0 +1,169 @@
+'use client'
+
+import { useState, useTransition } from 'react'
+import { Camera, Loader2, Plus, Trash2, Users } from 'lucide-react'
+import { adminNavItems } from '@/components/portal/portal-nav'
+import { PortalShell } from '@/components/portal/portal-shell'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { addTeamMember, removeTeamMember } from '../admin-actions'
+
+type Member = {
+  id: string
+  name: string
+  role_title: string
+  country: string
+  bio: string | null
+  image_url: string
+  status: string
+}
+
+export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
+  const [members, setMembers] = useState(initialMembers)
+  const [isPending, startTransition] = useTransition()
+  const [notice, setNotice] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
+
+  function handleAdd(formData: FormData) {
+    startTransition(async () => {
+      setNotice(null)
+      const result = await addTeamMember(formData)
+      if (result.error) {
+        setNotice({ type: 'err', msg: result.error })
+      } else {
+        setNotice({ type: 'ok', msg: 'Team member added successfully!' })
+        // Optimistic: reload from parent would do server revalidate
+        // For now show success and let Next.js revalidate refresh the list
+        window.location.reload()
+      }
+    })
+  }
+
+  function handleRemove(id: string, name: string) {
+    if (!confirm(`Remove "${name}" from the team page?`)) return
+    startTransition(async () => {
+      setNotice(null)
+      const result = await removeTeamMember(id)
+      if (result.error) {
+        setNotice({ type: 'err', msg: result.error })
+      } else {
+        setMembers(prev => prev.filter(m => m.id !== id))
+        setNotice({ type: 'ok', msg: `${name} removed from team page.` })
+      }
+    })
+  }
+
+  return (
+    <PortalShell
+      role="admin"
+      currentPath="/portal/admin/team"
+      badge="Team management"
+      title="Add, edit, and remove team members for the public team page."
+      subtitle="Changes made here are immediately reflected on /about/our-team on the public website."
+      navItems={adminNavItems}
+    >
+      {notice && (
+        <div className={`rounded-2xl px-5 py-3 text-sm font-medium mb-4 ${notice.type === 'ok' ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-red-50 border border-red-200 text-red-700'}`}>
+          {notice.type === 'ok' ? '✓' : '⚠'} {notice.msg}
+        </div>
+      )}
+
+      <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+        {/* Add Member Form */}
+        <Card className="border-primary-blue/15 bg-white py-0">
+          <CardHeader className="px-6 pt-6">
+            <CardTitle className="text-2xl font-black text-gray-950">Add new team member</CardTitle>
+          </CardHeader>
+          <CardContent className="px-6 pb-6">
+            <form action={handleAdd} className="space-y-5">
+              <div className="grid gap-5 md:grid-cols-2">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-800">Full name *</label>
+                  <Input name="name" required placeholder="Enter full name" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-800">Role / Title *</label>
+                  <Input name="role_title" required placeholder="e.g. Director of Education" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
+                </div>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-800">Country</label>
+                  <Input name="country" placeholder="e.g. United States, Pakistan" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-800">Short bio</label>
+                <Textarea name="bio" placeholder="Short public biography shown on the website" className="min-h-20 rounded-2xl border-gray-200 bg-gray-50" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-800">Photo URL *</label>
+                <Input name="image_url" required placeholder="https://i.ibb.co/..." className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
+                <p className="text-xs text-gray-400">Paste an imgbb.com or similar direct image link</p>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button type="submit" disabled={isPending} className="rounded-full bg-primary-blue text-white hover:bg-cyan-600">
+                  {isPending ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
+                  {isPending ? 'Saving...' : 'Add to team page'}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Existing Members List */}
+        <Card className="border-primary-blue/15 bg-white py-0">
+          <CardHeader className="px-6 pt-6">
+            <div className="flex items-center justify-between gap-4">
+              <CardTitle className="text-2xl font-black text-gray-950">Live team roster</CardTitle>
+              <Badge className="rounded-full bg-gray-950 px-4 py-1 text-white hover:bg-gray-950">
+                <Users className="mr-2 size-3.5" />
+                {members.length} members live
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4 px-6 pb-6">
+            {members.length === 0 && (
+              <p className="text-gray-400 text-sm py-8 text-center">No team members in database yet. Add one using the form.</p>
+            )}
+            {members.map((member) => (
+              <div key={member.id} className="flex flex-col gap-4 rounded-3xl border border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="flex size-16 items-center justify-center overflow-hidden rounded-full border-2 border-primary-blue/25 bg-gray-100 shrink-0">
+                    <img src={member.image_url} alt={member.name} className="h-full w-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-950">{member.name}</p>
+                    <p className="text-sm font-semibold text-primary-blue">{member.role_title}</p>
+                    <p className="text-xs text-gray-400">{member.country}</p>
+                    {member.bio && <p className="mt-1 max-w-xs text-sm text-gray-600 line-clamp-2">{member.bio}</p>}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                  <Badge className="rounded-full bg-green-50 border border-green-200 px-3 py-1 text-green-700 text-xs">
+                    ● Live
+                  </Badge>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={isPending}
+                    onClick={() => handleRemove(member.id, member.name)}
+                    className="rounded-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-700"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+    </PortalShell>
+  )
+}

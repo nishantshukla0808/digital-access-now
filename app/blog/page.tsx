@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { createClient } from '@/lib/supabase/server'
-import { Video, Play, ExternalLink } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 export const metadata = {
   title: 'Blog & Vlogs | Digital Access Now',
@@ -11,7 +11,6 @@ export const metadata = {
 function getEmbedUrl(url: string): string | null {
   try {
     const u = new URL(url)
-    // YouTube
     if (u.hostname.includes('youtube.com')) {
       const v = u.searchParams.get('v')
       if (v) return `https://www.youtube.com/embed/${v}`
@@ -19,7 +18,6 @@ function getEmbedUrl(url: string): string | null {
     if (u.hostname === 'youtu.be') {
       return `https://www.youtube.com/embed/${u.pathname.slice(1)}`
     }
-    // Vimeo
     if (u.hostname.includes('vimeo.com')) {
       const id = u.pathname.split('/').filter(Boolean).pop()
       if (id) return `https://player.vimeo.com/video/${id}`
@@ -51,35 +49,35 @@ export default async function BlogPage() {
         <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 tracking-tight">
+          <div role="heading" aria-level={1} className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 tracking-tight">
             BLOG & VLOGS
-          </h1>
+          </div>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Stories, insights, and videos from our volunteers in the field
           </p>
         </div>
       </section>
 
-      {/* Vlogs Grid */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      {/* Vlogs — News card format from homepage */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-4 text-gray-900">
-            VOLUNTEER VLOGS
-          </div>
-          <p className="text-gray-500 mb-12">Videos shared by our volunteers and approved by the DAN team.</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
+            Volunteer Vlogs
+          </h2>
 
           {(vlogs ?? []).length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-24 text-center">
-              <Video className="mx-auto mb-4 size-12 text-gray-300" />
-              <p className="text-gray-400 font-semibold text-lg">No vlogs published yet.</p>
-              <p className="text-gray-400 text-sm mt-2">Our volunteers are creating content — check back soon!</p>
+            <div className="bg-white border border-gray-200 rounded-lg p-16 text-center">
+              <div className="text-6xl mb-4">🎥</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No vlogs published yet</h3>
+              <p className="text-gray-600">Our volunteers are creating content — check back soon!</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {(vlogs ?? []).map((v) => {
                 const embed = getEmbedUrl(v.video_url)
                 return (
-                  <article key={v.id} className="flex flex-col bg-white rounded-2xl border border-primary-blue/10 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <div key={v.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    {/* Video thumbnail / embed */}
                     {embed ? (
                       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                         <iframe
@@ -91,20 +89,28 @@ export default async function BlogPage() {
                         />
                       </div>
                     ) : (
-                      <a href={v.video_url} target="_blank" rel="noopener noreferrer"
-                        className="h-40 bg-linear-to-br from-primary-blue/10 to-cyan-50 flex flex-col items-center justify-center gap-2 hover:from-primary-blue/20 transition-colors">
-                        <Play className="size-10 text-primary-blue" />
-                        <span className="text-xs font-semibold text-primary-blue flex items-center gap-1">Watch Video <ExternalLink className="size-3" /></span>
-                      </a>
+                      <div className="h-40 bg-gray-100 flex items-center justify-center text-5xl">
+                        🎥
+                      </div>
                     )}
-                    <div className="p-6 flex flex-col gap-2 flex-1">
-                      <h3 className="text-base font-black text-gray-950 leading-snug">{v.title}</h3>
-                      {v.description && <p className="text-sm text-gray-600 line-clamp-2 flex-1">{v.description}</p>}
-                      <p className="text-xs text-gray-400 mt-1">
-                        {new Date(v.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    <div className="p-6">
+                      <p className="text-sm text-gray-500 mb-2">
+                        {new Date(v.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </p>
+                      <h3 className="font-bold text-lg mb-3">{v.title}</h3>
+                      {v.description && (
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{v.description}</p>
+                      )}
+                      <a
+                        href={v.video_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary-blue font-bold hover:text-cyan-600 transition-all duration-300 flex items-center gap-2 text-sm"
+                      >
+                        Watch Video <ArrowRight size={16} />
+                      </a>
                     </div>
-                  </article>
+                  </div>
                 )
               })}
             </div>

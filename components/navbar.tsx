@@ -51,6 +51,9 @@ export function Navbar() {
             <Link href="/programs" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
               PROGRAMS
             </Link>
+            <Link href="/events" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
+              EVENTS
+            </Link>
 
             {/* IMPACT Dropdown */}
             <div className="relative group">
@@ -129,6 +132,9 @@ export function Navbar() {
             </Link>
             <Link href="/programs" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
               PROGRAMS
+            </Link>
+            <Link href="/events" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
+              EVENTS
             </Link>
 
             {/* Mobile IMPACT Dropdown */}

@@ -1,28 +1,8 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { createClient } from '@/lib/supabase/server'
-import { CalendarDays, MapPin, Clock, ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 
-function formatDate(d: string) {
-  return new Date(d).toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' })
-}
-function formatTime(d: string) {
-  return new Date(d).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-}
-
-export default async function Programs() {
-  const supabase = await createClient()
-  const today = new Date().toISOString()
-
-  const { data: events } = await supabase
-    .from('events')
-    .select('id, title, description, start_date, end_date, location')
-    .eq('status', 'published')
-    .order('start_date', { ascending: true })
-
-  const upcoming = (events ?? []).filter(e => e.start_date >= today)
-  const past = (events ?? []).filter(e => e.start_date < today).reverse()
-
+export default function Programs() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -279,64 +259,20 @@ export default async function Programs() {
         </div>
       </section>
 
-      {/* ─── DAN Community Events (Live from DB) ─── */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-4 text-gray-900">
-            DAN COMMUNITY EVENTS
-          </div>
-          <p className="text-gray-500 mb-12 text-base">Events submitted by our chapters and approved by the DAN team.</p>
-
-          {/* Upcoming */}
-          <div className="mb-14">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 border border-green-200 px-3 py-1 text-xs font-bold text-green-700">● Upcoming</span>
-            </div>
-            {upcoming.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-16 text-center">
-                <CalendarDays className="mx-auto mb-3 size-10 text-gray-300" />
-                <p className="text-gray-400 font-medium">No upcoming events scheduled yet.</p>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {upcoming.map(e => (
-                  <div key={e.id} className="rounded-2xl border border-primary-blue/15 bg-white p-6 shadow-sm hover:shadow-lg transition-shadow flex flex-col gap-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-primary-blue/10 px-2.5 py-0.5 text-xs font-bold text-primary-blue">Upcoming</span>
-                    </div>
-                    <h3 className="text-lg font-black text-gray-950 leading-snug">{e.title}</h3>
-                    <p className="text-sm text-gray-600 line-clamp-3 flex-1">{e.description}</p>
-                    <div className="space-y-1.5 text-sm text-gray-500">
-                      <div className="flex items-center gap-2"><CalendarDays className="size-4 text-primary-blue shrink-0" />{formatDate(e.start_date)}</div>
-                      <div className="flex items-center gap-2"><Clock className="size-4 text-primary-blue shrink-0" />{formatTime(e.start_date)} – {formatTime(e.end_date)}</div>
-                      <div className="flex items-center gap-2"><MapPin className="size-4 text-primary-blue shrink-0" />{e.location}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Past Events */}
-          {past.length > 0 && (
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 border border-gray-200 px-3 py-1 text-xs font-bold text-gray-500">● Past</span>
-              </div>
-              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {past.map(e => (
-                  <div key={e.id} className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex flex-col gap-4 opacity-75">
-                    <h3 className="text-lg font-black text-gray-700 leading-snug">{e.title}</h3>
-                    <p className="text-sm text-gray-500 line-clamp-2 flex-1">{e.description}</p>
-                    <div className="space-y-1.5 text-sm text-gray-400">
-                      <div className="flex items-center gap-2"><CalendarDays className="size-4 shrink-0" />{formatDate(e.start_date)}</div>
-                      <div className="flex items-center gap-2"><MapPin className="size-4 shrink-0" />{e.location}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+      {/* Events CTA */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-5xl mb-6">📅</div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Upcoming Events</h2>
+          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+            Our chapters host digital literacy workshops, device drives, leadership summits, and community events year-round. View all upcoming and past events.
+          </p>
+          <Link
+            href="/events"
+            className="inline-flex items-center gap-3 bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            View All Events
+          </Link>
         </div>
       </section>
 

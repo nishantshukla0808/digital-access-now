@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { createClient } from '@/lib/supabase/server'
-import { Wifi, BookOpen, Download } from 'lucide-react'
+import { Wifi } from 'lucide-react'
 
 export default async function Resources() {
   const supabase = await createClient()
@@ -11,14 +11,6 @@ export default async function Resources() {
     .select('id, title, description, category, file_url, created_at')
     .eq('status', 'published')
     .order('created_at', { ascending: false })
-
-  const categoryColors: Record<string, string> = {
-    'Digital Literacy': 'bg-blue-50 text-blue-700 border-blue-200',
-    'Training': 'bg-green-50 text-green-700 border-green-200',
-    'Research': 'bg-orange-50 text-orange-700 border-orange-200',
-    'Guides': 'bg-purple-50 text-purple-700 border-purple-200',
-    'Templates': 'bg-cyan-50 text-cyan-700 border-cyan-200',
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -376,42 +368,68 @@ export default async function Resources() {
 
       {/* ─── Community Resources (Live from DB) ─── */}
       {(resources ?? []).length > 0 && (
-        <section className="py-20 md:py-28 bg-white">
+        <section className="py-16 md:py-24 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-4 text-gray-900">
+            <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-10 text-gray-900">
               COMMUNITY RESOURCES
             </div>
-            <p className="text-gray-500 mb-12">Documents, guides and templates contributed by our volunteers and approved by the DAN team.</p>
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {(resources ?? []).map((r) => {
-                const colorClass = categoryColors[r.category ?? ''] ?? 'bg-gray-50 text-gray-600 border-gray-200'
-                return (
-                  <div key={r.id} className="flex flex-col rounded-2xl border border-primary-blue/10 bg-white p-6 shadow-sm hover:shadow-lg transition-shadow gap-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-bold ${colorClass}`}>
-                        {r.category || 'Resource'}
-                      </span>
-                      <BookOpen className="size-4 text-gray-300 shrink-0 mt-0.5" />
+            <div className="space-y-6">
+              {(resources ?? []).map((r) => (
+                <div key={r.id} className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-primary-blue">
+                  <div className="grid md:grid-cols-2 gap-12 items-center">
+                    {/* Left: Description */}
+                    <div>
+                      {r.category && (
+                        <span className="inline-block mb-3 bg-primary-blue/10 text-primary-blue font-bold text-xs px-3 py-1 rounded-full">
+                          {r.category}
+                        </span>
+                      )}
+                      <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed font-bold">
+                        {r.title}
+                      </p>
+                      {r.description && (
+                        <p className="text-lg text-gray-600 mb-8 leading-relaxed">{r.description}</p>
+                      )}
+                      <a
+                        href={r.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                      >
+                        Download Resource
+                      </a>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-black text-gray-950 mb-2 leading-snug">{r.title}</h3>
-                      {r.description && <p className="text-sm text-gray-500 line-clamp-2">{r.description}</p>}
+                    {/* Right: Info Panel */}
+                    <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
+                      <div className="text-center space-y-6">
+                        <div className="text-6xl">📄</div>
+                        <div className="space-y-4 text-left">
+                          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                            <p className="font-semibold mb-1 text-gray-900">Category</p>
+                            <p className="text-gray-600">{r.category || 'Resource'}</p>
+                          </div>
+                          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                            <p className="font-semibold mb-1 text-gray-900">Published</p>
+                            <p className="text-gray-600">
+                              {new Date(r.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                            </p>
+                          </div>
+                          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                            <p className="font-semibold mb-1 text-gray-900">Access</p>
+                            <p className="text-primary-blue font-bold">FREE DOWNLOAD</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <a
-                      href={r.file_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-primary-blue/10 hover:bg-primary-blue/20 text-primary-blue px-4 py-2 text-sm font-bold transition-colors self-start"
-                    >
-                      <Download className="size-3.5" /> Download
-                    </a>
                   </div>
-                )
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </section>
       )}
+
+
 
       {/* CTA */}
       <section className="py-20 md:py-28 bg-white">

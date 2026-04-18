@@ -1,14 +1,14 @@
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { createClient } from '@/lib/supabase/server'
-import { BookOpen, Download, FileText, ArrowUpRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 export const metadata = {
   title: 'Impact Stories | Digital Access Now',
   description: 'Read real impact stories and reports from our chapters working to bridge the digital divide.',
 }
 
-export default async function ImpactPage() {
+export default async function ImpactStoriesPage() {
   const supabase = await createClient()
 
   const { data: reports } = await supabase
@@ -21,7 +21,7 @@ export default async function ImpactPage() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero */}
+      {/* Hero — same gradient as all other pages */}
       <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-linear-to-br from-primary-blue via-primary-purple to-cyan-600 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
           <div className="absolute top-10 left-10 text-6xl md:text-8xl font-black text-white transform -rotate-12">IMPACT</div>
@@ -32,55 +32,45 @@ export default async function ImpactPage() {
         <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 tracking-tight">
+          <div role="heading" aria-level={1} className="text-2xl md:text-3xl lg:text-4xl font-black mb-6 tracking-tight">
             IMPACT STORIES
-          </h1>
+          </div>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Real stories of change from our chapters on the ground
+            Real stories of change from our chapters around the world
           </p>
         </div>
       </section>
 
-      {/* Reports Grid */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      {/* Program Stories — same format as homepage */}
+      <section className="py-16 md:py-24 bg-light-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div role="heading" aria-level={2} className="text-xl md:text-2xl font-black mb-4 text-gray-900">
-            CHAPTER REPORTS & STORIES
-          </div>
-          <p className="text-gray-500 mb-12">Published and verified stories from our global network of chapters.</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
+            Program Stories
+          </h2>
 
           {(reports ?? []).length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-24 text-center">
-              <BookOpen className="mx-auto mb-4 size-12 text-gray-300" />
-              <p className="text-gray-400 font-semibold text-lg">No impact stories published yet.</p>
-              <p className="text-gray-400 text-sm mt-2">Check back soon — our chapters are writing their stories.</p>
+            <div className="bg-white p-16 rounded-lg shadow-md text-center">
+              <div className="text-6xl mb-4">📋</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No stories published yet</h3>
+              <p className="text-gray-600">Check back soon — our chapters are writing their stories.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8">
               {(reports ?? []).map((r) => (
-                <article
-                  key={r.id}
-                  className="group flex flex-col bg-white rounded-2xl border border-primary-blue/10 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
-                >
-                  {/* Cover or emoji banner */}
+                <div key={r.id} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                   {r.cover_image_url ? (
-                    <div className="h-48 overflow-hidden">
-                      <img src={r.cover_image_url} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="h-40 -mx-8 -mt-8 mb-4 overflow-hidden rounded-t-lg">
+                      <img src={r.cover_image_url} alt={r.title} className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className="h-32 bg-linear-to-br from-primary-blue/10 to-cyan-50 flex items-center justify-center">
-                      <span className="text-5xl">{r.icon_emoji || '📋'}</span>
-                    </div>
+                    <div className="text-5xl mb-4">{r.icon_emoji || '📋'}</div>
                   )}
-
-                  <div className="flex flex-col flex-1 p-6 gap-3">
-                    <h3 className="text-lg font-black text-gray-950 leading-snug">{r.title}</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed line-clamp-3 flex-1">{r.excerpt_description}</p>
-                    <p className="text-xs text-gray-400">
-                      {new Date(r.published_date || r.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                    </p>
-                  </div>
-                </article>
+                  <p className="text-sm text-gray-400 mb-2">
+                    {new Date(r.published_date || r.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                  </p>
+                  <h3 className="text-xl font-bold mb-3">{r.title}</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">{r.excerpt_description}</p>
+                </div>
               ))}
             </div>
           )}

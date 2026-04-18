@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2, XCircle } from 'lucide-react'
-import { verifySubmission } from '@/app/portal/submissions'
+import { approveOrReject } from '@/app/portal/admin/admin-actions'
 import type { PendingItem } from './page'
 
 type TypeConfig = Record<string, {
@@ -29,7 +29,7 @@ export function ApprovalsClient({
   function handleAction(item: PendingItem, action: 'published' | 'rejected' | 'verified') {
     startTransition(async () => {
       setError(null)
-      const result = await verifySubmission(item.table, item.id, action)
+      const result = await approveOrReject(item.table, item.id, action)
       if (result.error) {
         setError(result.error)
         return
