@@ -16,19 +16,25 @@ export default async function AdminDashboardPage() {
     { data: pendingEvents },
     { data: pendingVlogs },
     { data: pendingResources },
-    { data: recentPending },
+    { data: pendingHours },
   ] = await Promise.all([
     service.from('users').select('*', { count: 'exact', head: true }),
-    service.from('reports').select('id').eq('status', 'pending_verification'),
-    service.from('events').select('id').eq('status', 'pending_verification'),
-    service.from('vlogs').select('id').eq('status', 'pending_verification'),
-    service.from('resources').select('id').eq('status', 'pending_verification'),
-    service.from('reports')
-      .select('id, title, status, created_at')
-      .eq('status', 'pending_verification')
-      .order('created_at', { ascending: false })
-      .limit(5),
+    service.from('reports').select('id, title, created_at').eq('status', 'pending_verification').order('created_at', { ascending: false }),
+    service.from('events').select('id, title, created_at').eq('status', 'pending_verification').order('created_at', { ascending: false }),
+    service.from('vlogs').select('id, title, created_at').eq('status', 'pending_verification').order('created_at', { ascending: false }),
+    service.from('resources').select('id, title, created_at').eq('status', 'pending_verification').order('created_at', { ascending: false }),
+    service.from('volunteer_attendance').select('id, activity_description, hours_logged, created_at').eq('status', 'pending').order('created_at', { ascending: false }),
   ])
+
+  // Merge all into one unified list, sorted by date, show top 5
+  const recentPending = [
+    ...(pendingReports ?? []).map(r => ({ id: r.id, title: r.title, date: r.created_at, type: 'Report' })),
+    ...(pendingEvents ?? []).map(e => ({ id: e.id, title: e.title, date: e.created_at, type: 'Event' })),
+    ...(pendingVlogs ?? []).map(v => ({ id: v.id, title: v.title, date: v.created_at, type: 'Vlog' })),
+    ...(pendingResources ?? []).map(r => ({ id: r.id, title: r.title, date: r.created_at, type: 'Resource' })),
+    ...(pendingHours ?? []).map(h => ({ id: h.id, title: `${h.hours_logged}h — ${h.activity_description?.slice(0, 40) ?? 'Activity'}`, date: h.created_at, type: 'Hours' })),
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5)
+
 
   const totalPending =
     (pendingReports?.length ?? 0) +
@@ -109,16 +115,16 @@ export default async function AdminDashboardPage() {
             </Link>
           </CardHeader>
           <CardContent className="space-y-3 px-6 pb-6">
-            {(recentPending ?? []).length === 0 ? (
+            {recentPending.length === 0 ? (
               <p className="text-white/40 text-sm py-8 text-center">No pending items — all clear! ✓</p>
             ) : (
-              (recentPending ?? []).map((item) => (
+              recentPending.map((item) => (
                 <div key={item.id} className="rounded-3xl border border-white/10 bg-white/5 p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <div>
+                    <div className="min-w-0">
                       <p className="font-semibold text-white truncate max-w-[200px]">{item.title}</p>
                       <p className="mt-1 text-xs text-white/50">
-                        {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        {item.type} · {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </p>
                     </div>
                     <Badge className="rounded-full bg-yellow-400/20 px-3 py-1 text-yellow-400 border-yellow-400/30 hover:bg-yellow-400/20 text-xs shrink-0">

@@ -1,6 +1,6 @@
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
-import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2 } from 'lucide-react'
@@ -17,7 +17,7 @@ export type PendingItem = {
 }
 
 export default async function AdminApprovalsPage() {
-  const supabase = await createClient()
+  const supabase = createServiceClient()
 
   // Fetch all pending items across tables in parallel
   const [{ data: reports }, { data: events }, { data: resources }, { data: vlogs }, { data: hours }] = await Promise.all([

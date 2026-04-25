@@ -35,6 +35,8 @@ export default async function BlogPage() {
     .eq('status', 'published')
     .order('created_at', { ascending: false })
 
+  const hasAny = (vlogs ?? []).length > 0
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -58,26 +60,33 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      {/* Vlogs — News card format from homepage */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
-            Volunteer Vlogs
-          </h2>
+      {/* No vlogs yet — placeholder */}
+      {!hasAny && (
+        <section className="py-24 bg-gray-50 text-center">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-6xl mb-6">🎥</div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              We'll update the blog & vlogs here in the future
+            </h2>
+            <p className="text-lg text-gray-600">
+              Stay tuned for exciting new stories and vlogs from our volunteers!
+            </p>
+          </div>
+        </section>
+      )}
 
-          {(vlogs ?? []).length === 0 ? (
-            <div className="bg-white border border-gray-200 rounded-lg p-16 text-center">
-              <div className="text-6xl mb-4">🎥</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">No vlogs published yet</h3>
-              <p className="text-gray-600">Our volunteers are creating content — check back soon!</p>
-            </div>
-          ) : (
+      {/* Vlogs grid — only when there is content */}
+      {hasAny && (
+        <section className="py-16 md:py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
+              Volunteer Vlogs
+            </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {(vlogs ?? []).map((v) => {
                 const embed = getEmbedUrl(v.video_url)
                 return (
                   <div key={v.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    {/* Video thumbnail / embed */}
                     {embed ? (
                       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                         <iframe
@@ -89,9 +98,7 @@ export default async function BlogPage() {
                         />
                       </div>
                     ) : (
-                      <div className="h-40 bg-gray-100 flex items-center justify-center text-5xl">
-                        🎥
-                      </div>
+                      <div className="h-40 bg-gray-100 flex items-center justify-center text-5xl">🎥</div>
                     )}
                     <div className="p-6">
                       <p className="text-sm text-gray-500 mb-2">
@@ -114,9 +121,9 @@ export default async function BlogPage() {
                 )
               })}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </div>

@@ -41,20 +41,28 @@ export default async function ImpactStoriesPage() {
         </div>
       </section>
 
-      {/* Program Stories — same format as homepage */}
-      <section className="py-16 md:py-24 bg-light-gray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
-            Program Stories
-          </h2>
+      {/* No reports yet — placeholder matching events/blog style */}
+      {(reports ?? []).length === 0 && (
+        <section className="py-24 bg-light-gray text-center">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-6xl mb-6">📋</div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              We'll update the impact stories here in the future
+            </h2>
+            <p className="text-lg text-gray-600">
+              Stay tuned — our chapters are writing their stories of change.
+            </p>
+          </div>
+        </section>
+      )}
 
-          {(reports ?? []).length === 0 ? (
-            <div className="bg-white p-16 rounded-lg shadow-md text-center">
-              <div className="text-6xl mb-4">📋</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">No stories published yet</h3>
-              <p className="text-gray-600">Check back soon — our chapters are writing their stories.</p>
-            </div>
-          ) : (
+      {/* Program Stories — only shown when there is content */}
+      {(reports ?? []).length > 0 && (
+        <section className="py-16 md:py-24 bg-light-gray">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
+              Program Stories
+            </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {(reports ?? []).map((r) => (
                 <div key={r.id} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
@@ -73,9 +81,9 @@ export default async function ImpactStoriesPage() {
                 </div>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </div>
