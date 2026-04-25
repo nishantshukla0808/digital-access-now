@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { Camera, Loader2, Plus, Trash2, Users } from 'lucide-react'
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
@@ -25,8 +25,16 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
   const [members, setMembers] = useState(initialMembers)
   const [isPending, startTransition] = useTransition()
   const [notice, setNotice] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
+  const [imageUrlPreview, setImageUrlPreview] = useState('')
+  const imageInputRef = useRef<HTMLInputElement>(null)
 
   function handleAdd(formData: FormData) {
+    const imageUrl = (formData.get('image_url') as string | null)?.trim() ?? ''
+    // Warn if they pasted an ibb.co viewer link instead of a direct i.ibb.co image link
+    if (imageUrl && imageUrl.includes('ibb.co') && !imageUrl.includes('i.ibb.co')) {
+      setNotice({ type: 'err', msg: 'Wrong ImgBB link! Use the "Direct link" (starts with https://i.ibb.co/...), not the viewer page link.' })
+      return
+    }
     startTransition(async () => {
       setNotice(null)
       const result = await addTeamMember(formData)
@@ -34,8 +42,8 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
         setNotice({ type: 'err', msg: result.error })
       } else {
         setNotice({ type: 'ok', msg: 'Team member added successfully!' })
-        // Optimistic: reload from parent would do server revalidate
-        // For now show success and let Next.js revalidate refresh the list
+        setImageUrlPreview('')
+        if (imageInputRef.current) imageInputRef.current.value = ''
         window.location.reload()
       }
     })
@@ -103,8 +111,33 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-800">Photo URL *</label>
-                <Input name="image_url" required placeholder="https://i.ibb.co/..." className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
-                <p className="text-xs text-gray-400">Paste an imgbb.com or similar direct image link</p>
+                <Input
+                  ref={imageInputRef}
+                  name="image_url"
+                  required
+                  placeholder="https://i.ibb.co/XXXXXXXX/photo.jpg"
+                  onChange={e => setImageUrlPreview(e.target.value)}
+                  className="h-11 rounded-2xl border-gray-200 bg-gray-50"
+                />
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800 space-y-1">
+                  <p className="font-bold">⚠ ImgBB: use the "Direct link" only</p>
+                  <p>✅ Correct: <span className="font-mono">https://i.ibb.co/XXXX/photo.jpg</span></p>
+                  <p>❌ Wrong: <span className="font-mono">https://ibb.co/XXXX</span> (viewer page)</p>
+                </div>
+                {imageUrlPreview && (
+                  <div className="mt-2 flex items-center gap-3">
+                    <div className="size-16 overflow-hidden rounded-full border-2 border-gray-200 bg-gray-100 shrink-0">
+                      <img
+                        src={imageUrlPreview}
+                        alt="Preview"
+                        className="h-full w-full object-cover"
+                        onError={e => { (e.target as HTMLImageElement).style.opacity = '0.2' }}
+                        onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1' }}
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500">Live preview — if you see a broken image, the URL is incorrect.</p>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row">

@@ -3,21 +3,13 @@ import { PortalShell } from '@/components/portal/portal-shell'
 import { createClient } from '@/lib/supabase/server'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
-import { CheckCircle2, FileText, CalendarDays, BookOpen, Video, Clock } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { ApprovalsClient } from './approvals-client'
-
-const typeConfig = {
-  report: { icon: FileText, color: 'bg-blue-50 text-blue-700 border-blue-200', badge: 'Chapter Report' },
-  event: { icon: CalendarDays, color: 'bg-green-50 text-green-700 border-green-200', badge: 'Chapter Event' },
-  resource: { icon: BookOpen, color: 'bg-primary-blue/10 text-primary-blue border-primary-blue/20', badge: 'Volunteer Resource' },
-  vlog: { icon: Video, color: 'bg-orange-50 text-orange-700 border-orange-200', badge: 'Volunteer Vlog' },
-  hours: { icon: Clock, color: 'bg-yellow-50 text-yellow-700 border-yellow-200', badge: 'Hours Log' },
-}
 
 export type PendingItem = {
   id: string
   title: string
-  type: keyof typeof typeConfig
+  type: 'report' | 'event' | 'resource' | 'vlog' | 'hours'
   table: 'reports' | 'events' | 'resources' | 'vlogs' | 'volunteer_attendance'
   submittedBy: string
   excerpt: string
@@ -103,7 +95,7 @@ export default async function AdminApprovalsPage() {
           </CardContent>
         </Card>
       ) : (
-        <ApprovalsClient initialItems={pending} typeConfig={typeConfig} />
+        <ApprovalsClient initialItems={pending} />
       )}
     </PortalShell>
   )
