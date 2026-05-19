@@ -69,7 +69,7 @@ export default async function OurTeam() {
         <div className="absolute top-20 right-12 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-12 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight">
             MEET OUR TEAM
           </h1>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">

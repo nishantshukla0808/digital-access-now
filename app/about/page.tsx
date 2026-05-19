@@ -139,7 +139,7 @@ export default function About() {
 
         {/* Main Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight">
             ABOUT US
           </h1>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">

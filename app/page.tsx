@@ -166,32 +166,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* News Section */}
+      {/* Recent Highlights Gallery */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12">
-            News
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { date: 'Jan 19, 2026', title: 'Digital Access Framework Released', image: '📋' },
-              { date: 'Dec 1, 2025', title: 'Five Years of Impact Milestone', image: '🎉' },
-              { date: 'Aug 12, 2025', title: 'New Partnership Announced', image: '🤝' },
-              { date: 'Aug 4, 2025', title: 'New Executive Leadership', image: '👤' },
-            ].map((news, i) => (
-              <div key={i} className="bg-white border border-border-gray rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <div className="h-40 bg-gray-100 flex items-center justify-center text-5xl">
-                  {news.image}
-                </div>
-                <div className="p-6">
-                  <p className="text-sm text-gray-500 mb-2">{news.date}</p>
-                  <h3 className="font-bold text-lg mb-4">{news.title}</h3>
-                  <Link href="#" className="text-primary-blue font-bold hover:text-cyan-600 transition-all duration-300 flex items-center gap-2">
-                    Read More <ArrowRight size={16} />
-                  </Link>
-                </div>
+          <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold text-primary-blue uppercase tracking-widest mb-3 block">In the Field</span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">Recent Highlights</h2>
+            </div>
+            <p className="text-gray-500 max-w-md text-sm leading-relaxed">
+              Our founder's recent engagements, conferences, and community partnerships across the globe.
+            </p>
+          </div>
+
+          {/* Bento Grid — col 1 tall (Forbes), cols 2-3 stacked pairs */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{gridTemplateRows: '420px 420px'}}>
+
+            {/* Image 3 — Forbes 30u30 — tall left card spanning 2 rows */}
+            <div className="md:row-span-2 relative rounded-2xl overflow-hidden group cursor-default">
+              <img src="https://i.ibb.co/QvVVTZFz/Whats-App-Image-2026-04-26-at-23-05-28-Picsart-Ai-Image-Enhancer.jpg" alt="Forbes 30 Under 30 Summit" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+              <div className="absolute top-4 left-4"><span className="text-xs font-bold text-white bg-primary-blue px-3 py-1 rounded-full">Apr 21, 2026</span></div>
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="text-primary-blue text-xs font-bold uppercase tracking-wide mb-1">Forbes 30 Under 30</p>
+                <p className="text-white font-semibold text-base leading-snug">Ritika represented Digital Access Now at the Forbes 30 Under 30 Summit</p>
               </div>
-            ))}
+            </div>
+
+            {/* Image 1 — Wharton Biotech — top middle */}
+            <div className="relative rounded-2xl overflow-hidden group cursor-default">
+              <img src="https://i.ibb.co/BKrhF3Vm/Whats-App-Image-2026-04-26-at-23-02-53-Picsart-Ai-Image-Enhancer.jpg" alt="Wharton Biotech Conference" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+              <div className="absolute top-4 left-4"><span className="text-xs font-bold text-white bg-primary-blue px-3 py-1 rounded-full">Apr 25, 2026</span></div>
+              <div className="absolute bottom-0 left-0 right-0 p-4"><p className="text-white font-semibold text-sm leading-snug">Networking at the Wharton Biotech Conference for Digital Access Now</p></div>
+            </div>
+
+            {/* Image 2 — Penn Biotech Dinner — top right */}
+            <div className="relative rounded-2xl overflow-hidden group cursor-default">
+              <img src="https://i.ibb.co/0VFTb5hQ/Whats-App-Image-2026-04-26-at-23-03-09-Picsart-Ai-Image-Enhancer.jpg" alt="Penn Biotech 25th Anniversary" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+              <div className="absolute top-4 left-4"><span className="text-xs font-bold text-white bg-primary-blue px-3 py-1 rounded-full">Apr 25, 2026</span></div>
+              <div className="absolute bottom-0 left-0 right-0 p-4"><p className="text-white font-semibold text-sm leading-snug">DAN attended Penn Biotech Group's 25th anniversary dinner at UPenn</p></div>
+            </div>
+
+            {/* Image 4 — Mask Ball — bottom middle */}
+            <div className="relative rounded-2xl overflow-hidden group cursor-default">
+              <img src="https://i.ibb.co/TDmJc0pb/Whats-App-Image-2026-04-26-at-23-07-12-Picsart-Ai-Image-Enhancer.jpg" alt="Mask Ball NYC" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+              <div className="absolute top-4 left-4"><span className="text-xs font-bold text-white bg-primary-blue px-3 py-1 rounded-full">Apr 10, 2026</span></div>
+              <div className="absolute bottom-0 left-0 right-0 p-4"><p className="text-white font-semibold text-sm leading-snug">Invited to the Mask Ball event at International House NYC</p></div>
+            </div>
+
+            {/* Image 5 — Ambassador Chris Lu — bottom right */}
+            <div className="relative rounded-2xl overflow-hidden group cursor-default">
+              <img src="https://i.ibb.co/Df08rPMw/Whats-App-Image-2026-04-26-at-23-08-23-Picsart-Ai-Image-Enhancer.jpg" alt="Meeting Ambassador Chris Lu" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+              <div className="absolute top-4 left-4"><span className="text-xs font-bold text-white bg-primary-blue px-3 py-1 rounded-full">Apr 8, 2026</span></div>
+              <div className="absolute bottom-0 left-0 right-0 p-4"><p className="text-white font-semibold text-sm leading-snug">Ritika met Ambassador Chris Lu at the Rotary Club</p></div>
+            </div>
+          </div>
+
+
+          {/* Image 8 — wide landscape card below */}
+          <div className="mt-4 relative rounded-2xl overflow-hidden h-96 group cursor-default">
+            <img src="https://i.ibb.co/nsdwW0rq/Whats-App-Image-2026-04-26-at-23-50-15-Picsart-Ai-Image-Enhancer.jpg" alt="Community engagement" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style={{objectPosition: 'center 30%'}} />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <p className="text-white font-semibold text-base md:text-lg max-w-xl">Community engagement and local partnerships — advancing digital equity at the grassroots level</p>
+            </div>
           </div>
         </div>
       </section>
@@ -286,6 +328,11 @@ function HeroCarousel() {
       image: 'https://i.ibb.co/vxPNQ21P/IMG-0533.jpg',
       title: 'Bridging the Digital Divide Worldwide',
       subtitle: 'Provide Digital Access to underserved communities Globally'
+    },
+    {
+      image: 'https://i.ibb.co/Kp60vPFj/Whats-App-Image-2026-04-26-at-23-50-33-Picsart-Ai-Image-Enhancer.jpg',
+      title: 'Driving Conversations on Digital Equity',
+      subtitle: 'Presenting at conferences and summits to advocate for universal access'
     },
     {
       image: 'https://i.ibb.co/NgjX72yS/Screenshot-2026-01-22-at-7-16-54-PM.png',
