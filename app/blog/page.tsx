@@ -28,6 +28,8 @@ function getEmbedUrl(url: string): string | null {
 
 export default async function BlogPage() {
   const supabase = await createClient()
+  const featuredUrl = 'https://www.youtube.com/watch?v=L92pl5a5Cho'
+  const featuredEmbed = getEmbedUrl(featuredUrl)
 
   const { data: vlogs } = await supabase
     .from('vlogs')
@@ -57,6 +59,51 @@ export default async function BlogPage() {
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Stories, insights, and videos from our volunteers in the field
           </p>
+        </div>
+      </section>
+
+      {/* Featured Video */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div className="relative w-full overflow-hidden rounded-2xl border border-primary-blue/20 bg-white shadow-xl">
+              {featuredEmbed ? (
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    src={featuredEmbed}
+                    title="Digital Access Now featured video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
+                  />
+                </div>
+              ) : (
+                <div className="h-64 bg-gray-100 flex items-center justify-center text-5xl">🎥</div>
+              )}
+            </div>
+            <div>
+              <p className="text-xs font-bold text-primary-blue uppercase tracking-widest mb-3">Featured Video</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Student workshop highlight
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                See how a Digital Access Now student workshop delivers hands-on digital literacy training and creates pathways for learners to thrive.
+              </p>
+              <div className="flex flex-wrap gap-4 mt-6">
+                <a
+                  href={featuredUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary-blue px-6 py-3 text-sm font-bold text-white hover:bg-cyan-600 transition-all duration-300"
+                >
+                  Watch on YouTube <ArrowRight size={16} />
+                </a>
+              </div>
+              <p className="text-sm text-gray-500 mt-4">
+                More volunteer vlogs and stories are listed below.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

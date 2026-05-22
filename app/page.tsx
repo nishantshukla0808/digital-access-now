@@ -129,6 +129,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Video */}
+      <section className="py-16 md:py-24 bg-[#f7fbfe]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div className="relative w-full overflow-hidden rounded-2xl border border-primary-blue/20 bg-white shadow-xl">
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  src="https://www.youtube.com/embed/L92pl5a5Cho"
+                  title="Digital Access Now featured video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-primary-blue uppercase tracking-widest mb-3">Featured Video</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Student workshop spotlight
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                A look inside a Digital Access Now student workshop where learners build real-world digital skills, gain confidence, and connect with mentors in their community.
+              </p>
+              <div className="flex flex-wrap gap-4 mt-6">
+                <a
+                  href="https://www.youtube.com/watch?v=L92pl5a5Cho"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary-blue px-6 py-3 text-sm font-bold text-white hover:bg-cyan-600 transition-all duration-300"
+                >
+                  Watch on YouTube <ArrowRight size={16} />
+                </a>
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 rounded-full border border-primary-blue/30 px-6 py-3 text-sm font-bold text-primary-blue hover:bg-primary-blue/10 transition-all duration-300"
+                >
+                  More blogs and vlogs
+                </Link>
+              </div>
+              <p className="text-sm text-gray-500 mt-4">
+                Want more stories? Visit the Blog & Vlogs page for the full library.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Program Stories */}
       <section className="py-16 md:py-24 bg-light-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

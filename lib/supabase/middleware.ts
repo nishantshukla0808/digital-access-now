@@ -32,8 +32,6 @@ export async function updateSession(request: NextRequest) {
     '/portal/register',
     '/portal/forgot-password',
     '/portal/update-password',
-    '/portal/verify-email',
-    '/portal/reset-password',
   ]
 
   const isPortalRoute = request.nextUrl.pathname.startsWith('/portal')

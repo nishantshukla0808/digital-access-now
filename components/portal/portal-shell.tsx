@@ -48,9 +48,10 @@ export function PortalShell({
   const RoleIcon = config.icon
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[linear-gradient(180deg,#f0f9ff_0%,#e8f4fd_100%)]">
-      {/* Sidebar — fixed height, never scrolls */}
-      <aside className="hidden lg:flex lg:w-72 lg:flex-none flex-col h-screen bg-[#04111f] text-white overflow-y-auto">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#f0f9ff_0%,#e8f4fd_100%)]">
+      <div className="mx-auto flex min-h-screen max-w-[1600px] flex-col lg:flex-row">
+        {/* Sidebar */}
+        <aside className="flex flex-col bg-[#04111f] text-white lg:w-72 lg:flex-none lg:min-h-screen">
           {/* Logo */}
           <div className="border-b border-white/8 px-6 py-5">
             <Link href="/portal" className="flex items-center gap-3">
@@ -111,10 +112,10 @@ export function PortalShell({
               </button>
             </form>
           </div>
-      </aside>
+        </aside>
 
-      {/* Main Content — takes remaining width, scrolls independently */}
-      <main className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+        {/* Main Content */}
+        <main className="flex-1 flex flex-col min-w-0">
           {/* Page Header */}
           <div className="border-b border-[#00BCD4]/15 bg-white px-6 py-6 sm:px-8 sm:py-7">
             <Badge className="rounded-full bg-primary-blue/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.25em] text-primary-blue hover:bg-primary-blue/10 border-0">
@@ -132,7 +133,8 @@ export function PortalShell({
           <div className="flex-1 p-6 sm:p-8">
             {children}
           </div>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }

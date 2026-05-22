@@ -21,19 +21,15 @@ returns trigger as $$
 declare
   new_custom_id text;
   user_role text;
-  current_year text;
-  serial_num text;
 begin
   user_role := coalesce((new.raw_user_meta_data->>'role'), 'VOLUNTEER');
-  current_year := extract(year from now())::text;
-  serial_num := nextval('custom_id_seq')::text;
-
+  
   if user_role = 'ADMIN' then
-    new_custom_id := 'DAN-ADM-' || current_year || '-' || serial_num;
+    new_custom_id := 'ADM-' || nextval('custom_id_seq')::text;
   elsif user_role = 'CHAPTER' then
-    new_custom_id := 'DAN-CH-' || current_year || '-' || serial_num;
+    new_custom_id := 'CH-' || nextval('custom_id_seq')::text;
   else
-    new_custom_id := 'DAN-VOL-' || current_year || '-' || serial_num;
+    new_custom_id := 'VOL-' || nextval('custom_id_seq')::text;
   end if;
 
   insert into public.users (id, custom_id, email, role, full_name)
@@ -60,7 +56,6 @@ create table public.team_members (
   name text not null,
   role_title text not null,
   country text not null,
-  bio text,
   image_url text not null,
   status text check (status in ('active', 'inactive')) default 'active',
   created_at timestamp with time zone default timezone('utc'::text, now())
