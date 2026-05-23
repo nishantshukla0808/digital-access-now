@@ -12,6 +12,26 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
+      {/* Announcement Header */}
+      <section className="pt-28 pb-0 bg-white">
+        <Link href="/events" className="block group">
+          <div className="sticky top-20 z-40 w-full border-y border-primary-blue/20 bg-gradient-to-r from-primary-blue/10 via-white to-primary-purple/10 px-4 sm:px-6 lg:px-8 py-2.5 shadow-sm transition-all duration-300 hover:shadow-md">
+            <div className="relative max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 overflow-hidden">
+              <div className="absolute inset-y-0 -left-1/3 w-1/3 bg-linear-to-r from-transparent via-white/60 to-transparent translate-x-0 group-hover:translate-x-[300%] transition-transform duration-700" />
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-primary-blue">
+                Upcoming Event
+              </span>
+              <p className="text-sm sm:text-base font-semibold text-gray-900 truncate sm:max-w-[520px] md:max-w-[640px]">
+                Rewriting the Script: South Asians Building the Next Wave of Tech, Media & Community & AI - #NYTechWeek
+              </p>
+              <span className="inline-flex items-center gap-2 text-primary-blue font-bold text-xs sm:text-sm whitespace-nowrap">
+                See details <ArrowRight size={14} />
+              </span>
+            </div>
+          </div>
+        </Link>
+      </section>
+
       {/* Hero Carousel */}
       <HeroCarousel />
 
@@ -421,7 +441,7 @@ function HeroCarousel() {
   }, [currentSlide, isMounted, slides.length])
 
   return (
-    <section className="pt-20 md:pt-24 relative">
+    <section className="pt-0 md:pt-0 -mt-px relative">
       <div className="w-full h-100 md:h-125 lg:h-150 overflow-hidden relative">
         {/* Slides */}
         {slides.map((slide, index) => (

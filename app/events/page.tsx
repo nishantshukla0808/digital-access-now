@@ -52,20 +52,71 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      {/* No events published yet — placeholder */}
-      {!hasAny && (
-        <section className="py-24 bg-gray-50 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-6xl mb-6">📅</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-              We'll update the events details here in the future
-            </h2>
-            <p className="text-lg text-gray-600">
-              Stay tuned for exciting new events hosted by our chapters!
-            </p>
+      {/* Featured Upcoming Event */}
+      <section className="py-12 md:py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-sky-50 shadow-xl">
+            <div className="relative p-6 md:p-8 lg:p-10">
+              <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+                <div className="lg:col-span-7 space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-blue/10 text-primary-blue text-sm font-semibold">
+                    Upcoming Featured Event
+                  </div>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 leading-tight">
+                    Rewriting the Script: South Asians Building the Next Wave of Tech, Media & Community & AI - #NYTechWeek
+                  </h2>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    A room for South Asian founders, operators, investors, and creatives to talk about building in the AI-native economy.
+                    Panel discussion followed by open networking and a DJ set.
+                  </p>
+                </div>
+                <div className="lg:col-span-5 flex flex-col gap-4">
+                  <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                    <p className="text-sm font-semibold text-gray-900">June 1, 2026 | 6:00 PM</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-primary-blue/10 text-primary-blue text-sm font-semibold">Panel + Networking</span>
+                    <span className="px-3 py-1 rounded-full bg-primary-purple/10 text-primary-purple text-sm font-semibold">DJ Set</span>
+                  </div>
+                  <a
+                    href="https://partiful.com/e/0xML5T8sg8hOEKSOgMcv"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 rounded-full bg-primary-blue text-white font-bold hover:bg-cyan-600 transition-colors"
+                  >
+                    More info and RSVP
+                  </a>
+                </div>
+              </div>
+
+              <div className="mt-8 grid sm:grid-cols-2 gap-4">
+                <div className="rounded-2xl bg-white/90 p-4 border border-slate-100 shadow-lg">
+                  <div className="rounded-xl bg-slate-50 p-3 flex items-center justify-center">
+                    <img
+                      src="https://i.ibb.co/TB2MY29c/Whats-App-Image-2026-05-23-at-22-21-39-Picsart-Ai-Image-Enhancer.jpg"
+                      alt="Event poster with registration QR code"
+                      className="w-full max-h-[460px] sm:max-h-[420px] md:max-h-[460px] object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600">Poster with registration QR</p>
+                </div>
+                <div className="rounded-2xl bg-white/90 p-4 border border-slate-100 shadow-lg">
+                  <div className="rounded-xl bg-slate-50 p-3 flex items-center justify-center">
+                    <img
+                      src="https://i.ibb.co/9kRzShzv/Whats-App-Image-2026-05-23-at-22-21-42-Picsart-Ai-Image-Enhancer.jpg"
+                      alt="Event hosts poster"
+                      className="w-full max-h-[460px] sm:max-h-[420px] md:max-h-[460px] object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600">Hosts and speakers</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Upcoming Events */}
       {upcoming.length > 0 && (

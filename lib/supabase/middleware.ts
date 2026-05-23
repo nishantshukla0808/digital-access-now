@@ -2,6 +2,23 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+  const publicPortalPaths = [
+    '/portal/login',
+    '/portal/register',
+    '/portal/forgot-password',
+    '/portal/update-password',
+  ]
+
+  const isPortalRoute = request.nextUrl.pathname.startsWith('/portal')
+  const isPublicPortalRoute = publicPortalPaths.some((p) =>
+    request.nextUrl.pathname.startsWith(p)
+  )
+  const isProtectedPortalRoute = isPortalRoute && !isPublicPortalRoute
+
+  if (!isProtectedPortalRoute) {
+    return NextResponse.next({ request })
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -27,37 +44,20 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const publicPortalPaths = [
-    '/portal/login',
-    '/portal/register',
-    '/portal/forgot-password',
-    '/portal/update-password',
-  ]
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
-  const isPortalRoute = request.nextUrl.pathname.startsWith('/portal')
-  const isPublicPortalRoute = publicPortalPaths.some((p) =>
-    request.nextUrl.pathname.startsWith(p)
-  )
-  const isProtectedPortalRoute = isPortalRoute && !isPublicPortalRoute
-
-  // IMPORTANT: Only query Supabase Auth if the user is trying to access a protected route.
-  // This prevents massive edge runtime timeouts and 'fetch failed' errors on public website pages.
-  if (isProtectedPortalRoute) {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      
-      if (!user) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/portal/login'
-        return NextResponse.redirect(url)
-      }
-    } catch {
+    if (!user) {
       const url = request.nextUrl.clone()
       url.pathname = '/portal/login'
       return NextResponse.redirect(url)
     }
+  } catch {
+    const url = request.nextUrl.clone()
+    url.pathname = '/portal/login'
+    return NextResponse.redirect(url)
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
