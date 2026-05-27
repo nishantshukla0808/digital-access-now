@@ -57,7 +57,31 @@ export default async function EventsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-sky-50 shadow-xl">
             <div className="relative p-6 md:p-8 lg:p-10">
-              <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+              <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                <div className="lg:col-span-5">
+                  <div className="rounded-2xl bg-white p-4 border border-slate-100 shadow-lg">
+                    <div className="rounded-xl bg-slate-50 p-3">
+                      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth">
+                        <div className="min-w-full snap-center flex items-center justify-center">
+                          <img
+                            src="https://i.ibb.co/TB2MY29c/Whats-App-Image-2026-05-23-at-22-21-39-Picsart-Ai-Image-Enhancer.jpg"
+                            alt="Event poster with registration QR code"
+                            className="w-full h-[520px] object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="min-w-full snap-center flex items-center justify-center">
+                          <img
+                            src="https://i.ibb.co/9kRzShzv/Whats-App-Image-2026-05-23-at-22-21-42-Picsart-Ai-Image-Enhancer.jpg"
+                            alt="Event hosts poster"
+                            className="w-full h-[520px] object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div className="lg:col-span-7 space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-blue/10 text-primary-blue text-sm font-semibold">
                     Upcoming Featured Event
@@ -69,12 +93,10 @@ export default async function EventsPage() {
                     A room for South Asian founders, operators, investors, and creatives to talk about building in the AI-native economy.
                     Panel discussion followed by open networking and a DJ set.
                   </p>
-                </div>
-                <div className="lg:col-span-5 flex flex-col gap-4">
-                  <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-                    <p className="text-sm font-semibold text-gray-900">June 1, 2026 | 6:00 PM</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
+                      <p className="text-sm font-semibold text-gray-900">June 1, 2026 | 6:00 PM</p>
+                    </div>
                     <span className="px-3 py-1 rounded-full bg-primary-blue/10 text-primary-blue text-sm font-semibold">Panel + Networking</span>
                     <span className="px-3 py-1 rounded-full bg-primary-purple/10 text-primary-purple text-sm font-semibold">DJ Set</span>
                   </div>
@@ -88,29 +110,58 @@ export default async function EventsPage() {
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="mt-8 grid sm:grid-cols-2 gap-4">
-                <div className="rounded-2xl bg-white/90 p-4 border border-slate-100 shadow-lg">
-                  <div className="rounded-xl bg-slate-50 p-3 flex items-center justify-center">
-                    <img
-                      src="https://i.ibb.co/TB2MY29c/Whats-App-Image-2026-05-23-at-22-21-39-Picsart-Ai-Image-Enhancer.jpg"
-                      alt="Event poster with registration QR code"
-                      className="w-full max-h-[460px] sm:max-h-[420px] md:max-h-[460px] object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                  <p className="mt-2 text-sm text-gray-600">Poster with registration QR</p>
+      {/* Featured Conference Event */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-primary-purple/20 bg-gradient-to-br from-white via-purple-50/50 to-sky-50 shadow-xl overflow-hidden">
+            <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center p-6 md:p-8">
+              <div className="lg:col-span-5">
+                <div className="rounded-2xl bg-white p-4 border border-slate-100 shadow-lg">
+                  <img
+                    src="https://i.ibb.co/Y4tJZrg9/Whats-App-Image-2026-05-26-at-11-20-50-Picsart-Ai-Image-Enhancer.jpg"
+                    alt="UDEI IC DEA 2026 poster"
+                    className="w-full h-auto object-contain"
+                    loading="lazy"
+                  />
                 </div>
-                <div className="rounded-2xl bg-white/90 p-4 border border-slate-100 shadow-lg">
-                  <div className="rounded-xl bg-slate-50 p-3 flex items-center justify-center">
-                    <img
-                      src="https://i.ibb.co/9kRzShzv/Whats-App-Image-2026-05-23-at-22-21-42-Picsart-Ai-Image-Enhancer.jpg"
-                      alt="Event hosts poster"
-                      className="w-full max-h-[460px] sm:max-h-[420px] md:max-h-[460px] object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                  <p className="mt-2 text-sm text-gray-600">Hosts and speakers</p>
+              </div>
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-purple/10 text-primary-purple text-sm font-semibold">
+                  UDEI IC DEA 2026 · SDG 4
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight">
+                  International Conference on Digital Education for All (Hybrid)
+                </h3>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  Cohosted by Bahrain Polytechnic, Christ University (Bengaluru), and KIIT (Bhubaneswar). Speaker highlight: Ritika Malik, Founder of Digital Access Now.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 rounded-full bg-primary-blue/10 text-primary-blue text-sm font-semibold">Hybrid</span>
+                  <span className="px-3 py-1 rounded-full bg-cyan-600/10 text-cyan-700 text-sm font-semibold">Call for Papers</span>
+                  <span className="px-3 py-1 rounded-full bg-slate-900/5 text-slate-700 text-sm font-semibold">Rolling deadline: Feb 20, 2026</span>
+                </div>
+                <div className="flex flex-wrap gap-3 pt-1">
+                  <a
+                    href="https://www.emeraldgrouppublishing.com/calls-for-papers/digital-education-all"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary-blue text-white font-bold hover:bg-cyan-600 transition-colors"
+                  >
+                    View details
+                  </a>
+                  <a
+                    href="https://udedu.org/udei-ic-dea-2026"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary-blue/30 text-primary-blue font-bold hover:bg-primary-blue/10 transition-colors"
+                  >
+                    Submit abstract
+                  </a>
                 </div>
               </div>
             </div>
