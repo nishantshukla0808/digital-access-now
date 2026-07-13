@@ -6,11 +6,12 @@ import { createServiceClient } from '@/lib/supabase/service'
 // ─── Add Team Member ────────────────────────────────────────────────────────
 export async function addTeamMember(formData: FormData): Promise<{ error?: string }> {
   const service = createServiceClient()
-  const name = (formData.get('name') as string)?.trim()
+  const name       = (formData.get('name')       as string)?.trim()
   const role_title = (formData.get('role_title') as string)?.trim()
-  const country = (formData.get('country') as string)?.trim() || 'Global'
-  const bio = (formData.get('bio') as string)?.trim() || null
-  const image_url = (formData.get('image_url') as string)?.trim()
+  const country    = (formData.get('country')    as string)?.trim() || 'Global'
+  const bio        = (formData.get('bio')        as string)?.trim() || null
+  const image_url  = (formData.get('image_url')  as string)?.trim()
+  const member_type = ((formData.get('member_type') as string)?.trim() || 'team') === 'advisory' ? 'advisory' : 'team'
 
   if (!name || !role_title || !image_url) {
     return { error: 'Name, role, and photo URL are required.' }
@@ -18,7 +19,7 @@ export async function addTeamMember(formData: FormData): Promise<{ error?: strin
 
   const { error } = await service
     .from('team_members')
-    .insert({ name, role_title, country, bio, image_url, status: 'active' })
+    .insert({ name, role_title, country, bio, image_url, status: 'active', member_type })
 
   if (error) return { error: error.message }
 

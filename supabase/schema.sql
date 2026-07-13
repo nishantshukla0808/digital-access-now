@@ -52,13 +52,17 @@ create trigger on_auth_user_created
 
 -- 2. TEAM MEMBERS
 create table public.team_members (
-  id uuid default uuid_generate_v4() primary key,
-  name text not null,
-  role_title text not null,
-  country text not null,
-  image_url text not null,
-  status text check (status in ('active', 'inactive')) default 'active',
-  created_at timestamp with time zone default timezone('utc'::text, now())
+  id          uuid        default uuid_generate_v4() primary key,
+  name        text        not null,
+  role_title  text        not null,
+  country     text        not null default 'Global',
+  bio         text,
+  image_url   text        not null,
+  member_type text        not null default 'team'
+              check (member_type in ('team', 'advisory')),
+  status      text        not null default 'active'
+              check (status in ('active', 'inactive')),
+  created_at  timestamptz not null default timezone('utc'::text, now())
 );
 alter table public.team_members enable row level security;
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useTransition } from 'react'
-import { Camera, Loader2, Plus, Trash2, Users } from 'lucide-react'
+import { Loader2, Plus, Star, Trash2, Users } from 'lucide-react'
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
 import { Badge } from '@/components/ui/badge'
@@ -19,18 +19,21 @@ type Member = {
   bio: string | null
   image_url: string
   status: string
+  member_type: string
 }
 
 export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
-  const [members, setMembers] = useState(initialMembers)
+  const [members, setMembers]       = useState(initialMembers)
   const [isPending, startTransition] = useTransition()
-  const [notice, setNotice] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
+  const [notice, setNotice]         = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
   const [imageUrlPreview, setImageUrlPreview] = useState('')
   const imageInputRef = useRef<HTMLInputElement>(null)
 
+  const teamMembers     = members.filter(m => m.member_type !== 'advisory')
+  const advisoryMembers = members.filter(m => m.member_type === 'advisory')
+
   function handleAdd(formData: FormData) {
     const imageUrl = (formData.get('image_url') as string | null)?.trim() ?? ''
-    // Warn if they pasted an ibb.co viewer link instead of a direct i.ibb.co image link
     if (imageUrl && imageUrl.includes('ibb.co') && !imageUrl.includes('i.ibb.co')) {
       setNotice({ type: 'err', msg: 'Wrong ImgBB link! Use the "Direct link" (starts with https://i.ibb.co/...), not the viewer page link.' })
       return
@@ -41,7 +44,8 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
       if (result.error) {
         setNotice({ type: 'err', msg: result.error })
       } else {
-        setNotice({ type: 'ok', msg: 'Team member added successfully!' })
+        const type = (formData.get('member_type') as string) || 'team'
+        setNotice({ type: 'ok', msg: type === 'advisory' ? 'Advisory board member added!' : 'Team member added successfully!' })
         setImageUrlPreview('')
         if (imageInputRef.current) imageInputRef.current.value = ''
         window.location.reload()
@@ -58,9 +62,57 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
         setNotice({ type: 'err', msg: result.error })
       } else {
         setMembers(prev => prev.filter(m => m.id !== id))
-        setNotice({ type: 'ok', msg: `${name} removed from team page.` })
+        setNotice({ type: 'ok', msg: `${name} removed.` })
       }
     })
+  }
+
+  function RosterGroup({ title, items, accent }: { title: string; items: Member[]; accent: 'blue' | 'purple' }) {
+    const borderCol = accent === 'purple' ? 'border-primary-purple/25' : 'border-primary-blue/25'
+    const textCol   = accent === 'purple' ? 'text-primary-purple'      : 'text-primary-blue'
+    const badgeBg   = accent === 'purple' ? 'bg-purple-50 border-purple-200 text-purple-700' : 'bg-cyan-50 border-cyan-200 text-cyan-700'
+
+    return (
+      <div className="space-y-3">
+        <div className="flex items-center gap-3 pb-2 border-b border-gray-100">
+          {accent === 'purple'
+            ? <Star className="size-4 text-primary-purple" />
+            : <Users className="size-4 text-primary-blue" />}
+          <p className={`text-sm font-bold ${textCol} uppercase tracking-wider`}>{title}</p>
+          <span className="text-xs text-gray-400 ml-auto">{items.length} members</span>
+        </div>
+        {items.length === 0 && (
+          <p className="text-gray-400 text-sm py-4 text-center">No members yet — add one using the form.</p>
+        )}
+        {items.map((member) => (
+          <div key={member.id} className="flex flex-col gap-4 rounded-3xl border border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              <div className={`flex size-14 items-center justify-center overflow-hidden rounded-full border-2 ${borderCol} bg-gray-100 shrink-0`}>
+                <img src={member.image_url} alt={member.name} className="h-full w-full object-cover" />
+              </div>
+              <div>
+                <p className="font-bold text-gray-950">{member.name}</p>
+                <p className={`text-sm font-semibold ${textCol}`}>{member.role_title}</p>
+                <p className="text-xs text-gray-400">{member.country}</p>
+                {member.bio && <p className="mt-1 max-w-xs text-sm text-gray-600 line-clamp-2">{member.bio}</p>}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+              <Badge className={`rounded-full border px-3 py-1 text-xs ${badgeBg}`}>● Live</Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={isPending}
+                onClick={() => handleRemove(member.id, member.name)}
+                className="rounded-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-700"
+              >
+                <Trash2 className="size-3.5" />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
   }
 
   return (
@@ -69,7 +121,7 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
       currentPath="/portal/admin/team"
       badge="Team management"
       title="Add, edit, and remove team members for the public team page."
-      subtitle="Changes made here are immediately reflected on /about/our-team on the public website."
+      subtitle="Changes are immediately reflected on /about/our-team. Use the Member Type selector to add Advisory Board members."
       navItems={adminNavItems}
     >
       {notice && (
@@ -79,13 +131,35 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
       )}
 
       <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-        {/* Add Member Form */}
+        {/* ── Add Member Form ────────────────────────────────────────── */}
         <Card className="border-primary-blue/15 bg-white py-0">
           <CardHeader className="px-6 pt-6">
-            <CardTitle className="text-2xl font-black text-gray-950">Add new team member</CardTitle>
+            <CardTitle className="text-2xl font-black text-gray-950">Add new member</CardTitle>
           </CardHeader>
           <CardContent className="px-6 pb-6">
             <form action={handleAdd} className="space-y-5">
+
+              {/* Member type selector */}
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-800">Member Type *</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer hover:border-primary-blue/40 transition-colors has-[:checked]:border-primary-blue has-[:checked]:bg-cyan-50">
+                    <input type="radio" name="member_type" value="team" defaultChecked className="accent-[#00BCD4]" />
+                    <div>
+                      <p className="text-sm font-bold text-gray-900">Core Team</p>
+                      <p className="text-xs text-gray-500">Staff &amp; directors</p>
+                    </div>
+                  </label>
+                  <label className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer hover:border-primary-purple/40 transition-colors has-[:checked]:border-primary-purple has-[:checked]:bg-purple-50">
+                    <input type="radio" name="member_type" value="advisory" className="accent-[#6633CC]" />
+                    <div>
+                      <p className="text-sm font-bold text-gray-900">Advisory Board</p>
+                      <p className="text-xs text-gray-500">Strategic advisors</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <div className="grid gap-5 md:grid-cols-2">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-800">Full name *</label>
@@ -97,11 +171,9 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
                 </div>
               </div>
 
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-800">Country</label>
-                  <Input name="country" placeholder="e.g. United States, Pakistan" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
-                </div>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-800">Country</label>
+                <Input name="country" placeholder="e.g. United States, Pakistan" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
               </div>
 
               <div className="space-y-2">
@@ -120,7 +192,7 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
                   className="h-11 rounded-2xl border-gray-200 bg-gray-50"
                 />
                 <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800 space-y-1">
-                  <p className="font-bold">⚠ ImgBB: use the "Direct link" only</p>
+                  <p className="font-bold">⚠ ImgBB: use the &quot;Direct link&quot; only</p>
                   <p>✅ Correct: <span className="font-mono">https://i.ibb.co/XXXX/photo.jpg</span></p>
                   <p>❌ Wrong: <span className="font-mono">https://ibb.co/XXXX</span> (viewer page)</p>
                 </div>
@@ -135,65 +207,33 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
                         onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1' }}
                       />
                     </div>
-                    <p className="text-xs text-gray-500">Live preview — if you see a broken image, the URL is incorrect.</p>
+                    <p className="text-xs text-gray-500">Live preview — broken image = wrong URL.</p>
                   </div>
                 )}
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button type="submit" disabled={isPending} className="rounded-full bg-primary-blue text-white hover:bg-cyan-600">
-                  {isPending ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
-                  {isPending ? 'Saving...' : 'Add to team page'}
-                </Button>
-              </div>
+              <Button type="submit" disabled={isPending} className="rounded-full bg-primary-blue text-white hover:bg-cyan-600">
+                {isPending ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
+                {isPending ? 'Saving...' : 'Add to page'}
+              </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Existing Members List */}
+        {/* ── Roster ────────────────────────────────────────────────── */}
         <Card className="border-primary-blue/15 bg-white py-0">
           <CardHeader className="px-6 pt-6">
             <div className="flex items-center justify-between gap-4">
-              <CardTitle className="text-2xl font-black text-gray-950">Live team roster</CardTitle>
+              <CardTitle className="text-2xl font-black text-gray-950">Live roster</CardTitle>
               <Badge className="rounded-full bg-gray-950 px-4 py-1 text-white hover:bg-gray-950">
                 <Users className="mr-2 size-3.5" />
-                {members.length} members live
+                {members.length} total
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4 px-6 pb-6">
-            {members.length === 0 && (
-              <p className="text-gray-400 text-sm py-8 text-center">No team members in database yet. Add one using the form.</p>
-            )}
-            {members.map((member) => (
-              <div key={member.id} className="flex flex-col gap-4 rounded-3xl border border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex size-16 items-center justify-center overflow-hidden rounded-full border-2 border-primary-blue/25 bg-gray-100 shrink-0">
-                    <img src={member.image_url} alt={member.name} className="h-full w-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-950">{member.name}</p>
-                    <p className="text-sm font-semibold text-primary-blue">{member.role_title}</p>
-                    <p className="text-xs text-gray-400">{member.country}</p>
-                    {member.bio && <p className="mt-1 max-w-xs text-sm text-gray-600 line-clamp-2">{member.bio}</p>}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-                  <Badge className="rounded-full bg-green-50 border border-green-200 px-3 py-1 text-green-700 text-xs">
-                    ● Live
-                  </Badge>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={isPending}
-                    onClick={() => handleRemove(member.id, member.name)}
-                    className="rounded-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-700"
-                  >
-                    <Trash2 className="size-3.5" />
-                  </Button>
-                </div>
-              </div>
-            ))}
+          <CardContent className="space-y-6 px-6 pb-6">
+            <RosterGroup title="Core Team" items={teamMembers}     accent="blue"   />
+            <RosterGroup title="Advisory Board" items={advisoryMembers} accent="purple" />
           </CardContent>
         </Card>
       </div>
