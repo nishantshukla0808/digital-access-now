@@ -11,15 +11,19 @@ const HARDCODED_TEAM = [
   { id: 'hc5', name: 'Nishu Shukla', role_title: 'Website Director', bio: 'Overseeing creative direction and brand development', image_url: 'https://i.ibb.co/jPXXKSLg/photo-nishu.jpg' },
   { id: 'hc6', name: 'Suman', role_title: 'Director of Data & Technology', bio: 'Managing data analytics and technology infrastructure', image_url: 'https://i.ibb.co/V02X2YCP/suman1.png' },
   { id: 'hc7', name: 'Tejinderjit Singh', role_title: 'Director of Student Engagement', bio: 'Leading student outreach and engagement initiatives', image_url: 'https://i.ibb.co/7xN2gfhs/TJ.jpg' },
-  { id: 'hc8', name: 'Prof. Abirlal Mukherjee', role_title: 'Country Director, India', bio: 'Leading operations and strategic initiatives in India', image_url: 'https://i.ibb.co/39BNW2fR/Screenshot-2026-02-07-153447-Picsart-Ai-Image-Enhancer.png' },
-  { id: 'hc9', name: 'Fashiba', role_title: 'Country Director, Pakistan', bio: 'Leading operations and strategic initiatives in Pakistan', image_url: 'https://i.ibb.co/KPp0qp3/Fashiba.jpg' },
+  { id: 'hc8', name: 'Yash Sharma', role_title: 'Social Media Director', bio: 'Driving digital presence and social media strategy across platforms', image_url: 'https://i.ibb.co/jvcmFJgQ/Yash-Picsart-Ai-Image-Enhancer.jpg' },
+  { id: 'hc9', name: 'Prof. Abirlal Mukherjee', role_title: 'Country Director, India', bio: 'Leading operations and strategic initiatives in India', image_url: 'https://i.ibb.co/39BNW2fR/Screenshot-2026-02-07-153447-Picsart-Ai-Image-Enhancer.png' },
+  { id: 'hc10', name: 'Fashiba', role_title: 'Country Director, Pakistan', bio: 'Leading operations and strategic initiatives in Pakistan', image_url: 'https://i.ibb.co/KPp0qp3/Fashiba.jpg' },
+  { id: 'hc11', name: 'Stuti Jhunjhunwala', role_title: 'Workshop Director', bio: 'Designing and leading impactful digital literacy workshops for communities', image_url: 'https://i.ibb.co/qMDzmrhG/Whats-App-Image-2026-07-11-at-23-47-12-Picsart-Ai-Image-Enhancer.jpg' },
+  { id: 'hc12', name: 'Christopher Ayisah', role_title: 'Full Stack Developer', bio: 'Building and maintaining the technical infrastructure that powers our mission', image_url: 'https://i.ibb.co/fYVwLwYd/Whats-App-Image-2026-07-11-at-23-48-00-Picsart-Ai-Image-Enhancer.jpg' },
+  { id: 'hc13', name: 'Shashi Bhushan', role_title: 'Team Member', bio: 'Contributing to digital equity initiatives and community outreach programs', image_url: 'https://i.ibb.co/Fb35dvys/Whats-App-Image-2026-07-11-at-23-50-27-Picsart-Ai-Image-Enhancer.jpg' },
 ]
 
 function MemberCard({ member, priority = false }: { member: typeof HARDCODED_TEAM[0]; priority?: boolean }) {
   return (
     <div className="text-center group cursor-pointer transition-all duration-300 hover:scale-105">
       <div className="mb-6 flex justify-center">
-        <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-primary-blue transition-all duration-300">
+        <div className="w-full aspect-square rounded-full bg-linear-to-br from-primary-blue to-primary-purple flex items-center justify-center text-white shadow-2xl overflow-hidden border-4 border-gray-200 group-hover:border-primary-blue transition-all duration-300">
           <img
             src={member.image_url}
             alt={member.name}
@@ -49,10 +53,7 @@ export default async function OurTeam() {
   // If DB has members, use them; otherwise show the hardcoded team (never empty)
   const teamMembers = dbMembers && dbMembers.length > 0 ? dbMembers : HARDCODED_TEAM
 
-  // Split into rows: first 3, next 3, rest in groups of 3–4
-  const row1 = teamMembers.slice(0, 3)
-  const row2 = teamMembers.slice(3, 6)
-  const row3 = teamMembers.slice(6)
+  // No row-splitting needed — flex-wrap handles any count automatically
 
   return (
     <div className="min-h-screen bg-white">
@@ -81,23 +82,16 @@ export default async function OurTeam() {
       {/* Team Members Grid */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {row1.length > 0 && (
-            <div className={`grid gap-12 mb-12 ${row1.length === 1 ? 'md:grid-cols-1 max-w-xs mx-auto' : row1.length === 2 ? 'md:grid-cols-2 max-w-2xl mx-auto' : 'md:grid-cols-3'}`}>
-              {row1.map((m, i) => <MemberCard key={m.id} member={m} priority={i < 3} />)}
-            </div>
-          )}
-          {row2.length > 0 && (
-            <div className={`grid gap-12 mb-12 ${row2.length < 3 ? `md:grid-cols-${row2.length} max-w-2xl mx-auto` : 'md:grid-cols-3'}`}>
-              {row2.map((m) => <MemberCard key={m.id} member={m} />)}
-            </div>
-          )}
-          {row3.length > 0 && (
-            <div className={`grid gap-12 ${row3.length <= 2 ? `md:grid-cols-${row3.length} max-w-2xl mx-auto` : row3.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-4'}`}>
-              {row3.map((m) => <MemberCard key={m.id} member={m} />)}
-            </div>
-          )}
+          <div className="flex flex-wrap justify-center gap-x-10 gap-y-14">
+            {teamMembers.map((m, i) => (
+              <div key={m.id} className="w-56 md:w-64">
+                <MemberCard member={m} priority={i < 4} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
 
       {/* Call to Action */}
       <section className="py-16 md:py-24 bg-linear-to-r from-primary-blue to-primary-purple text-white">

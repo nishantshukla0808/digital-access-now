@@ -208,15 +208,21 @@ INSERT INTO public.vlogs (volunteer_id, title, description, video_url, status) V
 'published');
 
 -- ─── TEAM MEMBERS ─────────────────────────────────────────────────────────────
+-- Full team roster with all 13 members.
+-- Safe to re-run: uses INSERT ... ON CONFLICT DO NOTHING via the unique name check below.
 
 INSERT INTO public.team_members (name, role_title, country, bio, image_url, status) VALUES
 
-('Ritika Malik', 'CEO and Founder', 'Global', 'Student studying Neuroscience at Columbia University', 'https://i.ibb.co/KxGZGXN4/rs-w-730-h-730-cg-true-Picsart-Ai-Image-Enhancer.png', 'active'),
-('Awahan Sapkota', 'Vice President', 'Global', 'Senior studying Chemical Engineering and Physics at the University of Pennsylvania', 'https://i.ibb.co/jZwpDG3G/Awahan.jpg', 'active'),
-('Aayushi Shah', 'Director of Human Resources', 'Global', 'Leading human resources and team development initiatives', 'https://i.ibb.co/5gmSJkvg/Aayushi-Shah-Picsart-Ai-Image-Enhancer.jpg', 'active'),
-('Ishita', 'Director of Education Systems', 'Global', 'Developing educational programs and curriculum frameworks', 'https://i.ibb.co/DDnVbWXY/Ishita.png', 'active'),
-('Nishu Shukla', 'Website Director', 'Global', 'Overseeing creative direction and brand development', 'https://i.ibb.co/jPXXKSLg/photo-nishu.jpg', 'active'),
-('Suman', 'Director of Data & Technology', 'Global', 'Managing data analytics and technology infrastructure', 'https://i.ibb.co/V02X2YCP/suman1.png', 'active'),
-('Tejinderjit Singh', 'Director of Student Engagement', 'Global', 'Leading student outreach and engagement initiatives', 'https://i.ibb.co/7xN2gfhs/TJ.jpg', 'active'),
-('Prof. Abirlal Mukherjee', 'Country Director, India', 'India', 'Leading operations and strategic initiatives in India', 'https://i.ibb.co/39BNW2fR/Screenshot-2026-02-07-153447-Picsart-Ai-Image-Enhancer.png', 'active'),
-('Fashiba', 'Country Director, Pakistan', 'Pakistan', 'Leading operations and strategic initiatives in Pakistan', 'https://i.ibb.co/KPp0qp3/Fashiba.jpg', 'active');
+('Ritika Malik',         'CEO and Founder',                'Global',   'Student studying Neuroscience at Columbia University',                                             'https://i.ibb.co/KxGZGXN4/rs-w-730-h-730-cg-true-Picsart-Ai-Image-Enhancer.png',    'active'),
+('Awahan Sapkota',       'Vice President',                 'Global',   'Senior studying Chemical Engineering and Physics at the University of Pennsylvania',              'https://i.ibb.co/jZwpDG3G/Awahan.jpg',                                                    'active'),
+('Aayushi Shah',         'Director of Human Resources',    'Global',   'Leading human resources and team development initiatives',                                        'https://i.ibb.co/5gmSJkvg/Aayushi-Shah-Picsart-Ai-Image-Enhancer.jpg',                   'active'),
+('Ishita',               'Director of Education Systems',  'Global',   'Developing educational programs and curriculum frameworks',                                       'https://i.ibb.co/DDnVbWXY/Ishita.png',                                                    'active'),
+('Nishu Shukla',         'Website Director',               'Global',   'Overseeing creative direction and brand development',                                             'https://i.ibb.co/jPXXKSLg/photo-nishu.jpg',                                               'active'),
+('Suman',                'Director of Data & Technology',  'Global',   'Managing data analytics and technology infrastructure',                                           'https://i.ibb.co/V02X2YCP/suman1.png',                                                    'active'),
+('Tejinderjit Singh',    'Director of Student Engagement', 'Global',   'Leading student outreach and engagement initiatives',                                             'https://i.ibb.co/7xN2gfhs/TJ.jpg',                                                       'active'),
+('Yash Sharma',          'Social Media Director',          'Global',   'Driving digital presence and social media strategy across platforms',                             'https://i.ibb.co/jvcmFJgQ/Yash-Picsart-Ai-Image-Enhancer.jpg',                          'active'),
+('Prof. Abirlal Mukherjee', 'Country Director, India',     'India',    'Leading operations and strategic initiatives in India',                                           'https://i.ibb.co/39BNW2fR/Screenshot-2026-02-07-153447-Picsart-Ai-Image-Enhancer.png', 'active'),
+('Fashiba',              'Country Director, Pakistan',     'Pakistan', 'Leading operations and strategic initiatives in Pakistan',                                        'https://i.ibb.co/KPp0qp3/Fashiba.jpg',                                                    'active'),
+('Stuti Jhunjhunwala',   'Workshop Director',              'Global',   'Designing and leading impactful digital literacy workshops for communities',                      'https://i.ibb.co/qMDzmrhG/Whats-App-Image-2026-07-11-at-23-47-12-Picsart-Ai-Image-Enhancer.jpg', 'active'),
+('Christopher Ayisah',   'Full Stack Developer',           'Global',   'Building and maintaining the technical infrastructure that powers our mission',                   'https://i.ibb.co/fYVwLwYd/Whats-App-Image-2026-07-11-at-23-48-00-Picsart-Ai-Image-Enhancer.jpg', 'active'),
+('Shashi Bhushan',       'Team Member',                    'Global',   'Contributing to digital equity initiatives and community outreach programs',                      'https://i.ibb.co/Fb35dvys/Whats-App-Image-2026-07-11-at-23-50-27-Picsart-Ai-Image-Enhancer.jpg', 'active');
