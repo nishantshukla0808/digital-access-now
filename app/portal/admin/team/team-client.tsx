@@ -232,7 +232,7 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
             </div>
           </CardHeader>
           <CardContent className="space-y-6 px-6 pb-6">
-            <RosterGroup title="Core Team" items={teamMembers}     accent="blue"   />
+            <RosterGroup title="Core Team"      items={teamMembers}     accent="blue"   />
             <RosterGroup title="Advisory Board" items={advisoryMembers} accent="purple" />
           </CardContent>
         </Card>

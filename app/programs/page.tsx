@@ -48,9 +48,7 @@ export default function Programs() {
                 Chapter leaders receive mentorship, strategic support, and access to a global network of peers — allowing them to exchange ideas, learn from diverse experiences, and collaborate across borders.
               </p>
               <div className="flex gap-4 pt-6">
-                <a href="https://wkf.ms/3OkUudk" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">APPLY NOW</button>
-                </a>
+                <button disabled className="bg-gray-300 text-gray-500 px-10 py-4 rounded-full font-bold text-lg cursor-not-allowed opacity-60">APPLY NOW</button>
                 <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
                   <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">LEARN MORE</button>
                 </a>
@@ -106,9 +104,7 @@ export default function Programs() {
                 Gain valuable experience, build your portfolio, and connect with a passionate community of changemakers dedicated to digital equity.
               </p>
               <div className="flex gap-4 pt-6">
-                <a href="https://wkf.ms/4aOVIFd" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">APPLY NOW</button>
-                </a>
+                <button disabled className="bg-gray-300 text-gray-500 px-10 py-4 rounded-full font-bold text-lg cursor-not-allowed opacity-60">APPLY NOW</button>
                 <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
                   <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">LEARN MORE</button>
                 </a>
@@ -148,9 +144,7 @@ export default function Programs() {
                 </ul>
               </div>
               <div className="flex gap-4 pt-6">
-                <a href="https://wkf.ms/4b2zfpl" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-primary-blue hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">APPLY NOW</button>
-                </a>
+                <button disabled className="bg-gray-300 text-gray-500 px-10 py-4 rounded-full font-bold text-lg cursor-not-allowed opacity-60">APPLY NOW</button>
                 <a href="https://www.notion.so/Digital-Access-Now-Chapter-Starter-Guide-Shareable-b0e3a0c08b244d5d87f1708ba3b0f77c" target="_blank" rel="noopener noreferrer">
                   <button className="bg-primary-blue hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">LEARN MORE</button>
                 </a>

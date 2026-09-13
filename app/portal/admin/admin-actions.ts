@@ -17,11 +17,27 @@ export async function addTeamMember(formData: FormData): Promise<{ error?: strin
     return { error: 'Name, role, and photo URL are required.' }
   }
 
+  // Try inserting with member_type first
   const { error } = await service
     .from('team_members')
     .insert({ name, role_title, country, bio, image_url, status: 'active', member_type })
 
-  if (error) return { error: error.message }
+  if (error) {
+    // If the column is missing from Supabase schema cache, insert without it
+    if (error.message.includes('member_type')) {
+      const { error: fallbackError } = await service
+        .from('team_members')
+        .insert({ name, role_title, country, bio, image_url, status: 'active' })
+
+      if (fallbackError) return { error: fallbackError.message }
+
+      revalidatePath('/portal/admin/team')
+      revalidatePath('/about/our-team')
+      // Warn admin that member_type column is missing
+      return { error: "⚠ Member added as Core Team, but Advisory Board support requires the member_type column in Supabase. Run: ALTER TABLE public.team_members ADD COLUMN IF NOT EXISTS member_type text NOT NULL DEFAULT 'team' CHECK (member_type IN ('team', 'advisory')); — then reload the schema cache." }
+    }
+    return { error: error.message }
+  }
 
   revalidatePath('/portal/admin/team')
   revalidatePath('/about/our-team')
