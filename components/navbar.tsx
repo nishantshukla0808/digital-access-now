@@ -69,9 +69,7 @@ export function Navbar() {
               </div>
             </div>
 
-            <Link href="/resources" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
-              RESOURCES
-            </Link>
+            {/* RESOURCES link hidden — page content preserved, re-enable when ready */}
             <Link href="/blog" className="px-3 xl:px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300 text-base font-medium whitespace-nowrap">
               BLOG
             </Link>
@@ -154,9 +152,7 @@ export function Navbar() {
               </div>
             )}
 
-            <Link href="/resources" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
-              RESOURCES
-            </Link>
+            {/* RESOURCES link hidden — page content preserved, re-enable when ready */}
             <Link href="/blog" className="block px-4 py-2 hover:bg-gray-800 rounded transition-all duration-300">
               BLOG
             </Link>
