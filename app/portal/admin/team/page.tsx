@@ -21,7 +21,7 @@ export default async function AdminTeamPage() {
       .select('id, name, role_title, country, bio, image_url, status')
       .eq('status', 'active')
       .order('created_at', { ascending: true })
-    members = fallback.data
+    members = fallback.data as typeof members
   }
 
   // Ensure every row has member_type so the UI never crashes

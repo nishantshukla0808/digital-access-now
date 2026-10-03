@@ -1,96 +1,160 @@
 'use client'
 
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
+import { Instagram, Linkedin, Mail } from 'lucide-react'
+
+const NAV = [
+  {
+    heading: 'Organization',
+    links: [
+      { label: 'About DAN',          href: '/about' },
+      { label: 'Why Digital Access', href: '/about/why-digital-access-now' },
+      { label: 'Our Team',           href: '/about/our-team' },
+      { label: 'Impact',             href: '/impact/our-impact' },
+    ],
+  },
+  {
+    heading: 'Work',
+    links: [
+      { label: 'Programs',     href: '/programs' },
+      { label: 'Events',       href: '/events' },
+      { label: 'Blog & Vlogs', href: '/blog' },
+      { label: 'Volunteer',    href: '/volunteer' },
+    ],
+  },
+  {
+    heading: 'Connect',
+    links: [
+      { label: 'Partner With Us', href: '/contact-us' },
+      { label: 'Contact',         href: '/contact-us' },
+    ],
+  },
+]
+
+const SOCIAL = [
+  {
+    label: 'Email',
+    href: 'mailto:hello@digitalaccessnow.org',
+    icon: <Mail size={18} />,
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/digitalaccessnow/',
+    icon: <Instagram size={18} />,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/digital-access-now/',
+    icon: <Linkedin size={18} />,
+  },
+]
 
 export function Footer() {
   return (
-    <footer className="bg-footer-black text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Column 1: Logo & Tagline */}
-          <div>
-            <div className="flex items-center mb-4">
-              <img 
-                src="https://i.ibb.co/xKnvQK05/logo-DAN.jpg" 
-                alt="Digital Access Now Logo" 
-                className="h-16 w-auto object-cover"
-              />
-            </div>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Empowering communities by bridging the digital divide through access, education, and opportunity.
+    <footer style={{ background: '#0B1A1A', color: '#FAFAF7' }}>
+
+      {/* Top teal accent bar */}
+      <div style={{ height: '3px', background: 'linear-gradient(to right, #4DB7E5, #0F5D5E)' }} />
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '64px 32px 40px' }}>
+
+        {/* Main grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '48px', marginBottom: '56px' }}
+          className="footer-grid"
+        >
+
+          {/* Brand column */}
+          <div style={{ gridColumn: 'span 1' }}>
+            <img
+              src="https://i.ibb.co/xKnvQK05/logo-DAN.jpg"
+              alt="Digital Access Now"
+              style={{ height: '90px', width: 'auto', objectFit: 'contain', marginBottom: '20px', mixBlendMode: 'screen' }}
+            />
+            <p style={{ fontSize: '13px', lineHeight: '1.75', color: 'rgba(250,250,247,0.55)', marginBottom: '24px', maxWidth: '240px' }}>
+              Helping underserved young people gain technology access, build practical digital skills, and connect to opportunity.
+            </p>
+            {/* Official tagline per brief */}
+            <p style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4DB7E5' }}>
+              Access. Skills. Opportunity.
             </p>
           </div>
 
-          {/* Column 2: Quick Links */}
-          <div>
-            <h4 className="font-bold text-lg mb-4">QUICK LINKS</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><Link href="/" className="hover:text-primary-blue transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-primary-blue transition-colors">About</Link></li>
-              <li><Link href="/programs" className="hover:text-primary-blue transition-colors">Programs</Link></li>
-              <li><Link href="/volunteer" className="hover:text-primary-blue transition-colors">Volunteer</Link></li>
-              <li><Link href="/resources" className="hover:text-primary-blue transition-colors">Resources</Link></li>
-            </ul>
-          </div>
-
-          {/* Column 3: Contact */}
-          <div>
-            <h4 className="font-bold text-lg mb-4">CONTACT</h4>
-            <div className="space-y-3 text-gray-300 text-sm">
-              <div className="flex gap-2">
-                <Mail size={18} className="text-primary-blue shrink-0 mt-0.5" />
-                <a href="mailto:hello@digitalaccessnow.org" className="hover:text-primary-blue transition-colors">
-                  hello@digitalaccessnow.org
-                </a>
-              </div>
+          {/* Nav columns */}
+          {NAV.map(({ heading, links }) => (
+            <div key={heading}>
+              <p style={{
+                fontSize: '11px',
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: 'rgba(250,250,247,0.85)',
+                marginBottom: '20px',
+                borderBottom: '1px solid rgba(255,255,255,0.08)',
+                paddingBottom: '12px',
+              }}>
+                {heading}
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {links.map(({ label, href }) => (
+                  <li key={label}>
+                    <Link
+                      href={href}
+                      style={{ fontSize: '14px', color: 'rgba(250,250,247,0.55)', textDecoration: 'none', transition: 'color 0.15s' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#FAFAF7')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(250,250,247,0.55)')}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          {/* Column 4: Newsletter */}
-          <div>
-            <h4 className="font-bold text-lg mb-4">NEWSLETTER</h4>
-            <p className="text-gray-300 text-sm mb-4">
-              Stay updated with our latest news and opportunities.
-            </p>
-            <div className="flex flex-col gap-2">
-              <input
-                suppressHydrationWarning
-                type="email"
-                placeholder="Your email"
-                className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:border-primary-blue focus:outline-none transition-colors"
-              />
-              <button suppressHydrationWarning className="bg-primary-blue hover:bg-cyan-600 text-white px-4 py-2 rounded font-bold transition-colors">
-                Subscribe
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-800 my-12"></div>
+        <div style={{ height: '1px', background: 'rgba(255,255,255,0.07)', marginBottom: '28px' }} />
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-gray-400 text-sm">
-            © 2026 Digital Access Now. All rights reserved.
+        {/* Bottom bar */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+          <p style={{ fontSize: '12px', color: 'rgba(250,250,247,0.30)' }}>
+            © {new Date().getFullYear()} Digital Access Now, Inc. All rights reserved.
           </p>
-          <div className="flex gap-4">
-            <a href="#" className="text-gray-400 hover:text-primary-blue transition-colors">
-              <Facebook size={20} />
-            </a>
-            <a href="https://www.instagram.com/digitalaccessnow/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-blue transition-colors">
-              <Instagram size={20} />
-            </a>
-            <a href="https://www.linkedin.com/company/digital-access-now/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-blue transition-colors">
-              <Linkedin size={20} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-primary-blue transition-colors">
-              <Youtube size={20} />
-            </a>
+
+          {/* Social icons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            {SOCIAL.map(({ label, href, icon }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                aria-label={label}
+                style={{ color: 'rgba(250,250,247,0.40)', transition: 'color 0.15s', display: 'flex' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#4DB7E5')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(250,250,247,0.40)')}
+              >
+                {icon}
+              </a>
+            ))}
           </div>
         </div>
+
       </div>
+
+      {/* Responsive style override for mobile */}
+      <style>{`
+        @media (max-width: 1023px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        @media (max-width: 639px) {
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </footer>
   )
 }
