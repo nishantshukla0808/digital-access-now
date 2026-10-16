@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import { chapterNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import { CheckCircle2, Upload } from 'lucide-react'
 import { submitChapterReport } from '@/app/portal/submissions'
+
+// ─── shared input style ────────────────────────────────────────────────────────
+const inp = 'w-full px-4 rounded-xl text-sm outline-none'
+const inpStyle = { height: '44px', background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933' }
 
 export default function ChapterSubmitReportPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -18,84 +19,76 @@ export default function ChapterSubmitReportPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-
     const formData = new FormData(e.currentTarget)
     const result = await submitChapterReport(formData)
-
     setLoading(false)
-    if (result.error) {
-      setError(result.error)
-    } else {
-      setSubmitted(true)
-    }
+    if (result.error) { setError(result.error) } else { setSubmitted(true) }
   }
 
   return (
     <PortalShell
       role="chapter"
       currentPath="/portal/chapter/submit-report"
-      badge="Submit Report"
-      title="Submit a chapter report for admin review."
-      subtitle="Your report will be reviewed by an admin before being published to the public website under 'News' and 'Impact Stories'."
+      badge="Chapter"
+      title="Submit Report"
+      subtitle="Your report will be reviewed by an admin before being published to the public website."
       navItems={chapterNavItems}
     >
       {submitted ? (
-        <Card className="border-green-200 bg-green-50">
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center gap-4">
-            <CheckCircle2 className="size-16 text-green-500" />
-            <p className="text-2xl font-black text-green-800">Report Submitted!</p>
-            <p className="text-green-700">Your report is now pending admin review. You'll be notified once it's published.</p>
-            <Button onClick={() => setSubmitted(false)} variant="outline" className="mt-2 rounded-full border-green-300 text-green-700">
-              Submit another report
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col items-center justify-center py-20 text-center rounded-xl" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+          <CheckCircle2 className="size-14 mb-4" style={{ color: '#0F5D5E' }} />
+          <p className="text-lg font-bold mb-1" style={{ color: '#1F2933' }}>Report Submitted!</p>
+          <p className="text-sm mb-5" style={{ color: '#1F2933', opacity: 0.55 }}>Your report is pending admin review.</p>
+          <button
+            onClick={() => setSubmitted(false)}
+            className="rounded-xl px-5 py-2.5 text-sm font-bold transition-opacity hover:opacity-80"
+            style={{ background: 'rgba(15,93,94,0.08)', color: '#0F5D5E', border: '1px solid rgba(15,93,94,0.2)' }}
+          >
+            Submit another report
+          </button>
+        </div>
       ) : (
-        <Card className="border-primary-blue/15 bg-white">
-          <CardHeader className="px-6 pt-6 pb-4 border-b border-gray-100">
-            <CardTitle className="text-2xl font-black text-gray-950">New Chapter Report</CardTitle>
-          </CardHeader>
-          <CardContent className="px-6 py-6">
-            {error && (
-              <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 font-medium">
-                {error}
+        <div className="rounded-xl p-6" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+          <p className="text-sm font-bold mb-5" style={{ color: '#1F2933' }}>New Chapter Report</p>
+          {error && (
+            <div className="mb-5 rounded-xl px-4 py-3 text-sm font-medium" style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c' }}>{error}</div>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid gap-5 md:grid-cols-2">
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold" style={{ color: '#1F2933' }} htmlFor="title">Report Title *</label>
+                <input id="title" name="title" required placeholder="e.g. Digital Literacy Training in Lahore" className={inp} style={inpStyle} />
               </div>
-            )}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-800" htmlFor="title">Report Title *</label>
-                  <Input id="title" name="title" required placeholder="e.g. Digital Literacy Training in Lahore" className="h-12 rounded-2xl border-gray-200 bg-gray-50" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-800" htmlFor="icon">Icon Emoji</label>
-                  <Input id="icon" name="icon" placeholder="e.g. 📚 🌐 🚀" className="h-12 rounded-2xl border-gray-200 bg-gray-50" />
-                </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold" style={{ color: '#1F2933' }} htmlFor="icon">Icon Emoji</label>
+                <input id="icon" name="icon" placeholder="e.g. 📚 🌐 🚀" className={inp} style={inpStyle} />
               </div>
+            </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-800" htmlFor="excerpt">Short Description *</label>
-                <Input id="excerpt" name="excerpt" required placeholder="1-2 sentences summarising the report (shown in cards on the site)" className="h-12 rounded-2xl border-gray-200 bg-gray-50" />
-              </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold" style={{ color: '#1F2933' }} htmlFor="excerpt">Short Description *</label>
+              <input id="excerpt" name="excerpt" required placeholder="1-2 sentences summarising the report" className={inp} style={inpStyle} />
+            </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-800" htmlFor="content">Full Content *</label>
-                <textarea
-                  id="content"
-                  name="content"
-                  required
-                  rows={8}
-                  placeholder="Write your full report here. Describe the activities, outcomes, and impact..."
-                  className="flex w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-primary-blue transition-colors resize-none"
-                />
-              </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold" style={{ color: '#1F2933' }} htmlFor="content">Full Content *</label>
+              <textarea
+                id="content" name="content" required rows={8}
+                placeholder="Write your full report here. Describe the activities, outcomes, and impact..."
+                className="w-full px-4 py-3 rounded-xl text-sm resize-none outline-none"
+                style={{ background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933' }}
+              />
+            </div>
 
-              <Button type="submit" disabled={loading} className="h-12 w-full rounded-full bg-primary-blue text-base font-bold text-footer-black hover:bg-cyan-600 gap-2">
-                {loading ? 'Submitting…' : <><Upload className="size-4" /> Submit for Review</>}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+            <button
+              type="submit" disabled={loading}
+              className="flex items-center justify-center gap-2 w-full h-11 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+              style={{ background: 'linear-gradient(135deg, #0F5D5E, #238C91)' }}
+            >
+              {loading ? 'Submitting…' : <><Upload className="size-4" /> Submit for Review</>}
+            </button>
+          </form>
+        </div>
       )}
     </PortalShell>
   )

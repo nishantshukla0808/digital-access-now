@@ -1,95 +1,105 @@
 import { chapterNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/server'
 import { FileText, CalendarDays } from 'lucide-react'
 
-const statusColor: Record<string, string> = {
-  published: 'bg-green-50 text-green-700 border-green-200',
-  pending_verification: 'bg-yellow-50 text-yellow-700 border-yellow-200',
-  rejected: 'bg-red-50 text-red-700 border-red-200',
-  draft: 'bg-gray-50 text-gray-700 border-gray-200',
+const statusColor: Record<string, { bg: string; color: string }> = {
+  published:            { bg: 'rgba(15,93,94,0.1)',   color: '#0F5D5E' },
+  pending_verification: { bg: 'rgba(234,179,8,0.1)',  color: '#b45309' },
+  rejected:             { bg: 'rgba(220,38,38,0.08)', color: '#dc2626' },
+  draft:                { bg: 'rgba(0,0,0,0.05)',     color: '#6b7280' },
 }
 
 export default async function ChapterMySubmissionsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
+  // Queries preserved exactly
   const [{ data: reports }, { data: events }] = await Promise.all([
     supabase.from('reports').select('id, title, status, created_at').eq('chapter_id', user?.id ?? '').order('created_at', { ascending: false }),
     supabase.from('events').select('id, title, status, start_date').eq('chapter_id', user?.id ?? '').order('start_date', { ascending: false }),
   ])
 
+  const thStyle = 'px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest'
+  const thColor = { color: '#1F2933', opacity: 0.45 } as const
+  const tableStyle = { background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }
+  const theadStyle = { background: '#FAFAF7', borderBottom: '1px solid rgba(15,93,94,0.08)' }
+
   return (
     <PortalShell
       role="chapter"
       currentPath="/portal/chapter/my-submissions"
-      badge="My Submissions"
-      title="Track your chapter reports and events."
+      badge="Chapter"
+      title="My Submissions"
       subtitle="View the approval status of everything your chapter has submitted."
       navItems={chapterNavItems}
     >
-      <div className="space-y-8">
-        <Card className="border-primary-blue/15 bg-white">
-          <CardHeader className="px-6 pt-6 pb-4 border-b border-gray-100">
-            <CardTitle className="flex items-center gap-3 text-2xl font-black text-gray-950">
-              <FileText className="size-6 text-primary-blue" /> Reports ({reports?.length ?? 0})
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-0 pb-0">
+      <div className="space-y-5">
+        {/* Reports table */}
+        <div className="rounded-xl overflow-hidden" style={tableStyle}>
+          <div className="flex items-center gap-2 px-5 py-4" style={{ borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+            <FileText className="size-4" style={{ color: '#0F5D5E' }} />
+            <p className="text-sm font-bold" style={{ color: '#1F2933' }}>Reports ({reports?.length ?? 0})</p>
+          </div>
+          <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Title</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Submitted</th>
+                <tr style={theadStyle}>
+                  {['Title', 'Status', 'Submitted'].map(h => <th key={h} className={thStyle} style={thColor}>{h}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {!reports || reports.length === 0 ? (
-                  <tr><td colSpan={3} className="px-6 py-12 text-center text-gray-400">No reports submitted yet.</td></tr>
-                ) : reports.map((r) => (
-                  <tr key={r.id} className="border-b border-gray-50 hover:bg-gray-50/80">
-                    <td className="px-6 py-4 font-semibold text-gray-900">{r.title}</td>
-                    <td className="px-6 py-4"><Badge className={`rounded-full border text-xs font-bold ${statusColor[r.status] || ''}`}>{r.status.replace('_', ' ')}</Badge></td>
-                    <td className="px-6 py-4 text-gray-500">{new Date(r.created_at).toLocaleDateString()}</td>
-                  </tr>
-                ))}
+                  <tr><td colSpan={3} className="px-5 py-12 text-center text-sm" style={{ color: '#1F2933', opacity: 0.4 }}>No reports submitted yet.</td></tr>
+                ) : reports.map((r) => {
+                  const s = statusColor[r.status] ?? { bg: 'rgba(0,0,0,0.05)', color: '#6b7280' }
+                  return (
+                    <tr key={r.id} style={{ borderBottom: '1px solid rgba(15,93,94,0.04)' }}>
+                      <td className="px-5 py-4 font-semibold" style={{ color: '#1F2933' }}>{r.title}</td>
+                      <td className="px-5 py-4">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: s.bg, color: s.color }}>{r.status.replace('_', ' ')}</span>
+                      </td>
+                      <td className="px-5 py-4 text-xs" style={{ color: '#1F2933', opacity: 0.45 }}>{new Date(r.created_at).toLocaleDateString()}</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="border-primary-blue/15 bg-white">
-          <CardHeader className="px-6 pt-6 pb-4 border-b border-gray-100">
-            <CardTitle className="flex items-center gap-3 text-2xl font-black text-gray-950">
-              <CalendarDays className="size-6 text-primary-blue" /> Events ({events?.length ?? 0})
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-0 pb-0">
+        {/* Events table */}
+        <div className="rounded-xl overflow-hidden" style={tableStyle}>
+          <div className="flex items-center gap-2 px-5 py-4" style={{ borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+            <CalendarDays className="size-4" style={{ color: '#0F5D5E' }} />
+            <p className="text-sm font-bold" style={{ color: '#1F2933' }}>Events ({events?.length ?? 0})</p>
+          </div>
+          <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Title</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Event Date</th>
+                <tr style={theadStyle}>
+                  {['Title', 'Status', 'Event Date'].map(h => <th key={h} className={thStyle} style={thColor}>{h}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {!events || events.length === 0 ? (
-                  <tr><td colSpan={3} className="px-6 py-12 text-center text-gray-400">No events submitted yet.</td></tr>
-                ) : events.map((e) => (
-                  <tr key={e.id} className="border-b border-gray-50 hover:bg-gray-50/80">
-                    <td className="px-6 py-4 font-semibold text-gray-900">{e.title}</td>
-                    <td className="px-6 py-4"><Badge className={`rounded-full border text-xs font-bold ${statusColor[e.status] || ''}`}>{e.status.replace('_', ' ')}</Badge></td>
-                    <td className="px-6 py-4 text-gray-500">{new Date(e.start_date).toLocaleDateString()}</td>
-                  </tr>
-                ))}
+                  <tr><td colSpan={3} className="px-5 py-12 text-center text-sm" style={{ color: '#1F2933', opacity: 0.4 }}>No events submitted yet.</td></tr>
+                ) : events.map((e) => {
+                  const s = statusColor[e.status] ?? { bg: 'rgba(0,0,0,0.05)', color: '#6b7280' }
+                  return (
+                    <tr key={e.id} style={{ borderBottom: '1px solid rgba(15,93,94,0.04)' }}>
+                      <td className="px-5 py-4 font-semibold" style={{ color: '#1F2933' }}>{e.title}</td>
+                      <td className="px-5 py-4">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: s.bg, color: s.color }}>{e.status.replace('_', ' ')}</span>
+                      </td>
+                      <td className="px-5 py-4 text-xs" style={{ color: '#1F2933', opacity: 0.45 }}>{new Date(e.start_date).toLocaleDateString()}</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </PortalShell>
   )

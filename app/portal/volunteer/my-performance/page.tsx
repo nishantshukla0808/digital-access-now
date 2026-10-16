@@ -1,13 +1,19 @@
 import { volunteerNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/server'
 import { Clock, BarChart3 } from 'lucide-react'
+
+const statusBadge = (status: string) => {
+  if (status === 'verified') return { bg: 'rgba(15,93,94,0.1)',   color: '#0F5D5E' }
+  if (status === 'rejected') return { bg: 'rgba(220,38,38,0.08)', color: '#dc2626' }
+  return                              { bg: 'rgba(234,179,8,0.1)', color: '#b45309' }
+}
 
 export default async function VolunteerPerformancePage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
+  // DB query preserved exactly
   const { data: hours } = await supabase
     .from('volunteer_attendance')
     .select('hours_logged, status, activity_description, date')
@@ -20,88 +26,67 @@ export default async function VolunteerPerformancePage() {
 
   const pending = (hours ?? []).filter((h) => h.status === 'pending').length
 
+  const statCards = [
+    { label: 'Verified Hours', value: `${totalVerified}h`, icon: Clock,     iconBg: 'rgba(15,93,94,0.1)',   iconColor: '#0F5D5E' },
+    { label: 'Pending',        value: `${pending}`,       icon: BarChart3,  iconBg: 'rgba(234,179,8,0.1)', iconColor: '#b45309' },
+    { label: 'Total Sessions', value: `${hours?.length ?? 0}`, icon: BarChart3, iconBg: 'rgba(15,93,94,0.1)', iconColor: '#0F5D5E' },
+  ]
+
   return (
     <PortalShell
       role="volunteer"
       currentPath="/portal/volunteer/my-performance"
-      badge="My Performance"
-      title="Track your volunteer hours and contribution score."
+      badge="Volunteer"
+      title="My Performance"
       subtitle="Only admin-verified hours count toward Volunteer of the Month eligibility."
       navItems={volunteerNavItems}
     >
-      <div className="grid gap-5 sm:grid-cols-3 mb-6">
-        <Card className="border-primary-blue/15 bg-white">
-          <CardContent className="px-6 py-6 flex items-center gap-4">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-primary-blue/10">
-              <Clock className="size-7 text-primary-blue" />
+      <div className="grid gap-4 sm:grid-cols-3 mb-5">
+        {statCards.map(({ label, value, icon: Icon, iconBg, iconColor }) => (
+          <div key={label} className="rounded-xl p-5 flex items-center gap-4" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+            <div className="flex size-12 items-center justify-center rounded-xl shrink-0" style={{ background: iconBg }}>
+              <Icon className="size-6" style={{ color: iconColor }} />
             </div>
             <div>
-              <p className="text-3xl font-black text-gray-950">{totalVerified}h</p>
-              <p className="text-sm text-gray-500">Verified Hours</p>
+              <p className="text-2xl font-bold" style={{ color: '#1F2933' }}>{value}</p>
+              <p className="text-xs" style={{ color: '#1F2933', opacity: 0.55 }}>{label}</p>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="border-primary-blue/15 bg-white">
-          <CardContent className="px-6 py-6 flex items-center gap-4">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-yellow-50">
-              <BarChart3 className="size-7 text-yellow-500" />
-            </div>
-            <div>
-              <p className="text-3xl font-black text-gray-950">{pending}</p>
-              <p className="text-sm text-gray-500">Pending Verification</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border-primary-blue/15 bg-white">
-          <CardContent className="px-6 py-6 flex items-center gap-4">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-primary-blue/10">
-              <BarChart3 className="size-7 text-primary-blue" />
-            </div>
-            <div>
-              <p className="text-3xl font-black text-gray-950">{hours?.length ?? 0}</p>
-              <p className="text-sm text-gray-500">Total Sessions</p>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        ))}
       </div>
 
-      <Card className="border-primary-blue/15 bg-white">
-        <CardHeader className="px-6 pt-6 pb-4 border-b border-gray-100">
-          <CardTitle className="text-2xl font-black text-gray-950">Hours History</CardTitle>
-        </CardHeader>
-        <CardContent className="px-0 pb-0">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Date</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Activity</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Hours</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {!hours || hours.length === 0 ? (
-                  <tr><td colSpan={4} className="px-6 py-16 text-center text-gray-400">No hours logged yet. Use the Log Hours page to submit your first entry.</td></tr>
-                ) : (
-                  hours.map((h, i) => (
-                    <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/80 transition-colors">
-                      <td className="px-6 py-4 text-gray-500">{new Date(h.date).toLocaleDateString()}</td>
-                      <td className="px-6 py-4 text-gray-900">{h.activity_description}</td>
-                      <td className="px-6 py-4 font-bold text-primary-blue">{h.hours_logged}h</td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${h.status === 'verified' ? 'bg-green-50 text-green-700 border-green-200' : h.status === 'rejected' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-yellow-50 text-yellow-700 border-yellow-200'}`}>
-                          {h.status}
-                        </span>
+      <div className="rounded-xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ background: '#FAFAF7', borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+                {['Date', 'Activity', 'Hours', 'Status'].map(h => (
+                  <th key={h} className="px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest" style={{ color: '#1F2933', opacity: 0.45 }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {!hours || hours.length === 0 ? (
+                <tr><td colSpan={4} className="px-5 py-16 text-center text-sm" style={{ color: '#1F2933', opacity: 0.4 }}>No hours logged yet. Use the Log Hours page to submit your first entry.</td></tr>
+              ) : (
+                hours.map((h, i) => {
+                  const s = statusBadge(h.status)
+                  return (
+                    <tr key={i} style={{ borderBottom: '1px solid rgba(15,93,94,0.05)' }}>
+                      <td className="px-5 py-4 text-xs" style={{ color: '#1F2933', opacity: 0.5 }}>{new Date(h.date).toLocaleDateString()}</td>
+                      <td className="px-5 py-4" style={{ color: '#1F2933' }}>{h.activity_description}</td>
+                      <td className="px-5 py-4 font-bold" style={{ color: '#0F5D5E' }}>{h.hours_logged}h</td>
+                      <td className="px-5 py-4">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: s.bg, color: s.color }}>{h.status}</span>
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+                  )
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </PortalShell>
   )
 }

@@ -1,8 +1,6 @@
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
 import { createServiceClient } from '@/lib/supabase/service'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2 } from 'lucide-react'
 import { ApprovalsClient } from './approvals-client'
 
@@ -81,19 +79,17 @@ export default async function AdminApprovalsPage() {
     <PortalShell
       role="admin"
       currentPath="/portal/admin/approvals"
-      badge="Pending Approvals"
-      title="Review & publish chapter and volunteer submissions."
-      subtitle="Approved content is immediately published to the public website. Rejected items are removed from the queue."
+      badge="Admin"
+      title="Pending Approvals"
+      subtitle="Approved content is immediately published. Rejected items are removed from the queue."
       navItems={adminNavItems}
     >
       {pending.length === 0 ? (
-        <Card className="border-primary-blue/15 bg-white">
-          <CardContent className="flex flex-col items-center justify-center py-20 text-center">
-            <CheckCircle2 className="size-16 text-green-400 mb-4" />
-            <p className="text-xl font-black text-gray-950">All caught up!</p>
-            <p className="text-gray-500 mt-2">No pending submissions to review.</p>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col items-center justify-center py-20 text-center rounded-xl" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+          <CheckCircle2 className="size-14 mb-4" style={{ color: '#0F5D5E' }} />
+          <p className="text-lg font-bold" style={{ color: '#1F2933' }}>All caught up!</p>
+          <p className="text-sm mt-1" style={{ color: '#1F2933', opacity: 0.5 }}>No pending submissions to review.</p>
+        </div>
       ) : (
         <ApprovalsClient initialItems={pending} />
       )}

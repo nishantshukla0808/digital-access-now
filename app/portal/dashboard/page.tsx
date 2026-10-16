@@ -1,25 +1,22 @@
 import Link from 'next/link'
 import { ArrowRight, FolderKanban, HandHelping, ShieldCheck } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
 const dashboards = [
   {
-    title: 'Admin dashboard',
+    title: 'Admin',
     description: 'Review users, approvals, and resource visibility settings.',
     href: '/portal/admin/dashboard',
     icon: ShieldCheck,
   },
   {
-    title: 'Chapter dashboard',
+    title: 'Chapter Lead',
     description: 'Upload reports, manage chapter activity, and monitor submissions.',
     href: '/portal/chapter/dashboard',
     icon: FolderKanban,
   },
   {
-    title: 'Volunteer dashboard',
-    description: 'Open assigned materials, event opportunities, and hour tracking.',
+    title: 'Volunteer',
+    description: 'Track hours, submit resources, and view upcoming events.',
     href: '/portal/volunteer/dashboard',
     icon: HandHelping,
   },
@@ -27,39 +24,37 @@ const dashboards = [
 
 export default function PortalDashboardRouterPage() {
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f8fcff_0%,#eef7fb_100%)] px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
-        <div className="text-center">
-          <p className="text-sm font-bold uppercase tracking-[0.34em] text-primary-blue">Portal dashboard</p>
-          <h1 className="mt-4 text-5xl font-black tracking-tight text-gray-950">Role redirect placeholder for the frontend phase.</h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-600">
-            Once JWT auth is connected, this route can inspect the signed-in user role and redirect automatically. For now, choose a dashboard preview below.
+    <div className="min-h-screen flex items-center justify-center px-4 py-16" style={{ background: '#FAFAF7' }}>
+      <div className="w-full max-w-4xl">
+        <div className="text-center mb-10">
+          <Link href="/portal">
+            <img src="https://i.ibb.co/xKnvQK05/logo-DAN.jpg" alt="Digital Access Now" className="mx-auto h-12 w-auto object-contain mb-6" style={{ mixBlendMode: 'normal' }} />
+          </Link>
+          <h1 className="text-2xl font-bold" style={{ color: '#1F2933' }}>Select your workspace</h1>
+          <p className="mt-2 text-sm max-w-md mx-auto" style={{ color: '#1F2933', opacity: 0.55 }}>
+            Once auth is connected, this page will auto-redirect based on your role. For now, select a preview.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {dashboards.map((dashboard) => {
-            const Icon = dashboard.icon
-            return (
-              <Card key={dashboard.title} className="border-primary-blue/15 bg-white py-0 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
-                <CardHeader className="px-6 pt-6">
-                  <div className="flex size-12 items-center justify-center rounded-2xl bg-primary-blue/12 text-primary-blue">
-                    <Icon className="size-5" />
-                  </div>
-                  <CardTitle className="pt-4 text-2xl font-black text-gray-950">{dashboard.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="px-6 pb-6">
-                  <p className="min-h-24 text-sm leading-7 text-gray-600">{dashboard.description}</p>
-                  <Button asChild className="mt-6 w-full rounded-full bg-primary-blue text-footer-black hover:bg-cyan-600">
-                    <Link href={dashboard.href}>
-                      Open preview
-                      <ArrowRight className="size-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            )
-          })}
+        <div className="grid gap-4 md:grid-cols-3">
+          {dashboards.map(({ title, description, href, icon: Icon }) => (
+            <Link
+              key={title} href={href}
+              className="group flex flex-col gap-4 rounded-xl p-6 transition-all duration-150 hover:-translate-y-1 hover:shadow-lg"
+              style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}
+            >
+              <div className="flex size-11 items-center justify-center rounded-xl" style={{ background: 'rgba(15,93,94,0.08)' }}>
+                <Icon className="size-5" style={{ color: '#0F5D5E' }} />
+              </div>
+              <div>
+                <p className="font-bold" style={{ color: '#1F2933' }}>{title}</p>
+                <p className="mt-1 text-sm leading-relaxed" style={{ color: '#1F2933', opacity: 0.55 }}>{description}</p>
+              </div>
+              <span className="flex items-center gap-1 text-xs font-bold mt-auto" style={{ color: '#0F5D5E' }}>
+                Open <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

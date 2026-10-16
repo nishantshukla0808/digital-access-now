@@ -5,14 +5,13 @@ import { Footer } from '@/components/footer'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import Image from 'next/image'
 
 export default function Donate() {
   const [expandedFaq, setExpandedFaq] = React.useState<number | null>(null)
   const [donationType, setDonationType] = React.useState<'one-time' | 'monthly'>('one-time')
   const [selectedAmount, setSelectedAmount] = React.useState<number | null>(null)
   const [customAmount, setCustomAmount] = React.useState('')
-  
+
   const donationAmounts = [100, 50, 25, 15, 10]
 
   const faqItems = [
@@ -22,7 +21,7 @@ export default function Donate() {
     },
     {
       question: 'Is my donation tax deductible?',
-      answer: 'Yes! All donations are tax deductible. Upon donation, you will receive a confirmation email with the necessary tax information. We provide all documentation needed for tax purposes.'
+      answer: 'Yes. All donations are tax deductible. Upon donation, you will receive a confirmation email with the necessary tax information. We provide all documentation needed for tax purposes.'
     },
     {
       question: 'How do I send donations?',
@@ -35,168 +34,153 @@ export default function Donate() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: '#FAFAF7' }}>
       <Navbar />
 
-      {/* Hero Section - Two Column Layout */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gray-50">
+      {/* Hero Section */}
+      <section className="pt-32 pb-16 md:pt-40 md:pb-24" style={{ background: '#FAFAF7' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-16 text-center text-gray-900">
-            Bridge the Digital Divide by Empowering<br />Communities to Access Technology
+
+          {/* Eyebrow */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="w-1 h-5 rounded-full" style={{ background: '#4DB7E5' }} />
+            <p className="text-xs font-black tracking-widest uppercase" style={{ color: '#4DB7E5' }}>Support Our Mission</p>
+          </div>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-16 text-center leading-tight" style={{ color: '#1F2933' }}>
+            Bridge the Digital Divide.<br />
+            <span style={{ color: '#0F5D5E' }}>Empower Communities.</span>
           </h1>
-          
+
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Left Column - Mission & Image */}
+            {/* Left Column — Mission & Image */}
             <div className="space-y-8">
               <div className="rounded-2xl overflow-hidden shadow-xl">
-                <img 
+                <img
                   src="https://i.ibb.co/vxPNQ21P/IMG-0533.jpg"
                   alt="Digital Access Now Team"
                   className="w-full h-[400px] object-cover"
                 />
               </div>
-              
-              <div className="space-y-6 text-gray-700 text-lg">
-                <div className="flex gap-3">
-                  <span className="text-primary-blue font-bold">•</span>
-                  <p><strong>Empower 340,000+ lives</strong> to achieve digital equity and access essential online resources.</p>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-primary-blue font-bold">•</span>
-                  <p><strong>Break barriers for underserved communities</strong> by providing devices, connectivity, and digital literacy training.</p>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-primary-blue font-bold">•</span>
-                  <p><strong>Grow a high-impact, community-led movement</strong> with operations in 52 countries and partnerships with global organizations.</p>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-primary-blue font-bold">•</span>
-                  <p><strong>Ensure economic status is never a barrier</strong> to participating in the digital economy.</p>
-                </div>
+
+              <div className="space-y-5">
+                {[
+                  { bold: 'Empower 340,000+ lives', text: ' to achieve digital equity and access essential online resources.' },
+                  { bold: 'Break barriers for underserved communities', text: ' by providing devices, connectivity, and digital literacy training.' },
+                  { bold: 'Grow a high-impact, community-led movement', text: ' with operations across 5 pilot countries and global partnerships.' },
+                  { bold: 'Ensure economic status is never a barrier', text: ' to participating in the digital economy.' },
+                ].map(({ bold, text }, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-1.5 h-1.5 rounded-full mt-2.5 shrink-0" style={{ background: '#4DB7E5' }} />
+                    <p className="text-base leading-relaxed" style={{ color: '#1F2933', opacity: 0.8 }}>
+                      <strong style={{ color: '#0F5D5E' }}>{bold}</strong>{text}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Right Column - Donation Widget */}
+            {/* Right Column — Donation Widget */}
             <div className="lg:sticky lg:top-32">
-              <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
+              <div className="bg-white rounded-2xl shadow-xl p-8 border" style={{ borderColor: 'rgba(15,93,94,0.12)' }}>
+
                 {/* Donation Type Toggle */}
                 <div className="flex gap-3 mb-6">
                   <button
                     suppressHydrationWarning
                     onClick={() => setDonationType('one-time')}
-                    className={`flex-1 py-3 px-6 rounded-full font-bold transition-all duration-300 ${
-                      donationType === 'one-time'
-                        ? 'bg-white border-2 border-primary-blue text-primary-blue'
-                        : 'bg-gray-100 text-gray-600 border-2 border-transparent hover:border-gray-300'
-                    }`}
+                    className="flex-1 py-3 px-6 rounded-full font-bold transition-all duration-200 text-sm"
+                    style={donationType === 'one-time'
+                      ? { background: 'white', border: '2px solid #0F5D5E', color: '#0F5D5E' }
+                      : { background: '#f5f5f0', border: '2px solid transparent', color: '#6b7280' }}
                   >
                     One-time
                   </button>
                   <button
                     suppressHydrationWarning
                     onClick={() => setDonationType('monthly')}
-                    className={`flex-1 py-3 px-6 rounded-full font-bold transition-all duration-300 ${
-                      donationType === 'monthly'
-                        ? 'bg-primary-blue text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
+                    className="flex-1 py-3 px-6 rounded-full font-bold transition-all duration-200 text-sm"
+                    style={donationType === 'monthly'
+                      ? { background: '#0F5D5E', color: 'white', border: '2px solid #0F5D5E' }
+                      : { background: '#f5f5f0', border: '2px solid transparent', color: '#6b7280' }}
                   >
                     Monthly
                   </button>
                 </div>
 
                 {donationType === 'monthly' && (
-                  <div className="mb-6 p-3 bg-blue-50 rounded-lg text-center">
-                    <p className="text-sm font-semibold text-blue-900">
-                      Giving monthly has a greater impact
+                  <div className="mb-6 p-3 rounded-lg text-center" style={{ background: 'rgba(15,93,94,0.06)' }}>
+                    <p className="text-sm font-semibold" style={{ color: '#0F5D5E' }}>
+                      Giving monthly has a greater long-term impact
                     </p>
                   </div>
                 )}
 
                 {/* Preset Amount Buttons */}
-                <div className="grid grid-cols-3 gap-3 mb-4">
+                <div className="grid grid-cols-3 gap-3 mb-3">
                   {donationAmounts.slice(0, 3).map((amount) => (
                     <button
                       suppressHydrationWarning
                       key={amount}
-                      onClick={() => {
-                        setSelectedAmount(amount)
-                        setCustomAmount('')
-                      }}
-                      className={`py-4 px-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                        selectedAmount === amount
-                          ? 'bg-primary-blue text-white shadow-lg scale-105'
-                          : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-primary-blue hover:text-primary-blue'
-                      }`}
-                    >
-                      ${amount}
-                    </button>
-                  ))}
-                </div>
-                
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {donationAmounts.slice(3, 5).map((amount) => (
-                    <button
-                      suppressHydrationWarning
-                      key={amount}
-                      onClick={() => {
-                        setSelectedAmount(amount)
-                        setCustomAmount('')
-                      }}
-                      className={`py-4 px-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                        selectedAmount === amount
-                          ? 'bg-primary-blue text-white shadow-lg scale-105'
-                          : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-primary-blue hover:text-primary-blue'
-                      }`}
+                      onClick={() => { setSelectedAmount(amount); setCustomAmount('') }}
+                      className="py-4 px-4 rounded-xl font-bold text-lg transition-all duration-200"
+                      style={selectedAmount === amount
+                        ? { background: '#0F5D5E', color: 'white', transform: 'scale(1.05)', boxShadow: '0 4px 16px rgba(15,93,94,0.3)' }
+                        : { background: 'white', border: '2px solid #e5e7eb', color: '#1F2933' }}
                     >
                       ${amount}
                     </button>
                   ))}
                 </div>
 
-                {/* Custom Amount Input */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {donationAmounts.slice(3, 5).map((amount) => (
+                    <button
+                      suppressHydrationWarning
+                      key={amount}
+                      onClick={() => { setSelectedAmount(amount); setCustomAmount('') }}
+                      className="py-4 px-4 rounded-xl font-bold text-lg transition-all duration-200"
+                      style={selectedAmount === amount
+                        ? { background: '#0F5D5E', color: 'white', transform: 'scale(1.05)', boxShadow: '0 4px 16px rgba(15,93,94,0.3)' }
+                        : { background: 'white', border: '2px solid #e5e7eb', color: '#1F2933' }}
+                    >
+                      ${amount}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Custom Amount */}
                 <div className="mb-6">
                   <input
                     suppressHydrationWarning
                     type="number"
                     placeholder="$ Enter custom amount"
                     value={customAmount}
-                    onChange={(e) => {
-                      setCustomAmount(e.target.value)
-                      setSelectedAmount(null)
-                    }}
-                    className="w-full px-4 py-4 border-2 border-primary-blue rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-blue text-lg"
+                    onChange={(e) => { setCustomAmount(e.target.value); setSelectedAmount(null) }}
+                    className="w-full px-4 py-4 rounded-xl text-lg focus:outline-none transition-all"
+                    style={{ border: '2px solid #0F5D5E', color: '#1F2933' }}
                   />
-                  <p className="text-xs text-gray-500 mt-2 text-center">
-                    Donating in <strong>US Dollars</strong>
-                  </p>
+                  <p className="text-xs text-gray-400 mt-2 text-center">Donating in <strong>US Dollars</strong></p>
                 </div>
 
                 {/* Payment Methods */}
-                <div className="flex justify-center gap-3 mb-6 flex-wrap">
-                  <div className="px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 text-xs font-semibold">
-                    Apple Pay
-                  </div>
-                  <div className="px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 text-xs font-semibold">
-                    Google Pay
-                  </div>
-                  <div className="px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 text-xs font-semibold">
-                    VISA
-                  </div>
-                  <div className="px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 text-xs font-semibold">
-                    Mastercard
-                  </div>
-                  <div className="px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 text-xs font-semibold">
-                    Amex
-                  </div>
-                </div>suppressHydrationWarning 
+                <div className="flex justify-center gap-2 mb-6 flex-wrap">
+                  {['Apple Pay', 'Google Pay', 'VISA', 'Mastercard', 'Amex'].map(m => (
+                    <div key={m} className="px-3 py-1.5 rounded-lg border text-xs font-semibold text-gray-500" style={{ background: '#f9fafb', borderColor: '#e5e7eb' }}>
+                      {m}
+                    </div>
+                  ))}
+                </div>
 
                 {/* Donate Button */}
-                <button className="w-full bg-primary-blue hover:bg-cyan-600 text-white py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6">
+                <button
+                  className="w-full text-white py-4 rounded-full font-bold text-lg transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 shadow-lg mb-5"
+                  style={{ background: 'linear-gradient(135deg, #0F5D5E, #238C91)' }}
+                >
                   Donate Now
                 </button>
 
-                <p className="text-xs text-gray-500 text-center italic">
+                <p className="text-xs text-gray-400 text-center">
                   Your donation supports digital literacy, device distribution, and outreach for community-led digital access.
                 </p>
               </div>
@@ -205,103 +189,32 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* Alternative Donation Methods */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Other Ways to Give</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Check Donation */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="text-4xl">✉️</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-3">Donate by Check</h3>
-                  <p className="text-gray-600 mb-4">
-                    Make checks payable to <strong>Registration Nation</strong> and mail to:
-                  </p>
-                  <div className="bg-gray-50 p-4 rounded-lg text-sm leading-relaxed text-gray-700">
-                    <p className="font-semibold">Registration Nation</p>
-                    <p>Fiscal Sponsor of Digital Access Now</p>
-                    <p>Attn: Sophia Nelson</p>
-                    <p>5883 Caribbean Blvd</p>
-                    <p>West Palm Beach, FL 33407</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bank Transfer */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="text-4xl">🏦</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-3">Bank Transfer (ACH)</h3>
-                  <p className="text-gray-600 mb-4">
-                    Transfer directly to Registration Nation:
-                  </p>
-                  <div className="bg-gray-50 p-4 rounded-lg text-sm space-y-2 text-gray-700">
-                    <div>
-                      <p className="font-semibold">Account Number:</p>
-                      <p className="font-mono">#81058155</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold">Routing Number:</p>
-                      <p className="font-mono">#026003379</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold">Bank:</p>
-                      <p>Amalgamated Bank</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Financial Documents */}
-          <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-200 text-center">
-            <h3 className="text-2xl font-bold mb-3">Need Financial Documents?</h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              We can provide donation receipts, financial statements, and tax documentation upon request.
-            </p>
-            <a 
-              href="mailto:finance@digitalaccessnow.org" 
-              className="inline-block bg-primary-blue hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold transition-all duration-300"
-            >
-              Request Documents
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* FAQ Section */}
       <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center" style={{ color: '#1F2933' }}>
             Frequently Asked Questions
           </h2>
-          <div className="space-y-1">
+          <div className="divide-y" style={{ borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb' }}>
             {faqItems.map((item, i) => (
-              <div key={i} className="border-b border-gray-200">
+              <div key={i}>
                 <button
                   suppressHydrationWarning
                   onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                  className="w-full px-0 py-6 flex items-center justify-between hover:text-primary-blue transition-all duration-300 group"
+                  className="w-full px-0 py-6 flex items-center justify-between text-left group"
                 >
-                  <h3 className="text-xl font-normal text-left text-gray-700 group-hover:text-primary-blue transition-colors">
+                  <h3 className="text-base font-semibold pr-6 transition-colors group-hover:text-[#0F5D5E]" style={{ color: '#1F2933' }}>
                     {item.question}
                   </h3>
-                  <ChevronDown 
-                    size={28} 
-                    className={`transition-all duration-300 flex-shrink-0 text-gray-400 group-hover:text-primary-blue ml-4 ${
-                      expandedFaq === i ? 'rotate-180' : ''
-                    }`}
+                  <ChevronDown
+                    size={20}
+                    className={`shrink-0 transition-all duration-300 ${expandedFaq === i ? 'rotate-180' : ''}`}
+                    style={{ color: '#0F5D5E' }}
                   />
                 </button>
                 {expandedFaq === i && (
-                  <div className="pb-6 pt-0">
-                    <p className="text-gray-600 leading-relaxed text-lg">{item.answer}</p>
+                  <div className="pb-6">
+                    <p className="leading-relaxed text-sm" style={{ color: '#1F2933', opacity: 0.75 }}>{item.answer}</p>
                   </div>
                 )}
               </div>
@@ -310,12 +223,12 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* Legal Information */}
-      <section className="py-12 bg-gray-50">
+      {/* Legal */}
+      <section className="py-12" style={{ background: '#FAFAF7' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-gray-500 text-center leading-relaxed">
-            Digital Access Now is fiscally sponsored by <strong>Registration Nation</strong>, a registered 501(c)(3) organization, 
-            Tax ID (EIN) 87-3891341. All donations are tax-deductible to the extent permitted by law. 
+          <p className="text-xs text-center leading-relaxed" style={{ color: '#1F2933', opacity: 0.45 }}>
+            Digital Access Now is fiscally sponsored by <strong>Registration Nation</strong>, a registered 501(c)(3) organization,
+            Tax ID (EIN) 87-3891341. All donations are tax-deductible to the extent permitted by law.
             Thank you for your support in bridging the digital divide.
           </p>
         </div>

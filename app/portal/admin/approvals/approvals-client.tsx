@@ -1,26 +1,19 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2, XCircle, FileText, CalendarDays, BookOpen, Video, Clock } from 'lucide-react'
 import { approveOrReject } from '@/app/portal/admin/admin-actions'
 import type { PendingItem } from './page'
 
 const typeConfig = {
-  report: { icon: FileText, color: 'bg-blue-50 text-blue-700 border-blue-200', badge: 'Chapter Report' },
-  event: { icon: CalendarDays, color: 'bg-green-50 text-green-700 border-green-200', badge: 'Chapter Event' },
-  resource: { icon: BookOpen, color: 'bg-primary-blue/10 text-primary-blue border-primary-blue/20', badge: 'Volunteer Resource' },
-  vlog: { icon: Video, color: 'bg-orange-50 text-orange-700 border-orange-200', badge: 'Volunteer Vlog' },
-  hours: { icon: Clock, color: 'bg-yellow-50 text-yellow-700 border-yellow-200', badge: 'Hours Log' },
+  report:   { icon: FileText,    badge: 'Chapter Report',      bg: 'rgba(15,93,94,0.08)',    color: '#0F5D5E' },
+  event:    { icon: CalendarDays, badge: 'Chapter Event',      bg: 'rgba(77,183,229,0.1)',   color: '#238C91' },
+  resource: { icon: BookOpen,    badge: 'Volunteer Resource',  bg: 'rgba(15,93,94,0.08)',    color: '#0F5D5E' },
+  vlog:     { icon: Video,       badge: 'Volunteer Vlog',      bg: 'rgba(234,179,8,0.1)',    color: '#b45309' },
+  hours:    { icon: Clock,       badge: 'Hours Log',           bg: 'rgba(234,179,8,0.1)',    color: '#b45309' },
 }
 
-export function ApprovalsClient({
-  initialItems,
-}: {
-  initialItems: PendingItem[]
-}) {
+export function ApprovalsClient({ initialItems }: { initialItems: PendingItem[] }) {
   const [items, setItems] = useState(initialItems)
   const [reviewedCount, setReviewedCount] = useState(0)
   const [error, setError] = useState<string | null>(null)
@@ -30,70 +23,74 @@ export function ApprovalsClient({
     startTransition(async () => {
       setError(null)
       const result = await approveOrReject(item.table, item.id, action)
-      if (result.error) {
-        setError(result.error)
-        return
-      }
+      if (result.error) { setError(result.error); return }
       setItems((prev) => prev.filter((i) => i.id !== item.id))
       setReviewedCount((c) => c + 1)
     })
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {reviewedCount > 0 && (
-        <div className="rounded-2xl bg-green-50 border border-green-200 px-5 py-3 text-sm font-medium text-green-700">
-          ✓ {reviewedCount} item(s) reviewed and updated in the database.
+        <div className="rounded-xl px-5 py-3 text-sm font-medium" style={{ background: 'rgba(15,93,94,0.08)', color: '#0F5D5E' }}>
+          {reviewedCount} item{reviewedCount > 1 ? 's' : ''} reviewed and updated.
         </div>
       )}
       {error && (
-        <div className="rounded-2xl bg-red-50 border border-red-200 px-5 py-3 text-sm font-medium text-red-700">
+        <div className="rounded-xl px-5 py-3 text-sm font-medium" style={{ background: '#fef2f2', color: '#b91c1c' }}>
           Error: {error}
         </div>
       )}
 
       {items.map((item) => {
-        const cfg = typeConfig[item.type]
+        const cfg = typeConfig[item.type as keyof typeof typeConfig]
         const Icon = cfg?.icon ?? CheckCircle2
-        // Hours need 'verified' status, others need 'published'
         const approveAction = item.type === 'hours' ? 'verified' : 'published'
 
         return (
-          <Card key={item.id} className="border-primary-blue/15 bg-white overflow-hidden">
-            <div className="flex flex-col lg:flex-row gap-0">
-              <CardContent className="flex-1 px-6 py-6">
-                <div className="flex flex-wrap items-start gap-3 mb-3">
-                  <Badge className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${cfg?.color ?? ''}`}>
-                    <Icon className="size-3" />
-                    {cfg?.badge}
-                  </Badge>
-                  <span className="text-xs text-gray-400">
-                    by {item.submittedBy} · {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </span>
-                </div>
-                <h3 className="text-lg font-black text-gray-950 mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">{item.excerpt}</p>
-              </CardContent>
-              <div className="flex flex-row lg:flex-col items-center justify-center gap-3 px-6 py-6 lg:border-l border-t lg:border-t-0 border-gray-100 bg-gray-50/60">
-                <Button
-                  onClick={() => handleAction(item, approveAction)}
-                  disabled={isPending}
-                  className="rounded-2xl bg-green-600 text-white hover:bg-green-700 gap-2"
-                >
-                  <CheckCircle2 className="size-4" />
-                  {item.type === 'hours' ? 'Verify' : 'Publish'}
-                </Button>
-                <Button
-                  onClick={() => handleAction(item, 'rejected')}
-                  disabled={isPending}
-                  variant="outline"
-                  className="rounded-2xl border-red-200 text-red-600 hover:bg-red-50 gap-2"
-                >
-                  <XCircle className="size-4" /> Reject
-                </Button>
+          <div
+            key={item.id}
+            className="flex flex-col lg:flex-row overflow-hidden rounded-xl"
+            style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}
+          >
+            {/* Content */}
+            <div className="flex-1 p-5">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold" style={{ background: cfg?.bg, color: cfg?.color }}>
+                  <Icon className="size-3" /> {cfg?.badge}
+                </span>
+                <span className="text-xs" style={{ color: '#1F2933', opacity: 0.45 }}>
+                  by {item.submittedBy} · {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </span>
               </div>
+              <h3 className="text-base font-bold mb-1" style={{ color: '#1F2933' }}>{item.title}</h3>
+              <p className="text-sm leading-relaxed line-clamp-2" style={{ color: '#1F2933', opacity: 0.6 }}>{item.excerpt}</p>
             </div>
-          </Card>
+
+            {/* Actions */}
+            <div
+              className="flex flex-row lg:flex-col items-center justify-center gap-2 p-4 lg:border-l"
+              style={{ background: '#FAFAF7', borderColor: 'rgba(15,93,94,0.08)' }}
+            >
+              <button
+                onClick={() => handleAction(item, approveAction)}
+                disabled={isPending}
+                className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                style={{ background: '#0F5D5E' }}
+              >
+                <CheckCircle2 className="size-4" />
+                {item.type === 'hours' ? 'Verify' : 'Publish'}
+              </button>
+              <button
+                onClick={() => handleAction(item, 'rejected')}
+                disabled={isPending}
+                className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-all hover:opacity-90 disabled:opacity-50"
+                style={{ background: 'rgba(220,38,38,0.08)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.2)' }}
+              >
+                <XCircle className="size-4" /> Reject
+              </button>
+            </div>
+          </div>
         )
       })}
     </div>

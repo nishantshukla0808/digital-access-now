@@ -3,8 +3,6 @@
 import { useState, useTransition } from 'react'
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ShieldCheck, FolderKanban, HandHelping, Loader2 } from 'lucide-react'
 import { changeUserRole } from '../admin-actions'
 
@@ -18,21 +16,19 @@ type User = {
 }
 
 const roleIcon: Record<string, React.ElementType> = {
-  ADMIN: ShieldCheck,
-  CHAPTER: FolderKanban,
-  VOLUNTEER: HandHelping,
+  ADMIN: ShieldCheck, CHAPTER: FolderKanban, VOLUNTEER: HandHelping,
 }
-const roleColors: Record<string, string> = {
-  ADMIN: 'bg-red-50 text-red-700 border-red-200',
-  CHAPTER: 'bg-primary-blue/10 text-primary-blue border-primary-blue/20',
-  VOLUNTEER: 'bg-primary-purple/10 text-primary-purple border-primary-purple/20',
+const roleBadge: Record<string, { bg: string; color: string }> = {
+  ADMIN:     { bg: 'rgba(220,38,38,0.08)',  color: '#dc2626' },
+  CHAPTER:   { bg: 'rgba(15,93,94,0.1)',    color: '#0F5D5E' },
+  VOLUNTEER: { bg: 'rgba(77,183,229,0.1)',  color: '#238C91' },
 }
 
 export function UsersClient({ initialUsers }: { initialUsers: User[] }) {
-  const [users, setUsers] = useState(initialUsers)
-  const [notice, setNotice] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
-  const [isPending, startTransition] = useTransition()
-  const [changingId, setChangingId] = useState<string | null>(null)
+  const [users, setUsers]             = useState(initialUsers)
+  const [notice, setNotice]           = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
+  const [isPending, startTransition]  = useTransition()
+  const [changingId, setChangingId]   = useState<string | null>(null)
 
   function handleRoleChange(userId: string, newRole: 'ADMIN' | 'CHAPTER' | 'VOLUNTEER') {
     setChangingId(userId)
@@ -53,86 +49,76 @@ export function UsersClient({ initialUsers }: { initialUsers: User[] }) {
     <PortalShell
       role="admin"
       currentPath="/portal/admin/users"
-      badge="User Management"
-      title={`All registered users (${users.length})`}
-      subtitle="View and manage Admins, Chapter Leads, and Volunteers. Change roles using the dropdown per user."
+      badge="Admin"
+      title={`Users (${users.length})`}
+      subtitle="View and manage Admins, Chapter Leads, and Volunteers. Change roles using the dropdown."
       navItems={adminNavItems}
     >
       {notice && (
-        <div className={`rounded-2xl px-5 py-3 text-sm font-medium mb-6 ${notice.type === 'ok' ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-red-50 border border-red-200 text-red-700'}`}>
-          {notice.type === 'ok' ? '✓' : '⚠'} {notice.msg}
+        <div className="rounded-xl px-5 py-3 text-sm font-medium mb-5"
+          style={notice.type === 'ok'
+            ? { background: 'rgba(15,93,94,0.08)', color: '#0F5D5E' }
+            : { background: '#fef2f2', color: '#b91c1c' }}>
+          {notice.msg}
         </div>
       )}
 
-      <Card className="border-primary-blue/15 bg-white">
-        <CardHeader className="px-6 pt-6 pb-4 border-b border-gray-100">
-          <CardTitle className="text-2xl font-black text-gray-950">
-            Users ({users.length})
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-0 pb-0">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Credential ID</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Name</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Email</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Role</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Change Role</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest text-gray-500">Joined</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="px-6 py-16 text-center text-gray-400">
-                      No users yet.
-                    </td>
-                  </tr>
-                ) : (
-                  users.map(user => {
-                    const Icon = roleIcon[user.role] ?? HandHelping
-                    const isChanging = changingId === user.id && isPending
-                    return (
-                      <tr key={user.id} className="border-b border-gray-50 hover:bg-gray-50/80 transition-colors">
-                        <td className="px-6 py-4 font-mono text-xs font-bold text-primary-blue">{user.custom_id}</td>
-                        <td className="px-6 py-4 font-semibold text-gray-900">{user.full_name || '—'}</td>
-                        <td className="px-6 py-4 text-gray-600">{user.email}</td>
-                        <td className="px-6 py-4">
-                          <Badge className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${roleColors[user.role] || ''}`}>
-                            <Icon className="size-3" />
-                            {user.role}
-                          </Badge>
-                        </td>
-                        <td className="px-6 py-4">
-                          {isChanging ? (
-                            <Loader2 className="size-4 animate-spin text-primary-blue" />
-                          ) : (
-                            <select
-                              value={user.role}
-                              disabled={isPending}
-                              onChange={e => handleRoleChange(user.id, e.target.value as 'ADMIN' | 'CHAPTER' | 'VOLUNTEER')}
-                              className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-700 outline-none focus:border-primary-blue transition-colors disabled:opacity-50"
-                            >
-                              <option value="ADMIN">ADMIN</option>
-                              <option value="CHAPTER">CHAPTER</option>
-                              <option value="VOLUNTEER">VOLUNTEER</option>
-                            </select>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-gray-500">
-                          {new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                        </td>
-                      </tr>
-                    )
-                  })
-                )}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ background: '#FAFAF7', borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+                {['Credential ID', 'Name', 'Email', 'Role', 'Change Role', 'Joined'].map(h => (
+                  <th key={h} className="px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest" style={{ color: '#1F2933', opacity: 0.45 }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {users.length === 0 ? (
+                <tr><td colSpan={6} className="px-5 py-16 text-center text-sm" style={{ color: '#1F2933', opacity: 0.4 }}>No users yet.</td></tr>
+              ) : (
+                users.map(user => {
+                  const Icon = roleIcon[user.role] ?? HandHelping
+                  const badge = roleBadge[user.role] ?? { bg: 'rgba(0,0,0,0.05)', color: '#6b7280' }
+                  const isChanging = changingId === user.id && isPending
+                  return (
+                    <tr key={user.id} style={{ borderBottom: '1px solid rgba(15,93,94,0.05)' }}>
+                      <td className="px-5 py-4 font-mono text-xs font-bold" style={{ color: '#0F5D5E' }}>{user.custom_id}</td>
+                      <td className="px-5 py-4 font-semibold" style={{ color: '#1F2933' }}>{user.full_name || '—'}</td>
+                      <td className="px-5 py-4" style={{ color: '#1F2933', opacity: 0.65 }}>{user.email}</td>
+                      <td className="px-5 py-4">
+                        <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold" style={{ background: badge.bg, color: badge.color }}>
+                          <Icon className="size-3" /> {user.role}
+                        </span>
+                      </td>
+                      <td className="px-5 py-4">
+                        {isChanging ? (
+                          <Loader2 className="size-4 animate-spin" style={{ color: '#0F5D5E' }} />
+                        ) : (
+                          <select
+                            value={user.role}
+                            disabled={isPending}
+                            onChange={e => handleRoleChange(user.id, e.target.value as 'ADMIN' | 'CHAPTER' | 'VOLUNTEER')}
+                            className="rounded-lg px-3 py-1.5 text-xs font-semibold outline-none disabled:opacity-50"
+                            style={{ background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933' }}
+                          >
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="CHAPTER">CHAPTER</option>
+                            <option value="VOLUNTEER">VOLUNTEER</option>
+                          </select>
+                        )}
+                      </td>
+                      <td className="px-5 py-4 text-xs" style={{ color: '#1F2933', opacity: 0.45 }}>
+                        {new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </td>
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </PortalShell>
   )
 }

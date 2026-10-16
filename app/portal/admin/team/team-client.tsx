@@ -4,11 +4,6 @@ import { useRef, useState, useTransition } from 'react'
 import { Loader2, Plus, Star, Trash2, Users } from 'lucide-react'
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { addTeamMember, removeTeamMember } from '../admin-actions'
 
 type Member = {
@@ -23,9 +18,9 @@ type Member = {
 }
 
 export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
-  const [members, setMembers]       = useState(initialMembers)
-  const [isPending, startTransition] = useTransition()
-  const [notice, setNotice]         = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
+  const [members, setMembers]         = useState(initialMembers)
+  const [isPending, startTransition]  = useTransition()
+  const [notice, setNotice]           = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
   const [imageUrlPreview, setImageUrlPreview] = useState('')
   const imageInputRef = useRef<HTMLInputElement>(null)
 
@@ -45,7 +40,7 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
         setNotice({ type: 'err', msg: result.error })
       } else {
         const type = (formData.get('member_type') as string) || 'team'
-        setNotice({ type: 'ok', msg: type === 'advisory' ? 'Advisory board member added!' : 'Team member added successfully!' })
+        setNotice({ type: 'ok', msg: type === 'advisory' ? 'Advisory board member added.' : 'Team member added.' })
         setImageUrlPreview('')
         if (imageInputRef.current) imageInputRef.current.value = ''
         window.location.reload()
@@ -67,47 +62,45 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
     })
   }
 
-  function RosterGroup({ title, items, accent }: { title: string; items: Member[]; accent: 'blue' | 'purple' }) {
-    const borderCol = accent === 'purple' ? 'border-primary-purple/25' : 'border-primary-blue/25'
-    const textCol   = accent === 'purple' ? 'text-primary-purple'      : 'text-primary-blue'
-    const badgeBg   = accent === 'purple' ? 'bg-purple-50 border-purple-200 text-purple-700' : 'bg-cyan-50 border-cyan-200 text-cyan-700'
+  const inputStyle = {
+    width: '100%', height: '42px', paddingLeft: '12px', paddingRight: '12px',
+    borderRadius: '10px', fontSize: '14px', outline: 'none',
+    background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933',
+  } as const
 
+  function RosterGroup({ title, items, isAdvisory }: { title: string; items: Member[]; isAdvisory?: boolean }) {
     return (
       <div className="space-y-3">
-        <div className="flex items-center gap-3 pb-2 border-b border-gray-100">
-          {accent === 'purple'
-            ? <Star className="size-4 text-primary-purple" />
-            : <Users className="size-4 text-primary-blue" />}
-          <p className={`text-sm font-bold ${textCol} uppercase tracking-wider`}>{title}</p>
-          <span className="text-xs text-gray-400 ml-auto">{items.length} members</span>
+        <div className="flex items-center gap-2 pb-2" style={{ borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+          {isAdvisory ? <Star className="size-4" style={{ color: '#4DB7E5' }} /> : <Users className="size-4" style={{ color: '#0F5D5E' }} />}
+          <p className="text-xs font-bold uppercase tracking-widest" style={{ color: isAdvisory ? '#4DB7E5' : '#0F5D5E' }}>{title}</p>
+          <span className="ml-auto text-xs" style={{ color: '#1F2933', opacity: 0.4 }}>{items.length} members</span>
         </div>
         {items.length === 0 && (
-          <p className="text-gray-400 text-sm py-4 text-center">No members yet — add one using the form.</p>
+          <p className="text-sm text-center py-4" style={{ color: '#1F2933', opacity: 0.4 }}>No members yet — add one below.</p>
         )}
         {items.map((member) => (
-          <div key={member.id} className="flex flex-col gap-4 rounded-3xl border border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <div className={`flex size-14 items-center justify-center overflow-hidden rounded-full border-2 ${borderCol} bg-gray-100 shrink-0`}>
+          <div key={member.id} className="flex flex-col gap-3 rounded-xl p-4 sm:flex-row sm:items-center sm:justify-between" style={{ background: '#FAFAF7', border: '1px solid rgba(15,93,94,0.08)' }}>
+            <div className="flex items-center gap-3">
+              <div className="size-12 overflow-hidden rounded-full shrink-0" style={{ border: '2px solid rgba(15,93,94,0.2)' }}>
                 <img src={member.image_url} alt={member.name} className="h-full w-full object-cover" />
               </div>
               <div>
-                <p className="font-bold text-gray-950">{member.name}</p>
-                <p className={`text-sm font-semibold ${textCol}`}>{member.role_title}</p>
-                <p className="text-xs text-gray-400">{member.country}</p>
-                {member.bio && <p className="mt-1 max-w-xs text-sm text-gray-600 line-clamp-2">{member.bio}</p>}
+                <p className="font-bold text-sm" style={{ color: '#1F2933' }}>{member.name}</p>
+                <p className="text-xs font-semibold" style={{ color: '#0F5D5E' }}>{member.role_title}</p>
+                <p className="text-xs" style={{ color: '#1F2933', opacity: 0.45 }}>{member.country}</p>
               </div>
             </div>
             <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-              <Badge className={`rounded-full border px-3 py-1 text-xs ${badgeBg}`}>● Live</Badge>
-              <Button
-                variant="outline"
-                size="sm"
+              <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(15,93,94,0.1)', color: '#0F5D5E' }}>Live</span>
+              <button
                 disabled={isPending}
                 onClick={() => handleRemove(member.id, member.name)}
-                className="rounded-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-700"
+                className="flex items-center justify-center size-8 rounded-lg transition-opacity hover:opacity-80 disabled:opacity-40"
+                style={{ background: 'rgba(220,38,38,0.08)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.2)' }}
               >
                 <Trash2 className="size-3.5" />
-              </Button>
+              </button>
             </div>
           </div>
         ))}
@@ -119,123 +112,119 @@ export function TeamClient({ initialMembers }: { initialMembers: Member[] }) {
     <PortalShell
       role="admin"
       currentPath="/portal/admin/team"
-      badge="Team management"
-      title="Add, edit, and remove team members for the public team page."
-      subtitle="Changes are immediately reflected on /about/our-team. Use the Member Type selector to add Advisory Board members."
+      badge="Admin"
+      title="Team Members"
+      subtitle="Changes are reflected immediately on the public /about/our-team page."
       navItems={adminNavItems}
     >
       {notice && (
-        <div className={`rounded-2xl px-5 py-3 text-sm font-medium mb-4 ${notice.type === 'ok' ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-red-50 border border-red-200 text-red-700'}`}>
-          {notice.type === 'ok' ? '✓' : '⚠'} {notice.msg}
+        <div className="rounded-xl px-5 py-3 text-sm font-medium mb-5"
+          style={notice.type === 'ok'
+            ? { background: 'rgba(15,93,94,0.08)', color: '#0F5D5E' }
+            : { background: '#fef2f2', color: '#b91c1c' }}>
+          {notice.msg}
         </div>
       )}
 
-      <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-        {/* ── Add Member Form ────────────────────────────────────────── */}
-        <Card className="border-primary-blue/15 bg-white py-0">
-          <CardHeader className="px-6 pt-6">
-            <CardTitle className="text-2xl font-black text-gray-950">Add new member</CardTitle>
-          </CardHeader>
-          <CardContent className="px-6 pb-6">
-            <form action={handleAdd} className="space-y-5">
-
-              {/* Member type selector */}
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-800">Member Type *</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer hover:border-primary-blue/40 transition-colors has-[:checked]:border-primary-blue has-[:checked]:bg-cyan-50">
-                    <input type="radio" name="member_type" value="team" defaultChecked className="accent-[#00BCD4]" />
-                    <div>
-                      <p className="text-sm font-bold text-gray-900">Core Team</p>
-                      <p className="text-xs text-gray-500">Staff &amp; directors</p>
-                    </div>
-                  </label>
-                  <label className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer hover:border-primary-purple/40 transition-colors has-[:checked]:border-primary-purple has-[:checked]:bg-purple-50">
-                    <input type="radio" name="member_type" value="advisory" className="accent-[#6633CC]" />
-                    <div>
-                      <p className="text-sm font-bold text-gray-900">Advisory Board</p>
-                      <p className="text-xs text-gray-500">Strategic advisors</p>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-800">Full name *</label>
-                  <Input name="name" required placeholder="Enter full name" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-800">Role / Title *</label>
-                  <Input name="role_title" required placeholder="e.g. Director of Education" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-800">Country</label>
-                <Input name="country" placeholder="e.g. United States, Pakistan" className="h-11 rounded-2xl border-gray-200 bg-gray-50" />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-800">Short bio</label>
-                <Textarea name="bio" placeholder="Short public biography shown on the website" className="min-h-20 rounded-2xl border-gray-200 bg-gray-50" />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-800">Photo URL *</label>
-                <Input
-                  ref={imageInputRef}
-                  name="image_url"
-                  required
-                  placeholder="https://i.ibb.co/XXXXXXXX/photo.jpg"
-                  onChange={e => setImageUrlPreview(e.target.value)}
-                  className="h-11 rounded-2xl border-gray-200 bg-gray-50"
-                />
-                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800 space-y-1">
-                  <p className="font-bold">⚠ ImgBB: use the &quot;Direct link&quot; only</p>
-                  <p>✅ Correct: <span className="font-mono">https://i.ibb.co/XXXX/photo.jpg</span></p>
-                  <p>❌ Wrong: <span className="font-mono">https://ibb.co/XXXX</span> (viewer page)</p>
-                </div>
-                {imageUrlPreview && (
-                  <div className="mt-2 flex items-center gap-3">
-                    <div className="size-16 overflow-hidden rounded-full border-2 border-gray-200 bg-gray-100 shrink-0">
-                      <img
-                        src={imageUrlPreview}
-                        alt="Preview"
-                        className="h-full w-full object-cover"
-                        onError={e => { (e.target as HTMLImageElement).style.opacity = '0.2' }}
-                        onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1' }}
-                      />
-                    </div>
-                    <p className="text-xs text-gray-500">Live preview — broken image = wrong URL.</p>
+      <div className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+        {/* Add member form */}
+        <div className="rounded-xl p-6" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+          <p className="text-sm font-bold mb-5" style={{ color: '#1F2933' }}>Add new member</p>
+          <form action={handleAdd} className="space-y-4">
+            {/* Member type */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold" style={{ color: '#1F2933' }}>Member Type</label>
+              <div className="grid grid-cols-2 gap-2">
+                <label className="flex items-center gap-2 rounded-xl p-3 cursor-pointer" style={{ background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)' }}>
+                  <input type="radio" name="member_type" value="team" defaultChecked style={{ accentColor: '#0F5D5E' }} />
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: '#1F2933' }}>Core Team</p>
+                    <p className="text-xs" style={{ color: '#1F2933', opacity: 0.5 }}>Staff & directors</p>
                   </div>
-                )}
+                </label>
+                <label className="flex items-center gap-2 rounded-xl p-3 cursor-pointer" style={{ background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)' }}>
+                  <input type="radio" name="member_type" value="advisory" style={{ accentColor: '#4DB7E5' }} />
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: '#1F2933' }}>Advisory Board</p>
+                    <p className="text-xs" style={{ color: '#1F2933', opacity: 0.5 }}>Strategic advisors</p>
+                  </div>
+                </label>
               </div>
-
-              <Button type="submit" disabled={isPending} className="rounded-full bg-primary-blue text-white hover:bg-cyan-600">
-                {isPending ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
-                {isPending ? 'Saving...' : 'Add to page'}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* ── Roster ────────────────────────────────────────────────── */}
-        <Card className="border-primary-blue/15 bg-white py-0">
-          <CardHeader className="px-6 pt-6">
-            <div className="flex items-center justify-between gap-4">
-              <CardTitle className="text-2xl font-black text-gray-950">Live roster</CardTitle>
-              <Badge className="rounded-full bg-gray-950 px-4 py-1 text-white hover:bg-gray-950">
-                <Users className="mr-2 size-3.5" />
-                {members.length} total
-              </Badge>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-6 px-6 pb-6">
-            <RosterGroup title="Core Team"      items={teamMembers}     accent="blue"   />
-            <RosterGroup title="Advisory Board" items={advisoryMembers} accent="purple" />
-          </CardContent>
-        </Card>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold" style={{ color: '#1F2933' }}>Full name *</label>
+                <input name="name" required placeholder="Enter full name" style={inputStyle} />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold" style={{ color: '#1F2933' }}>Role / Title *</label>
+                <input name="role_title" required placeholder="e.g. Director of Education" style={inputStyle} />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold" style={{ color: '#1F2933' }}>Country</label>
+              <input name="country" placeholder="e.g. United States" style={inputStyle} />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold" style={{ color: '#1F2933' }}>Short bio</label>
+              <textarea
+                name="bio"
+                placeholder="Short public biography"
+                rows={3}
+                className="w-full px-3 py-2.5 rounded-xl text-sm resize-none outline-none"
+                style={{ background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933' }}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold" style={{ color: '#1F2933' }}>Photo URL *</label>
+              <input
+                ref={imageInputRef}
+                name="image_url"
+                required
+                placeholder="https://i.ibb.co/XXXXXXXX/photo.jpg"
+                onChange={e => setImageUrlPreview(e.target.value)}
+                style={inputStyle}
+              />
+              <div className="rounded-xl px-4 py-3 text-xs space-y-1" style={{ background: 'rgba(234,179,8,0.08)', border: '1px solid rgba(234,179,8,0.25)', color: '#b45309' }}>
+                <p className="font-bold">ImgBB: use the "Direct link" only</p>
+                <p>Correct: <span className="font-mono">https://i.ibb.co/XXXX/photo.jpg</span></p>
+                <p>Wrong: <span className="font-mono">https://ibb.co/XXXX</span></p>
+              </div>
+              {imageUrlPreview && (
+                <div className="flex items-center gap-3 mt-2">
+                  <div className="size-14 overflow-hidden rounded-full shrink-0" style={{ border: '2px solid rgba(15,93,94,0.2)' }}>
+                    <img src={imageUrlPreview} alt="Preview" className="h-full w-full object-cover" onError={e => { (e.target as HTMLImageElement).style.opacity = '0.2' }} onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1' }} />
+                  </div>
+                  <p className="text-xs" style={{ color: '#1F2933', opacity: 0.5 }}>Live preview — broken = wrong URL.</p>
+                </div>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={isPending}
+              className="flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+              style={{ background: 'linear-gradient(135deg, #0F5D5E, #238C91)' }}
+            >
+              {isPending ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
+              {isPending ? 'Saving...' : 'Add to page'}
+            </button>
+          </form>
+        </div>
+
+        {/* Live roster */}
+        <div className="rounded-xl p-6 space-y-6" style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.1)' }}>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-bold" style={{ color: '#1F2933' }}>Live roster</p>
+            <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: '#0B1A1A', color: '#ffffff' }}>{members.length} total</span>
+          </div>
+          <RosterGroup title="Core Team"      items={teamMembers}     />
+          <RosterGroup title="Advisory Board" items={advisoryMembers} isAdvisory />
+        </div>
       </div>
     </PortalShell>
   )
