@@ -36,7 +36,8 @@ export default async function AdminDashboardPage() {
     (pendingReports?.length ?? 0) +
     (pendingEvents?.length ?? 0) +
     (pendingVlogs?.length ?? 0) +
-    (pendingResources?.length ?? 0)
+    (pendingResources?.length ?? 0) +
+    (pendingHours?.length ?? 0)
 
   const quickActions = [
     { title: 'Review approvals', desc: 'Approve or reject pending reports, events, vlogs and resources.', href: '/portal/admin/approvals', badge: `${totalPending} pending` },
@@ -57,7 +58,7 @@ export default async function AdminDashboardPage() {
       {/* Stat Cards */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <PortalStatCard label="Total users"       value={String(totalUsers ?? 0)}                    detail="Registered across all roles"                  icon="Users"      />
-        <PortalStatCard label="Pending approvals" value={String(totalPending).padStart(2, '0')}      detail="Across reports, events, vlogs, resources"     icon="FileCheck2" />
+        <PortalStatCard label="Pending approvals" value={String(totalPending).padStart(2, '0')}      detail="Across reports, events, vlogs, resources, hours"     icon="FileCheck2" />
         <PortalStatCard label="Pending reports"   value={String(pendingReports?.length ?? 0).padStart(2, '0')} detail="Chapter reports awaiting review"     icon="ShieldCheck"/>
         <PortalStatCard label="Pending events"    value={String(pendingEvents?.length ?? 0).padStart(2, '0')}  detail="Events awaiting publish approval"    icon="Activity"   />
       </div>

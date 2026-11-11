@@ -109,15 +109,44 @@ export async function logVolunteerHours(formData: FormData): Promise<{ error?: s
   if (!activity_type || !hours_logged || !date || !activity_description) {
     return { error: 'Please fill in all required fields.' }
   }
-  if (hours_logged <= 0 || hours_logged > 24) {
+  if (hours_logged < 0.5 || hours_logged > 24) {
     return { error: 'Hours must be between 0.5 and 24.' }
+  }
+
+  // Date must be a real calendar date, today or earlier — no future dates.
+  // Compared as YYYY-MM-DD strings (UTC), so there are no time-of-day edge cases.
+  const today = new Date().toISOString().slice(0, 10)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date)) || date > today) {
+    return { error: 'Date cannot be in the future. Please pick today or an earlier date.' }
+  }
+
+  const fullDescription = `[${activity_type}] ${activity_description}`
+
+  // Reject an identical entry for the same day (double-submit protection).
+  // Same volunteer + same calendar date (UTC) + same activity text. Rows an
+  // admin already rejected do not block — those may be logged again, corrected.
+  const dayStart = new Date(`${date}T00:00:00.000Z`)
+  const dayEnd = new Date(dayStart)
+  dayEnd.setUTCDate(dayEnd.getUTCDate() + 1)
+  const { data: existing, error: dupError } = await supabase
+    .from('volunteer_attendance')
+    .select('id')
+    .eq('volunteer_id', user.id)
+    .eq('activity_description', fullDescription)
+    .gte('date', dayStart.toISOString())
+    .lt('date', dayEnd.toISOString())
+    .neq('status', 'rejected')
+    .limit(1)
+  if (dupError) return { error: dupError.message }
+  if (existing && existing.length > 0) {
+    return { error: 'You already logged this activity on this date. Check My Performance to see your submitted hours.' }
   }
 
   const { error } = await supabase.from('volunteer_attendance').insert({
     volunteer_id: user.id,
-    activity_description: `[${activity_type}] ${activity_description}`,
+    activity_description: fullDescription,
     hours_logged,
-    date: new Date(date).toISOString(),
+    date: dayStart.toISOString(),
     status: 'pending',
   })
 

@@ -10,6 +10,11 @@ const activityTypes = ['Event Attendance', 'Training Session', 'Community Outrea
 const inp = 'w-full px-4 rounded-xl text-sm outline-none'
 const inpStyle = { height: '44px', background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933' }
 
+// Today in the volunteer's own timezone — the date picker must not allow
+// future dates. The server action enforces this too; this is only a convenience.
+const now = new Date()
+const todayLocal = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+
 export default function VolunteerLogHoursPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -69,7 +74,7 @@ export default function VolunteerLogHoursPage() {
               <div className="space-y-1.5">
                 <label className="text-sm font-semibold" style={{ color: '#1F2933' }} htmlFor="date">Date *</label>
                 {/* name="date" preserved */}
-                <input id="date" name="date" type="date" required className={inp} style={inpStyle} />
+                <input id="date" name="date" type="date" required max={todayLocal} className={inp} style={inpStyle} />
               </div>
             </div>
 
