@@ -527,7 +527,7 @@ export async function signupForWebsiteDialog(
 // ─── VERIFY OTP (website dialog variant — verifies AND signs in) ───────────
 export async function verifyOtpForWebsiteDialog(
   formData: FormData
-): Promise<{ ok: boolean; error?: string }> {
+): Promise<{ ok: boolean; error?: string; needsLogin?: boolean }> {
   const email = formData.get('email') as string
   const otp = formData.get('otp') as string
   const password = formData.get('password') as string
@@ -585,14 +585,19 @@ export async function verifyOtpForWebsiteDialog(
   })
 
   // Sign the user in on this same page — no navigation.
-  // The password is the one they just registered with.
+  // The password is the one they just registered with. For an email that
+  // already belonged to a PORTAL account, that password is NOT the portal
+  // password, so this sign-in fails — but the email IS verified by now.
+  // Return success with needsLogin instead of an error: the old code
+  // returned ok:false here, and the form showed "Email verified!" in a
+  // RED error box, which read as a failure.
   if (!password) {
-    return { ok: false, error: 'Email verified! Please sign in from the login page.' }
+    return { ok: true, needsLogin: true }
   }
   const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
   if (signInError) {
     console.error('Sign-in after OTP verify failed:', signInError)
-    return { ok: false, error: 'Email verified! Please sign in from the login page.' }
+    return { ok: true, needsLogin: true }
   }
 
   return { ok: true }

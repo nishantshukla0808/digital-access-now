@@ -23,7 +23,11 @@ import {
 //
 // If the email already belongs to a portal account, the server action
 // creates the website profile on that same auth identity instead of a
-// second account, and the OTP step still runs.
+// second account, and the OTP step still runs. The email IS verified by
+// the OTP — but the auto sign-in then fails, because the password typed
+// in this dialog is not the portal password. That case returns
+// needsLogin, and the form shows a green success state with a Sign in
+// button instead of a red error box.
 // ---------------------------------------------------------------------------
 
 type AuthRegisterFormProps = {
@@ -51,7 +55,7 @@ const INFO_STYLE = {
 
 export function AuthRegisterForm({ onClose }: AuthRegisterFormProps) {
   const router = useRouter()
-  const [step, setStep] = useState<'form' | 'otp'>('form')
+  const [step, setStep] = useState<'form' | 'otp' | 'done'>('form')
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -117,6 +121,13 @@ export function AuthRegisterForm({ onClose }: AuthRegisterFormProps) {
       setError(result.error || 'Could not verify the code. Please try again.')
       return
     }
+    if (result.needsLogin) {
+      // Email verified, but the auto sign-in could not log them in (the
+      // email belongs to a portal account with a different password).
+      // Show the green success state with a Sign in button.
+      setStep('done')
+      return
+    }
     // Signed in as a website user. Close the dialog and stay on the same
     // page — refresh so the page re-renders as logged in.
     onClose?.()
@@ -143,6 +154,31 @@ export function AuthRegisterForm({ onClose }: AuthRegisterFormProps) {
     setOtp('')
     setError(null)
     setInfo(null)
+  }
+
+  if (step === 'done') {
+    return (
+      <div className="space-y-5">
+        <div className="rounded-lg px-4 py-3 text-sm font-medium" style={INFO_STYLE}>
+          Email verified! Your website account is ready.
+        </div>
+        <p className="text-center text-sm" style={{ color: '#1F2933', opacity: 0.75 }}>
+          Please sign in with your password to continue.
+        </p>
+        <a
+          href="/portal/login"
+          className="flex w-full items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(135deg, #0F5D5E, #238C91)' }}
+        >
+          Sign in <ArrowRight className="size-4" />
+        </a>
+        <p className="text-center text-sm" style={{ color: '#1F2933', opacity: 0.55 }}>
+          <button type="button" onClick={() => onClose?.()} className="font-bold hover:opacity-70" style={{ color: '#0F5D5E' }}>
+            Close
+          </button>
+        </p>
+      </div>
+    )
   }
 
   if (step === 'otp') {
