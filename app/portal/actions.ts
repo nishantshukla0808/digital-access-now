@@ -68,6 +68,9 @@ export async function signup(formData: FormData) {
   const password = formData.get('password') as string
   const fullName = formData.get('fullName') as string
   const role = (formData.get('role') as string) || 'VOLUNTEER'
+  // Newsletter opt-in (The Bridge). Unchecked checkboxes submit nothing,
+  // so only an explicit tick counts as consent.
+  const newsletterOptIn = formData.get('newsletterOptIn') === 'on'
 
   if (!email || !password || !fullName) {
     redirect('/portal/register?error=All+fields+are+required')
@@ -109,6 +112,20 @@ export async function signup(formData: FormData) {
 
   if (otpError) {
     console.error('OTP insert error:', otpError)
+  }
+
+  // Record the newsletter choice on the profile row. The users row is
+  // created by the handle_new_user trigger during createUser above.
+  // If the columns don't exist yet (supabase/add-newsletter-optin.sql
+  // not run), log and continue — registration must not fail over this.
+  if (newsletterOptIn) {
+    const { error: optInError } = await service
+      .from('users')
+      .update({ newsletter_opt_in: true, newsletter_opt_in_at: new Date().toISOString() })
+      .eq('id', userId)
+    if (optInError) {
+      console.error('Newsletter opt-in update failed (run supabase/add-newsletter-optin.sql):', optInError)
+    }
   }
 
   // Send the OTP via Resend

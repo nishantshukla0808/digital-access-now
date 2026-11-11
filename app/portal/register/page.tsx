@@ -57,6 +57,16 @@ export default async function PortalRegisterPage({
               </select>
             </div>
 
+            <label className="flex items-start gap-2.5 cursor-pointer" htmlFor="newsletterOptIn">
+              <input
+                id="newsletterOptIn" name="newsletterOptIn" type="checkbox"
+                className="mt-0.5 size-4 shrink-0 accent-[#0F5D5E]"
+              />
+              <span className="text-sm" style={{ color: '#1F2933', opacity: 0.75 }}>
+                Send me <span className="font-semibold" style={{ color: '#1F2933', opacity: 1 }}>The Bridge</span> newsletter
+              </span>
+            </label>
+
             <button
               type="submit"
               className="flex w-full items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90 mt-2"
