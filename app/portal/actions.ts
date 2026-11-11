@@ -428,7 +428,10 @@ export async function signupForWebsiteDialog(
     // chapter lead or admin registering as a website user too). Auth
     // identities are unique per email, so a second account is impossible —
     // instead, create the website profile on the SAME auth identity.
-    if (signupError && /already registered/i.test(signupError.message)) {
+    // Supabase's duplicate message is "A user with this email address
+    // has already been registered" — note "already BEEN registered", so
+    // the match must allow words between "already" and "registered".
+    if (signupError && /already.*registered/i.test(signupError.message)) {
       const { data: portalUser } = await service
         .from('users')
         .select('id, full_name, is_email_verified')
