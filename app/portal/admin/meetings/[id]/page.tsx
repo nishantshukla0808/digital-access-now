@@ -22,6 +22,16 @@ export type AttendanceRow = {
   is_late: boolean
   left_early: boolean
   minutes_late: number
+  /** True for an Absent placeholder row (expected, never joined). */
+  is_absent: boolean
+}
+
+export type ExpectedAttendeeRow = {
+  id: string
+  email: string
+  full_name: string | null
+  /** True when this row was copied from the default roster at scheduling. */
+  from_defaults: boolean
 }
 
 export default async function AdminMeetingDetailPage({
@@ -45,16 +55,42 @@ export default async function AdminMeetingDetailPage({
       <MeetingClient
         meeting={null}
         initialRows={[]}
+        initialExpected={[]}
         meetingsReady={false}
+        expectedReady={false}
       />
     )
   }
 
-  const { data: rows } = await service
+  // is_absent comes from the Absent-feature SQL. If that file has not
+  // been run yet the column does not exist — fall back to the old
+  // select so the table still renders (everyone shows as attended).
+  const { data: rowsWithAbsent } = await service
     .from('meeting_attendance')
-    .select('id, name, email, first_join, last_leave, total_minutes, is_late, left_early, minutes_late')
+    .select('id, name, email, first_join, last_leave, total_minutes, is_late, left_early, minutes_late, is_absent')
     .eq('meeting_id', id)
     .order('first_join', { ascending: true, nullsFirst: false })
+  let rows = rowsWithAbsent
+  if (!rows) {
+    const { data: rowsLegacy } = await service
+      .from('meeting_attendance')
+      .select('id, name, email, first_join, last_leave, total_minutes, is_late, left_early, minutes_late')
+      .eq('meeting_id', id)
+      .order('first_join', { ascending: true, nullsFirst: false })
+    rows = rowsLegacy as typeof rowsWithAbsent
+  }
+
+  // Expected attendees for this meeting. If the expected-attendees
+  // table is not set up yet (new SQL not run), the query errors —
+  // the page still works with an empty expected list, and the client
+  // shows the setup note in the expected-attendees section.
+  // from_defaults comes from the same SQL file as the table, so it
+  // exists whenever the table does.
+  const { data: expectedRows, error: expectedError } = await service
+    .from('meeting_expected_attendees')
+    .select('id, email, full_name, from_defaults')
+    .eq('meeting_id', id)
+    .order('email', { ascending: true })
 
   const detail: MeetingDetail = {
     id: meeting.id as string,
@@ -73,7 +109,22 @@ export default async function AdminMeetingDetailPage({
     is_late: (r.is_late as boolean) ?? false,
     left_early: (r.left_early as boolean) ?? false,
     minutes_late: (r.minutes_late as number) ?? 0,
+    is_absent: (r.is_absent as boolean) ?? false,
+  }))
+  const expected: ExpectedAttendeeRow[] = (expectedRows ?? []).map((e) => ({
+    id: e.id as string,
+    email: e.email as string,
+    full_name: (e.full_name as string | null) ?? null,
+    from_defaults: (e.from_defaults as boolean) ?? false,
   }))
 
-  return <MeetingClient meeting={detail} initialRows={attendance} meetingsReady={true} />
+  return (
+    <MeetingClient
+      meeting={detail}
+      initialRows={attendance}
+      initialExpected={expected}
+      meetingsReady={true}
+      expectedReady={!expectedError}
+    />
+  )
 }

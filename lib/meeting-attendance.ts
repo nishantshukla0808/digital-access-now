@@ -11,6 +11,14 @@
 // as IST wall time and converted to UTC. Absolute timestamps (with Z
 // or an explicit ±HH:MM offset) are used as-is. All comparisons are
 // done on UTC instants, so the flags are timezone-proof once parsed.
+//
+// ABSENT (added 2026-11-12): the CSV only lists people who joined, so
+// someone who never joined never appears. The admin lists who was
+// expected for a meeting (meeting_expected_attendees); anyone expected
+// but missing from the CSV — and from the attendance table — is an
+// Absent row: same ComputedRow shape, no join/leave times, 0 minutes.
+// Absent rows are STORED in meeting_attendance (flagged is_absent) so
+// the table, the counts and the CSV export all see the same list.
 
 export const LATE_AFTER_MINUTES = 10
 export const EARLY_LEAVE_BEFORE_MINUTES = 10
@@ -25,6 +33,7 @@ export type AttendanceStatus =
   | 'Left early'
   | 'Late + left early'
   | 'No data'
+  | 'Absent'
 
 /** Column mapping: the exact header text from the uploaded CSV, or null
  *  when the file has no such column. The admin confirms / adjusts this
@@ -58,6 +67,14 @@ export interface ComputedRow extends ParsedRow {
 export interface MeetingWindow {
   scheduledStart: Date
   scheduledEnd: Date
+}
+
+/** One person the admin expects at a meeting. Email is the identity —
+ *  matched case-insensitively everywhere. full_name may be null when
+ *  the admin typed a bare email; the display falls back to the email. */
+export interface ExpectedAttendeeInput {
+  email: string
+  full_name: string | null
 }
 
 // ─── CSV parsing (dependency-free, handles quoted fields) ───────────────
@@ -282,6 +299,117 @@ export function parseAttendanceCsv(
   return { rows, errors }
 }
 
+// ─── Expected attendees (the Absent feature) ────────────────────────────
+
+/** A line is valid when it yields an email. The email check is
+ *  deliberately simple (something@something.tld, no spaces) — this is
+ *  an admin-typed list, not a public signup form. */
+function isValidEmail(email: string): boolean {
+  return /^\S+@\S+\.\S+$/.test(email)
+}
+
+/**
+ * Parse the "Expected attendees" textarea: one person per line, either
+ *   Ritika Malik <ritika@example.org>
+ *   ritika@example.org
+ * Rules: blank lines skipped; emails lowercased; duplicates dropped
+ * (first occurrence wins); a line with no usable email is SKIPPED
+ * silently, not an error — the schedule form says so next to the
+ * field. A bare "First Last email@x.org" line (name + email without
+ * angle brackets) is ambiguous and is also skipped; use <email> for
+ * a name. Returns the list in the order typed.
+ */
+export function parseExpectedAttendees(text: string): ExpectedAttendeeInput[] {
+  const seen = new Set<string>()
+  const out: ExpectedAttendeeInput[] = []
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.trim()
+    if (!line) continue
+    let email = ''
+    let fullName: string | null = null
+    const angled = line.match(/^(.*?)\s*<([^<>]+)>\s*$/)
+    if (angled) {
+      fullName = angled[1].trim() || null
+      email = angled[2].trim().toLowerCase()
+    } else if (isValidEmail(line)) {
+      email = line.toLowerCase()
+    } else {
+      continue // no usable email on this line — skip, don't error
+    }
+    if (!isValidEmail(email)) continue
+    if (seen.has(email)) continue
+    seen.add(email)
+    out.push({ email, full_name: fullName })
+  }
+  return out
+}
+
+/**
+ * Which expected list a new meeting gets. The rule is deliberately
+ * simple and either/or — never a merge:
+ *   - typed list non-empty → the typed list (deduped, lowercased).
+ *     The defaults are ignored for this meeting entirely, so a typed
+ *     list can also shrink the roster (a special meeting with only a
+ *     few people). When the same email is in both lists, the typed
+ *     entry wins — its name is the one kept.
+ *   - typed list empty → the saved default roster (deduped the same
+ *     way).
+ *   - both empty → no expected list; the meeting behaves exactly as
+ *     before the Absent feature existed.
+ * Dedupe reuses the same first-wins, lowercase-email rule as
+ * parseExpectedAttendees — no second copy of that logic.
+ */
+export function resolveExpectedList(
+  typed: ExpectedAttendeeInput[],
+  defaults: ExpectedAttendeeInput[],
+): ExpectedAttendeeInput[] {
+  const source = typed.length > 0 ? typed : defaults
+  const seen = new Set<string>()
+  const out: ExpectedAttendeeInput[] = []
+  for (const person of source) {
+    const email = person.email.trim().toLowerCase()
+    if (!email || seen.has(email)) continue
+    seen.add(email)
+    out.push({ email, full_name: (person.full_name ?? '').trim() || null })
+  }
+  return out
+}
+
+/**
+ * Absent rows for expected people who have no attendance row yet.
+ * `attendedEmails` is every email that already has a row in
+ * meeting_attendance for this meeting — real rows AND Absent rows —
+ * plus the emails in the CSV being imported, so a re-import never
+ * re-creates an Absent row. Matching is case-insensitive.
+ * An Absent row carries totalMinutes 0 (not null) so it matches the
+ * export shape exactly: empty join/leave times, 0 minutes, 0 late.
+ */
+export function computeAbsent(
+  expected: ExpectedAttendeeInput[],
+  attendedEmails: string[],
+): ComputedRow[] {
+  const attended = new Set(attendedEmails.map((e) => e.trim().toLowerCase()))
+  const seen = new Set<string>()
+  const rows: ComputedRow[] = []
+  for (const person of expected) {
+    const email = person.email.trim().toLowerCase()
+    if (!email || seen.has(email) || attended.has(email)) continue
+    seen.add(email)
+    rows.push({
+      name: (person.full_name ?? '').trim() || email,
+      email,
+      firstJoin: null,
+      lastLeave: null,
+      totalMinutes: 0,
+      minutesLate: 0,
+      isLate: false,
+      leftEarly: false,
+      status: 'Absent',
+    })
+  }
+  return rows
+}
+
 // ─── Flags ──────────────────────────────────────────────────────────────
 
 export function computeAttendance(
@@ -315,6 +443,7 @@ export function attendanceSummary(rows: ComputedRow[]): {
   late: number
   leftEarly: number
   lateAndEarly: number
+  absent: number
 } {
   return {
     total: rows.length,
@@ -322,7 +451,78 @@ export function attendanceSummary(rows: ComputedRow[]): {
     late: rows.filter((r) => r.status === 'Late').length,
     leftEarly: rows.filter((r) => r.status === 'Left early').length,
     lateAndEarly: rows.filter((r) => r.status === 'Late + left early').length,
+    absent: rows.filter((r) => r.status === 'Absent').length,
   }
+}
+
+// ─── Import planning (pure — the server action applies this plan) ───────
+
+/** One row already stored for this meeting. is_absent tells a real
+ *  attendance row apart from an Absent placeholder. */
+export interface ExistingAttendanceRow {
+  email: string
+  is_absent: boolean
+}
+
+export interface ImportPlan {
+  /** CSV rows with no DB row yet — inserted as-is. */
+  insert: ComputedRow[]
+  /** CSV rows whose DB row is currently an Absent row — the real row
+   *  replaces the placeholder (upsert on (meeting_id, email)). */
+  replaceAbsent: ComputedRow[]
+  /** CSV rows already stored as real rows — skipped, re-import is a no-op. */
+  skipped: number
+  /** Expected people missing from the CSV and from the DB — new Absent rows. */
+  absent: ComputedRow[]
+}
+
+/**
+ * Decide what a CSV import does, without touching the database. The
+ * server action applies the plan; the tests exercise this function
+ * directly (idempotent re-import, Absent → real replacement).
+ */
+export function planImport(
+  existing: ExistingAttendanceRow[],
+  csvRows: ComputedRow[],
+  expected: ExpectedAttendeeInput[],
+): ImportPlan {
+  const existingByEmail = new Map<string, boolean>()
+  for (const e of existing) {
+    existingByEmail.set(e.email.trim().toLowerCase(), e.is_absent)
+  }
+  const insert: ComputedRow[] = []
+  const replaceAbsent: ComputedRow[] = []
+  let skipped = 0
+  const csvEmails = new Set<string>()
+  for (const r of csvRows) {
+    const email = r.email.trim().toLowerCase()
+    csvEmails.add(email)
+    const flag = existingByEmail.get(email)
+    if (flag === undefined) insert.push(r)
+    else if (flag) replaceAbsent.push(r)
+    else skipped += 1
+  }
+  // "Already present" for Absent purposes = any stored row (real or
+  // Absent) plus anything in this CSV — so a re-import never duplicates
+  // an Absent row, and an Absent person in the CSV gets the real row
+  // instead (replaceAbsent above), not a second Absent row.
+  const present = new Set<string>([...existingByEmail.keys(), ...csvEmails])
+  const absent = computeAbsent(expected, [...present])
+  return { insert, replaceAbsent, skipped, absent }
+}
+
+/**
+ * Drop the Absent row for one email from a stored-row list. Real rows
+ * (is_absent false) are never removed — used by the meeting page when
+ * an expected attendee is removed, and by the tests for the "never
+ * delete a real row" rule.
+ */
+export function removeAbsentRow<T extends { email: string; is_absent: boolean }>(
+  rows: T[],
+  email: string,
+): T[] {
+  const lowered = email.trim().toLowerCase()
+  return rows.filter((r) => !(r.email.toLowerCase() === lowered && r.is_absent))
 }
 
 // ─── Formatting / export ────────────────────────────────────────────────
