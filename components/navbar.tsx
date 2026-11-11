@@ -3,6 +3,8 @@
 import React from "react"
 import Link from 'next/link'
 import { Menu, X, ChevronDown, Instagram, Linkedin, Youtube } from 'lucide-react'
+import { openRegisterDialog } from '@/lib/register-dialog'
+import { AuthRegisterDialog } from '@/components/auth-register-dialog'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -15,6 +17,7 @@ export function Navbar() {
   }
 
   return (
+    <>
     <nav style={{ background: '#0B1A1A' }} className="fixed w-full text-white z-50 shadow-lg">
       <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="flex items-center h-28">
@@ -104,6 +107,24 @@ export function Navbar() {
             >
               <Youtube size={22} />
             </a>
+            {/* Sign in + Join us — registration opens in a dialog on this page. */}
+            <Link
+              href="/portal/login"
+              className="ml-1 px-2 py-2 text-base font-medium whitespace-nowrap transition-colors hover:text-[#4DB7E5]"
+              style={{ color: 'rgba(255,255,255,0.85)' }}
+            >
+              Sign in
+            </Link>
+            <button
+              type="button"
+              onClick={openRegisterDialog}
+              className="px-6 xl:px-7 py-2.5 rounded-full font-bold text-base whitespace-nowrap text-white transition-all duration-200 hover:-translate-y-0.5"
+              style={{ background: 'transparent', border: '1.5px solid rgba(255,255,255,0.5)' }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = '#4DB7E5')}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)')}
+            >
+              Join us
+            </button>
             <Link
               href="/donate"
               className="ml-2 px-6 xl:px-8 py-2.5 rounded-full font-bold text-base whitespace-nowrap text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
@@ -187,6 +208,15 @@ export function Navbar() {
               ><Youtube size={20} /></a>
             </div>
 
+            {/* Join us — opens the register dialog on this page. */}
+            <button
+              type="button"
+              onClick={() => { setIsOpen(false); openRegisterDialog() }}
+              className="block w-full text-center text-white font-bold py-3 rounded-full transition-all duration-200 mb-3"
+              style={{ background: 'transparent', border: '1.5px solid rgba(255,255,255,0.5)' }}
+            >
+              Join us
+            </button>
             <Link
               href="/donate"
               className="block text-center text-white font-bold py-3 rounded-full transition-all duration-200"
@@ -194,9 +224,20 @@ export function Navbar() {
             >
               DONATE
             </Link>
+            <Link
+              href="/portal/login"
+              onClick={() => setIsOpen(false)}
+              className="block text-center py-3 text-sm font-medium transition-colors hover:text-[#4DB7E5]"
+              style={{ color: 'rgba(255,255,255,0.8)' }}
+            >
+              Sign in
+            </Link>
           </div>
         </div>
       )}
     </nav>
+    {/* The register dialog lives here so it exists on every page with a navbar. */}
+    <AuthRegisterDialog />
+    </>
   )
 }

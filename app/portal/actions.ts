@@ -67,7 +67,14 @@ export async function signup(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const fullName = formData.get('fullName') as string
-  const role = (formData.get('role') as string) || 'VOLUNTEER'
+  // Portal signup only. Admin is NEVER self-chosen at registration — an
+  // admin grants it later from the admin users page. Reject it outright
+  // (the form no longer offers it, but the server must not trust that).
+  const submittedRole = (formData.get('role') as string) || 'VOLUNTEER'
+  if (submittedRole === 'ADMIN') {
+    redirect('/portal/register?error=Admin+accounts+are+created+by+an+administrator.+Please+choose+Chapter+Lead+or+Volunteer.')
+  }
+  const role = submittedRole === 'CHAPTER' ? 'CHAPTER' : 'VOLUNTEER'
   // Newsletter opt-in (The Bridge). Unchecked checkboxes submit nothing,
   // so only an explicit tick counts as consent.
   const newsletterOptIn = formData.get('newsletterOptIn') === 'on'
@@ -80,8 +87,8 @@ export async function signup(formData: FormData) {
 
   // Use admin.createUser instead of signUp — the admin API creates users silently
   // without triggering any Supabase confirmation email whatsoever.
-  // email_confirm: false so Supabase marks it unconfirmed, but we handle it via our OTP.
-  // email_confirm: true so Supabase won't block signInWithPassword — our is_email_verified flag is the gate instead.
+  // email_confirm: false so Supabase marks the user unconfirmed; we confirm
+  // it ourselves via admin.updateUserById in verifyOtp after the OTP code.
   const { data: signupData, error: signupError } = await service.auth.admin.createUser({
     email,
     password,
@@ -362,3 +369,267 @@ export async function logout() {
   revalidatePath('/', 'layout')
   redirect('/portal/login')
 }
+
+// ─── WEBSITE SIGNUP (dialog variants — no redirects) ─────────────────────
+// Website visitors register as WEBSITE users (public.website_users), not
+// portal users. These three mirror signup / verifyOtp / resendOtp step for
+// step (same OTP table, same Resend email, same 10-minute expiry) but:
+//   - they create NO portal users row (the gated handle_new_user trigger
+//     skips account_type = 'website'; see supabase/add-website-users.sql),
+//   - they return result objects instead of redirecting, so the dialog can
+//     show the OTP step inside itself and sign the user in on the same page.
+// Deliberately duplicated rather than refactored: the live redirect flows
+// stay byte-identical. Extract a shared helper later, once the dialog flow
+// is proven live.
+// ────────────────────────────────────────────────────────────────────────────
+
+// ─── SIGNUP (website dialog variant) ───────────────────────────────────────
+export async function signupForWebsiteDialog(
+  formData: FormData
+): Promise<{ ok: boolean; email?: string; error?: string }> {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const fullName = formData.get('fullName') as string
+  // Newsletter opt-in (The Bridge). Unchecked checkboxes submit nothing,
+  // so only an explicit tick counts as consent.
+  const newsletterOptIn = formData.get('newsletterOptIn') === 'on'
+
+  if (!email || !password || !fullName) {
+    return { ok: false, error: 'All fields are required' }
+  }
+
+  const service = createServiceClient()
+
+  // Already a website user? Point them at sign-in instead of failing
+  // cryptically on a duplicate email below.
+  const { data: existingWebsite } = await service
+    .from('website_users')
+    .select('id')
+    .eq('email', email)
+    .single()
+  if (existingWebsite) {
+    return { ok: false, error: 'An account with this email already exists. Please sign in instead.' }
+  }
+
+  // Create the auth identity. account_type = 'website' is the marker the
+  // gated handle_new_user trigger reads: with it, NO portal users row is
+  // created. No role is passed at all — roles belong to the portal only.
+  const { data: signupData, error: signupError } = await service.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: false, // Unconfirmed until the OTP step; confirmed in verifyOtpForWebsiteDialog.
+    user_metadata: { full_name: fullName, account_type: 'website' },
+  })
+
+  let userId = signupData.user?.id
+
+  if (signupError || !userId) {
+    // This email may already belong to a PORTAL account (a volunteer,
+    // chapter lead or admin registering as a website user too). Auth
+    // identities are unique per email, so a second account is impossible —
+    // instead, create the website profile on the SAME auth identity.
+    if (signupError && /already registered/i.test(signupError.message)) {
+      const { data: portalUser } = await service
+        .from('users')
+        .select('id, full_name, is_email_verified')
+        .eq('email', email)
+        .single()
+      if (!portalUser) {
+        return { ok: false, error: 'An account with this email already exists. Please sign in instead.' }
+      }
+      userId = portalUser.id
+      const { error: linkError } = await service
+        .from('website_users')
+        .upsert(
+          {
+            id: userId,
+            email,
+            full_name: fullName || portalUser.full_name,
+            newsletter_opt_in: newsletterOptIn,
+            newsletter_opt_in_at: newsletterOptIn ? new Date().toISOString() : null,
+            is_email_verified: portalUser.is_email_verified ?? false,
+          },
+          { onConflict: 'id', ignoreDuplicates: true },
+        )
+      if (linkError) {
+        console.error('Website profile link failed (run supabase/add-website-users.sql):', linkError)
+        return { ok: false, error: 'Could not create your website account. Please try again.' }
+      }
+      // Fall through to the OTP step below with the existing identity.
+    } else {
+      return { ok: false, error: signupError?.message || 'Account creation failed. Please try again.' }
+    }
+  }
+
+  if (!userId) {
+    return { ok: false, error: 'Account creation failed. Please try again.' }
+  }
+
+  // Brand-new auth user: create the website profile row.
+  // (Skipped for the existing-portal-account path above, which already
+  // upserted it.)
+  if (!signupError) {
+    const { error: profileError } = await service
+      .from('website_users')
+      .upsert(
+        {
+          id: userId,
+          email,
+          full_name: fullName,
+          newsletter_opt_in: newsletterOptIn,
+          newsletter_opt_in_at: newsletterOptIn ? new Date().toISOString() : null,
+          is_email_verified: false,
+        },
+        { onConflict: 'id', ignoreDuplicates: true },
+      )
+    if (profileError) {
+      // Most likely the website_users table does not exist yet — the SQL
+      // file was not run. Remove the just-created auth user so the visitor
+      // can retry cleanly once it is run, instead of hitting
+      // "already registered" with no profile row.
+      console.error('Website profile insert failed (run supabase/add-website-users.sql):', profileError)
+      await service.auth.admin.deleteUser(userId).catch(() => {})
+      return { ok: false, error: 'Could not create your website account. Please try again.' }
+    }
+
+    // Safety net for the window before supabase/add-website-users.sql is
+    // run: the OLD trigger creates a portal users row for every signup.
+    // A brand-new auth id can only have a portal row from that trigger, so
+    // removing it is safe. With the gated trigger live this deletes 0 rows.
+    await service.from('users').delete().eq('id', userId)
+  }
+
+  // Generate OTP and store it (same table and rules as the portal flow).
+  const otp = generateOTP()
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString() // 10 minutes
+
+  const { error: otpError } = await service.from('email_verifications').insert({
+    user_id: userId,
+    email,
+    otp,
+    type: 'signup',
+    expires_at: expiresAt,
+  })
+
+  if (otpError) {
+    console.error('OTP insert error:', otpError)
+  }
+
+  // Send the OTP via Resend
+  await sendOtpEmail(email, fullName, otp)
+
+  return { ok: true, email }
+}
+
+// ─── VERIFY OTP (website dialog variant — verifies AND signs in) ───────────
+export async function verifyOtpForWebsiteDialog(
+  formData: FormData
+): Promise<{ ok: boolean; error?: string }> {
+  const email = formData.get('email') as string
+  const otp = formData.get('otp') as string
+  const password = formData.get('password') as string
+
+  if (!email || !otp) {
+    return { ok: false, error: 'Please enter your verification code' }
+  }
+
+  const service = createServiceClient()
+  const supabase = await createClient()
+
+  // Website profile — NOT the portal users table.
+  const { data: websiteUser } = await service
+    .from('website_users')
+    .select('id')
+    .eq('email', email)
+    .single()
+
+  if (!websiteUser) {
+    return { ok: false, error: 'Account not found' }
+  }
+
+  // Find valid OTP (same table and rules as the portal flow).
+  const { data: verification } = await service
+    .from('email_verifications')
+    .select('*')
+    .eq('user_id', websiteUser.id)
+    .eq('otp', otp)
+    .eq('type', 'signup')
+    .is('used_at', null)
+    .gt('expires_at', new Date().toISOString())
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (!verification) {
+    return { ok: false, error: 'Invalid or expired code. Please try again.' }
+  }
+
+  // Mark OTP as used and the website profile as verified.
+  await service
+    .from('email_verifications')
+    .update({ used_at: new Date().toISOString() })
+    .eq('id', verification.id)
+
+  await service
+    .from('website_users')
+    .update({ is_email_verified: true })
+    .eq('id', websiteUser.id)
+
+  // CRITICAL: Also confirm email in Supabase Auth itself.
+  // Without this, signInWithPassword returns "Email not confirmed".
+  await service.auth.admin.updateUserById(websiteUser.id, {
+    email_confirm: true,
+  })
+
+  // Sign the user in on this same page — no navigation.
+  // The password is the one they just registered with.
+  if (!password) {
+    return { ok: false, error: 'Email verified! Please sign in from the login page.' }
+  }
+  const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+  if (signInError) {
+    console.error('Sign-in after OTP verify failed:', signInError)
+    return { ok: false, error: 'Email verified! Please sign in from the login page.' }
+  }
+
+  return { ok: true }
+}
+
+// ─── RESEND OTP (website dialog variant) ───────────────────────────────────
+export async function resendOtpForWebsiteDialog(
+  formData: FormData
+): Promise<{ ok: boolean; error?: string; message?: string }> {
+  const email = formData.get('email') as string
+
+  if (!email) {
+    return { ok: false, error: 'Email is required' }
+  }
+
+  const service = createServiceClient()
+
+  const { data: websiteUser } = await service
+    .from('website_users')
+    .select('id, full_name')
+    .eq('email', email)
+    .single()
+
+  if (!websiteUser) {
+    return { ok: false, error: 'Account not found' }
+  }
+
+  const otp = generateOTP()
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString()
+
+  await service.from('email_verifications').insert({
+    user_id: websiteUser.id,
+    email,
+    otp,
+    type: 'signup',
+    expires_at: expiresAt,
+  })
+
+  await sendOtpEmail(email, websiteUser.full_name || 'there', otp)
+
+  return { ok: true, message: 'New code sent! Check your inbox.' }
+}
+

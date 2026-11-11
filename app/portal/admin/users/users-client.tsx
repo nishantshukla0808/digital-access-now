@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useMemo, useState, useTransition } from 'react'
 import { adminNavItems } from '@/components/portal/portal-nav'
 import { PortalShell } from '@/components/portal/portal-shell'
 import { ShieldCheck, FolderKanban, HandHelping, Loader2, Download } from 'lucide-react'
@@ -17,6 +17,26 @@ type User = {
   newsletter_opt_in_at: string | null
 }
 
+// A website subscriber (public.website_users). Website visitors are NOT
+// portal users — they live in a separate table — but their newsletter
+// opt-ins belong in the same weekly export as the portal opt-ins.
+type WebsiteSubscriber = {
+  id: string
+  email: string
+  full_name: string | null
+  newsletter_opt_in_at: string | null
+  created_at: string
+}
+
+type MergedSubscriber = {
+  id: string
+  email: string
+  full_name: string | null
+  newsletter_opt_in_at: string | null
+  created_at: string
+  source: 'Website' | 'Portal' | 'Website + Portal'
+}
+
 const roleIcon: Record<string, React.ElementType> = {
   ADMIN: ShieldCheck, CHAPTER: FolderKanban, VOLUNTEER: HandHelping,
 }
@@ -26,14 +46,65 @@ const roleBadge: Record<string, { bg: string; color: string }> = {
   VOLUNTEER: { bg: 'rgba(77,183,229,0.1)',  color: '#238C91' },
 }
 
-export function UsersClient({ initialUsers, newsletterReady }: { initialUsers: User[]; newsletterReady: boolean }) {
+export function UsersClient({
+  initialUsers,
+  newsletterReady,
+  websiteSubscribers,
+  websiteReady,
+}: {
+  initialUsers: User[]
+  newsletterReady: boolean
+  websiteSubscribers: WebsiteSubscriber[]
+  websiteReady: boolean
+}) {
   const [users, setUsers]             = useState(initialUsers)
   const [notice, setNotice]           = useState<{ type: 'ok' | 'err'; msg: string } | null>(null)
   const [isPending, startTransition]  = useTransition()
   const [changingId, setChangingId]   = useState<string | null>(null)
 
-  // Users who ticked "Send me The Bridge newsletter" at registration.
-  const subscribers = users.filter((u) => u.newsletter_opt_in)
+  // Merge portal + website newsletter opt-ins, deduped by email. The same
+  // person can be both a portal user and a website user — one row in the
+  // export, earliest opt-in date wins, source shows both.
+  const subscribers: MergedSubscriber[] = useMemo(() => {
+    const byEmail = new Map<string, MergedSubscriber>()
+    const optInDate = (u: { newsletter_opt_in_at: string | null; created_at: string }) =>
+      u.newsletter_opt_in_at ?? u.created_at
+    for (const u of users.filter((x) => x.newsletter_opt_in)) {
+      byEmail.set(u.email.toLowerCase(), {
+        id: u.id,
+        email: u.email,
+        full_name: u.full_name,
+        newsletter_opt_in_at: u.newsletter_opt_in_at,
+        created_at: u.created_at,
+        source: 'Portal',
+      })
+    }
+    for (const w of websiteSubscribers) {
+      const key = w.email.toLowerCase()
+      const existing = byEmail.get(key)
+      if (existing) {
+        // In both lists: keep the earliest opt-in date, label both sources.
+        if (optInDate(w) < optInDate(existing)) {
+          existing.newsletter_opt_in_at = w.newsletter_opt_in_at
+          existing.created_at = w.created_at
+        }
+        if (w.full_name && !existing.full_name) existing.full_name = w.full_name
+        existing.source = 'Website + Portal'
+      } else {
+        byEmail.set(key, {
+          id: w.id,
+          email: w.email,
+          full_name: w.full_name,
+          newsletter_opt_in_at: w.newsletter_opt_in_at,
+          created_at: w.created_at,
+          source: 'Website',
+        })
+      }
+    }
+    return [...byEmail.values()].sort((a, b) =>
+      optInDate(b).localeCompare(optInDate(a)),
+    )
+  }, [users, websiteSubscribers])
 
   function handleRoleChange(userId: string, newRole: 'ADMIN' | 'CHAPTER' | 'VOLUNTEER') {
     setChangingId(userId)
@@ -59,8 +130,9 @@ export function UsersClient({ initialUsers, newsletterReady }: { initialUsers: U
       u.full_name || '',
       u.email,
       (u.newsletter_opt_in_at ? new Date(u.newsletter_opt_in_at) : new Date(u.created_at)).toISOString().slice(0, 10),
+      u.source,
     ])
-    const csv = [['Name', 'Email', 'Opted in on'], ...rows]
+    const csv = [['Name', 'Email', 'Opted in on', 'Source'], ...rows]
       .map((r) => r.map(escapeCell).join(','))
       .join('\r\n')
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
@@ -154,7 +226,7 @@ export function UsersClient({ initialUsers, newsletterReady }: { initialUsers: U
           <div>
             <h2 className="text-sm font-bold" style={{ color: '#1F2933' }}>The Bridge newsletter — subscribers ({subscribers.length})</h2>
             <p className="text-xs mt-0.5" style={{ color: '#1F2933', opacity: 0.55 }}>
-              Users who ticked “Send me The Bridge newsletter” at registration. Download the CSV each week and add new addresses to beehiiv manually.
+              Users who ticked “Send me The Bridge newsletter” at registration — portal users and website visitors, deduped by email. Download the CSV each week and add new addresses to beehiiv manually.
             </p>
           </div>
           <button
@@ -167,18 +239,24 @@ export function UsersClient({ initialUsers, newsletterReady }: { initialUsers: U
             <Download className="size-3.5" /> Download CSV
           </button>
         </div>
-        {!newsletterReady ? (
-          <p className="px-5 py-6 text-sm" style={{ color: '#1F2933', opacity: 0.55 }}>
-            Newsletter columns are not in the database yet — run <span className="font-mono text-xs">supabase/add-newsletter-optin.sql</span> in the Supabase SQL Editor, then reload this page.
+        {!newsletterReady && (
+          <p className="px-5 py-4 text-sm" style={{ color: '#1F2933', opacity: 0.55, borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+            Portal newsletter columns are not in the database yet — run <span className="font-mono text-xs">supabase/add-newsletter-optin.sql</span> in the Supabase SQL Editor, then reload this page.
           </p>
-        ) : subscribers.length === 0 ? (
+        )}
+        {!websiteReady && (
+          <p className="px-5 py-4 text-sm" style={{ color: '#1F2933', opacity: 0.55, borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
+            Website subscribers are not in the database yet — run <span className="font-mono text-xs">supabase/add-website-users.sql</span> in the Supabase SQL Editor, then reload this page. Only portal subscribers are listed below.
+          </p>
+        )}
+        {subscribers.length === 0 ? (
           <p className="px-5 py-6 text-sm" style={{ color: '#1F2933', opacity: 0.4 }}>No subscribers yet.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr style={{ background: '#FAFAF7', borderBottom: '1px solid rgba(15,93,94,0.08)' }}>
-                  {['Name', 'Email', 'Opted in on'].map(h => (
+                  {['Name', 'Email', 'Opted in on', 'Source'].map(h => (
                     <th key={h} className="px-5 py-3 text-left text-xs font-bold uppercase tracking-widest" style={{ color: '#1F2933', opacity: 0.45 }}>{h}</th>
                   ))}
                 </tr>
@@ -190,6 +268,9 @@ export function UsersClient({ initialUsers, newsletterReady }: { initialUsers: U
                     <td className="px-5 py-3.5" style={{ color: '#1F2933', opacity: 0.65 }}>{u.email}</td>
                     <td className="px-5 py-3.5 text-xs" style={{ color: '#1F2933', opacity: 0.45 }}>
                       {new Date(u.newsletter_opt_in_at ?? u.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </td>
+                    <td className="px-5 py-3.5 text-xs font-semibold" style={{ color: '#0F5D5E' }}>
+                      {u.source}
                     </td>
                   </tr>
                 ))}

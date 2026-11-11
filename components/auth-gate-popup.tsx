@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Mail, X } from 'lucide-react'
+import { openRegisterDialog } from '@/lib/register-dialog'
 
 // ---------------------------------------------------------------------------
 // Auth gate pop-up
@@ -18,6 +19,10 @@ import { Mail, X } from 'lucide-react'
 //    7 days) so the visitor is not asked again on every tap.
 //  - It is never shown to a logged-in user — pages decide that server-side
 //    (via supabase.auth.getUser()) and simply don't render the trigger.
+//  - Register opens the WEBSITE register dialog on the same page
+//    (2026-11-12 rebuild). Website visitors register as website users
+//    (public.website_users); /portal/register is the PORTAL registration
+//    page (Volunteer / Chapter Lead only) and is not linked from here.
 // ---------------------------------------------------------------------------
 
 const DISMISSED_COOKIE = 'dan_auth_gate_dismissed'
@@ -122,13 +127,17 @@ export function AuthGatePopup({ open, onClose }: AuthGatePopupProps) {
         </p>
 
         <div className="flex flex-col gap-3">
-          <Link
-            href="/portal/register"
+          <button
+            type="button"
+            onClick={() => {
+              close()
+              openRegisterDialog()
+            }}
             className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:opacity-90"
             style={{ background: 'linear-gradient(135deg, #0F5D5E, #238C91)' }}
           >
             Register
-          </Link>
+          </button>
           <Link
             href="/portal/login"
             className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold transition-all duration-200 hover:opacity-90"
@@ -204,15 +213,16 @@ export function SubscribeButton() {
           className="mt-3 text-sm"
           style={{ color: '#1F2933', opacity: 0.75 }}
         >
-          You can register any time from the{' '}
-          <Link
-            href="/portal/register"
+          You can register any time — just tap{' '}
+          <button
+            type="button"
+            onClick={openRegisterDialog}
             className="font-bold hover:opacity-70"
             style={{ color: '#0F5D5E' }}
           >
-            portal
-          </Link>{' '}
-          — it only takes a minute.
+            Join us
+          </button>{' '}
+          in the menu. It only takes a minute.
         </p>
       )}
     </div>

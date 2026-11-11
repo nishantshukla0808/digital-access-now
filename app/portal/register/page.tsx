@@ -1,6 +1,15 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { signup } from '../actions'
+import { DanLogo } from '@/components/dan-logo'
+
+// ---------------------------------------------------------------------------
+// /portal/register — PORTAL registration only (Volunteer / Chapter Lead).
+// Website visitors register through the register dialog instead (their
+// accounts live in public.website_users, not public.users).
+// Admin is NOT offered here and is rejected server-side in signup() —
+// admin accounts are granted by an administrator only.
+// ---------------------------------------------------------------------------
 
 export default async function PortalRegisterPage({
   searchParams,
@@ -14,7 +23,7 @@ export default async function PortalRegisterPage({
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <Link href="/portal">
-            <img src="https://i.ibb.co/xKnvQK05/logo-DAN.jpg" alt="Digital Access Now" className="mx-auto h-12 w-auto object-contain mb-5" style={{ mixBlendMode: 'normal' }} />
+            <DanLogo className="mx-auto h-12 w-auto object-contain mb-5" />
           </Link>
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: '#1F2933' }}>Create your account</h1>
           <p className="mt-1.5 text-sm" style={{ color: '#1F2933', opacity: 0.55 }}>Register to access your portal workspace.</p>
@@ -51,10 +60,12 @@ export default async function PortalRegisterPage({
                 className="w-full h-11 px-4 rounded-xl text-sm outline-none"
                 style={{ background: '#FAFAF7', border: '1.5px solid rgba(15,93,94,0.2)', color: '#1F2933' }}
               >
-                <option value="ADMIN">Admin</option>
-                <option value="CHAPTER">Chapter Lead</option>
                 <option value="VOLUNTEER">Volunteer</option>
+                <option value="CHAPTER">Chapter Lead</option>
               </select>
+              <p className="text-xs" style={{ color: '#1F2933', opacity: 0.5 }}>
+                Admin accounts are created by an administrator, not here.
+              </p>
             </div>
 
             <label className="flex items-start gap-2.5 cursor-pointer" htmlFor="newsletterOptIn">
@@ -85,3 +96,4 @@ export default async function PortalRegisterPage({
     </div>
   )
 }
+
