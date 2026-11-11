@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Menu, X, ChevronDown, Instagram, Linkedin, Youtube } from 'lucide-react'
 import { openRegisterDialog } from '@/lib/register-dialog'
 import { AuthRegisterDialog } from '@/components/auth-register-dialog'
+import { AuthLoginDialog } from '@/components/auth-login-dialog'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -107,14 +108,11 @@ export function Navbar() {
             >
               <Youtube size={22} />
             </a>
-            {/* Sign in + Join us — registration opens in a dialog on this page. */}
-            <Link
-              href="/portal/login"
-              className="ml-1 px-2 py-2 text-base font-medium whitespace-nowrap transition-colors hover:text-[#4DB7E5]"
-              style={{ color: 'rgba(255,255,255,0.85)' }}
-            >
-              Sign in
-            </Link>
+            {/* Join us — opens the register dialog on this page. There is
+                deliberately NO standalone "Sign in" button here: the navbar
+                keeps one entry point, and sign-in is reached from inside
+                the register dialog ("Already have an account?") and the
+                auth-gate pop-up ("Log in"). */}
             <button
               type="button"
               onClick={openRegisterDialog}
@@ -148,7 +146,10 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div style={{ background: '#0D1F1F', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div
+          className="max-h-[calc(100dvh-7rem)] overflow-y-auto"
+          style={{ background: '#0D1F1F', borderTop: '1px solid rgba(255,255,255,0.08)' }}
+        >
           <div className="px-4 py-4 space-y-1">
             {/* Mobile ABOUT Dropdown */}
             <button
@@ -224,20 +225,16 @@ export function Navbar() {
             >
               DONATE
             </Link>
-            <Link
-              href="/portal/login"
-              onClick={() => setIsOpen(false)}
-              className="block text-center py-3 text-sm font-medium transition-colors hover:text-[#4DB7E5]"
-              style={{ color: 'rgba(255,255,255,0.8)' }}
-            >
-              Sign in
-            </Link>
+            {/* Join us — opens the register dialog on this page.
+                No standalone "Sign in" here either (see desktop note):
+                sign-in is reached from inside the dialogs. */}
           </div>
         </div>
       )}
     </nav>
-    {/* The register dialog lives here so it exists on every page with a navbar. */}
+    {/* The register + login dialogs live here so they exist on every page with a navbar. */}
     <AuthRegisterDialog />
+    <AuthLoginDialog />
     </>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import {
   Dialog,
   DialogContent,
@@ -12,6 +11,7 @@ import {
 import { AuthRegisterForm } from '@/components/auth-register-form'
 import { DanLogo } from '@/components/dan-logo'
 import { REGISTER_DIALOG_OPEN_EVENT } from '@/lib/register-dialog'
+import { openLoginDialog } from '@/lib/login-dialog'
 
 // ---------------------------------------------------------------------------
 // Website register dialog — the registration entry point for visitors.
@@ -43,7 +43,7 @@ export function AuthRegisterDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="sm:max-w-md rounded-2xl p-7"
+        className="sm:max-w-md max-h-[90dvh] overflow-y-auto rounded-2xl p-7"
         style={{ background: '#ffffff', border: '1px solid rgba(15,93,94,0.12)' }}
       >
         <div className="text-center">
@@ -63,9 +63,14 @@ export function AuthRegisterDialog() {
 
         <p className="mt-5 text-center text-sm" style={{ color: '#1F2933', opacity: 0.55 }}>
           Already have an account?{' '}
-          <Link href="/portal/login" className="font-bold hover:opacity-70" style={{ color: '#0F5D5E' }}>
+          <button
+            type="button"
+            onClick={() => { setOpen(false); openLoginDialog() }}
+            className="font-bold hover:opacity-70"
+            style={{ color: '#0F5D5E' }}
+          >
             Sign in
-          </Link>
+          </button>
         </p>
       </DialogContent>
     </Dialog>

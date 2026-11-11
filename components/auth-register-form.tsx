@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, RotateCcw } from 'lucide-react'
+import { openLoginDialog } from '@/lib/login-dialog'
 import {
   signupForWebsiteDialog,
   verifyOtpForWebsiteDialog,
@@ -165,13 +166,14 @@ export function AuthRegisterForm({ onClose }: AuthRegisterFormProps) {
         <p className="text-center text-sm" style={{ color: '#1F2933', opacity: 0.75 }}>
           Please sign in with your password to continue.
         </p>
-        <a
-          href="/portal/login"
+        <button
+          type="button"
+          onClick={() => { onClose?.(); openLoginDialog() }}
           className="flex w-full items-center justify-center gap-2 h-11 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90"
           style={{ background: 'linear-gradient(135deg, #0F5D5E, #238C91)' }}
         >
           Sign in <ArrowRight className="size-4" />
-        </a>
+        </button>
         <p className="text-center text-sm" style={{ color: '#1F2933', opacity: 0.55 }}>
           <button type="button" onClick={() => onClose?.()} className="font-bold hover:opacity-70" style={{ color: '#0F5D5E' }}>
             Close

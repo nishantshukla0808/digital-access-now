@@ -1,9 +1,9 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
 import { Mail, X } from 'lucide-react'
 import { openRegisterDialog } from '@/lib/register-dialog'
+import { openLoginDialog } from '@/lib/login-dialog'
 
 // ---------------------------------------------------------------------------
 // Auth gate pop-up
@@ -92,7 +92,7 @@ export function AuthGatePopup({ open, onClose }: AuthGatePopupProps) {
       />
 
       <div
-        className="relative w-full max-w-sm rounded-2xl p-6 shadow-xl"
+        className="relative w-full max-w-sm max-h-[90dvh] overflow-y-auto rounded-2xl p-6 shadow-xl"
         style={{ background: '#ffffff', border: '1px solid #E7ECEF' }}
       >
         <button
@@ -138,8 +138,12 @@ export function AuthGatePopup({ open, onClose }: AuthGatePopupProps) {
           >
             Register
           </button>
-          <Link
-            href="/portal/login"
+          <button
+            type="button"
+            onClick={() => {
+              close()
+              openLoginDialog()
+            }}
             className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold transition-all duration-200 hover:opacity-90"
             style={{
               background: '#ffffff',
@@ -148,7 +152,7 @@ export function AuthGatePopup({ open, onClose }: AuthGatePopupProps) {
             }}
           >
             Log in
-          </Link>
+          </button>
           <button
             type="button"
             onClick={close}

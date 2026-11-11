@@ -400,14 +400,38 @@ export async function signupForWebsiteDialog(
 
   const service = createServiceClient()
 
-  // Already a website user? Point them at sign-in instead of failing
-  // cryptically on a duplicate email below.
+  // Already a website user? If they never finished verification, send a
+  // fresh code and take them to the OTP step — otherwise re-registering
+  // would be a dead end: they can't sign in unverified, and they can't
+  // get a new code any other way. If they ARE verified, point them at
+  // sign-in instead of failing cryptically on a duplicate email below.
+  // (Note: re-registering does NOT change the password — the auth user's
+  // password stays whatever it was. If they type a different password
+  // here, the OTP step's auto sign-in fails and the form shows the green
+  // "Email verified, please sign in" state; they sign in with the
+  // original password.)
   const { data: existingWebsite } = await service
     .from('website_users')
-    .select('id')
+    .select('id, full_name, is_email_verified')
     .eq('email', email)
     .single()
   if (existingWebsite) {
+    if (!existingWebsite.is_email_verified) {
+      const otp = generateOTP()
+      const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString() // 10 minutes
+      const { error: otpError } = await service.from('email_verifications').insert({
+        user_id: existingWebsite.id,
+        email,
+        otp,
+        type: 'signup',
+        expires_at: expiresAt,
+      })
+      if (otpError) {
+        console.error('OTP insert error:', otpError)
+      }
+      await sendOtpEmail(email, existingWebsite.full_name || fullName, otp)
+      return { ok: true, email }
+    }
     return { ok: false, error: 'An account with this email already exists. Please sign in instead.' }
   }
 
@@ -639,5 +663,81 @@ export async function resendOtpForWebsiteDialog(
   await sendOtpEmail(email, websiteUser.full_name || 'there', otp)
 
   return { ok: true, message: 'New code sent! Check your inbox.' }
+}
+
+// ─── SIGN IN (website dialog variant — no redirects, returns a result) ─────
+// One sign-in for everyone, because Supabase Auth is shared. Mirrors
+// login() above step for step, but returns a result object so the dialog
+// can close / navigate client-side instead of redirecting:
+//   - Portal users (users row) go where the portal login sends them:
+//     ADMIN → /portal/admin/dashboard, CHAPTER →
+//     /portal/chapter/dashboard, anyone else → /portal/volunteer/dashboard.
+//     A person with BOTH rows takes the portal path (their workspace).
+//   - Verified website users (website_users row) stay on the same page:
+//     the dialog closes and the page refreshes as logged in.
+//   - Unverified users are signed out again (like login() does) and get
+//     a clear error instead of a silent bounce to /portal/verify-email.
+//   - An auth identity with no profile row at all gets "Account not
+//     found" — that should not normally happen.
+// The password is never changed here, and no OTP is involved.
+// ────────────────────────────────────────────────────────────────────────────
+export async function signInForWebsiteDialog(
+  formData: FormData
+): Promise<{ ok: boolean; error?: string; redirect?: string }> {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  if (!email || !password) {
+    return { ok: false, error: 'Email and password are required' }
+  }
+
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+
+  if (error || !data.user) {
+    return { ok: false, error: error?.message || 'Could not sign in. Please try again.' }
+  }
+
+  const service = createServiceClient()
+
+  // Portal profile first — portal people sign in to the portal.
+  const { data: portalUser } = await service
+    .from('users')
+    .select('role, roles, is_email_verified')
+    .eq('id', data.user.id)
+    .single()
+
+  if (portalUser) {
+    if (!portalUser.is_email_verified) {
+      // Mirror login(): don't leave an unverified user signed in.
+      await supabase.auth.signOut()
+      return { ok: false, error: 'Please verify your email first. Check your inbox for the verification code.' }
+    }
+    revalidatePath('/', 'layout')
+    const roles: string[] = portalUser.roles ?? [portalUser.role ?? 'VOLUNTEER']
+    if (roles.includes('ADMIN')) return { ok: true, redirect: '/portal/admin/dashboard' }
+    if (roles.includes('CHAPTER')) return { ok: true, redirect: '/portal/chapter/dashboard' }
+    return { ok: true, redirect: '/portal/volunteer/dashboard' }
+  }
+
+  // Website profile — verified users stay on the same page.
+  const { data: websiteUser } = await service
+    .from('website_users')
+    .select('is_email_verified')
+    .eq('id', data.user.id)
+    .single()
+
+  if (websiteUser) {
+    if (!websiteUser.is_email_verified) {
+      await supabase.auth.signOut()
+      return { ok: false, error: 'Your email is not verified yet. Please check your inbox for the code.' }
+    }
+    revalidatePath('/', 'layout')
+    return { ok: true }
+  }
+
+  // Auth identity with no profile row at all — should not normally happen.
+  await supabase.auth.signOut()
+  return { ok: false, error: 'Account not found. Please register first.' }
 }
 
